@@ -1,3 +1,2 @@
-# group18
-
-Ceng453-Software Construction Term Project
+# AlienGame
+Term Project for Ceng453-Software Construction Course
