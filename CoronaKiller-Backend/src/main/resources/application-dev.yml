@@ -5,7 +5,7 @@ spring:
         name: corona-killer-backend
     jpa:
         hibernate:
-            ddl-auto: create
+            ddl-auto: update
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -13,7 +13,7 @@ spring:
                 format_sql: true
     datasource:
         driver-class-name: org.mariadb.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/ceng453_local?useSSL=false
+        url: jdbc:mysql://localhost:3306/ceng453_local # TODO: ?useSSL=false
         username: yavuz
         password: p@ssw0rd
 
