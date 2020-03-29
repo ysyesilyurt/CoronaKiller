@@ -24,6 +24,10 @@ public class ScoreBoardController {
 	 * 	1- getScoreBoard -> ALL TIME SCOREBOARD
 	 * 	2- getWeeklyScoreBoard -> Weekly
 	 * 	3- getMonthlyScoreBoard -> monthly
+	 * 		FOR ALL THESE OPERATIONS ONLY 1 ENDPOINT WILL BE USED:
+	 * 			GET /api/scoreboard
+ * 			QUERY STRING WILL BE USED TO IDENTIFY BOARD TYPE:
+	 * 			GET /api/scoreboard (?type=all or ?type=weekly or ?type=monthly)
 	 */
 }
 

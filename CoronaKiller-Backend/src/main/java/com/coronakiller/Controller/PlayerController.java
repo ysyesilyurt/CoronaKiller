@@ -30,11 +30,11 @@ public class PlayerController {
 
 	/**
 	 * TODO:
-	 * 	1- getPlayerById
-	 * 	2- registerPlayer (create)
-	 * 	3- removePlayer
-	 * 	4- updatePlayer
-	 * 	5- LoginPlayer
+	 * 	1- getPlayerById => GET /api/players/{id}
+	 * 	2- registerPlayer (create) => PUT /api/players
+	 * 	3- removePlayer => DELETE /api/players/{id}
+	 * 	4- updatePlayer => POST /api/players/{id}
+	 * 	5- LoginPlayer => WILL BE HANDLED IN ACCORDANCE WITH spring security
 	 */
 }
 
