@@ -1,6 +1,5 @@
 package com.coronakiller.Repository;
 
-import com.coronakiller.Dto.ScoreDTO;
 import com.coronakiller.Entity.Score;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
