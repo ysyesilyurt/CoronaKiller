@@ -16,7 +16,7 @@ import java.util.List;
 public interface GameSessionMapper {
     List<GameSessionDTO> toGameSessionDTOList(List<GameSession> gameSessionList);
 
-    @Mapping(source = "shipHealth", target = "spaceship.health")
-    @Mapping(source = "shipType", target = "spaceship.type")
+    @Mapping(source = "spaceship.health", target = "shipHealth")
+    @Mapping(source = "spaceship.type", target = "shipType")
     GameSessionDTO toGameSessionDTO(GameSession gameSession);
 }

@@ -15,6 +15,6 @@ import java.util.List;
 public interface ScoreMapper {
 	List<ScoreDTO> toScoreDTOList(List<Score> scoreList);
 
-	@Mapping(source = "playerUsername", target = "player.username")
+	@Mapping(source = "player.username", target = "playerUsername")
 	ScoreDTO toScoreDTO(Score score);
 }
