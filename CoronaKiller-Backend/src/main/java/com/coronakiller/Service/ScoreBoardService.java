@@ -1,45 +1,42 @@
 package com.coronakiller.Service;
 
-import com.coronakiller.Dto.ScoreDTO;
-import com.coronakiller.Entity.Score;
-import com.coronakiller.Mapper.ScoreMapper;
+import com.coronakiller.Constant.APIConstants;
+import com.coronakiller.Dto.ResponseDTO;
 import com.coronakiller.Repository.ScoreRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
 public class ScoreBoardService {
 
 	private ScoreRepository scoreRepository;
-	private ScoreMapper scoreMapper;
 
-	public ScoreBoardService(ScoreRepository scoreRepository, ScoreMapper scoreMapper){
+	public ScoreBoardService(ScoreRepository scoreRepository) {
 		this.scoreRepository = scoreRepository;
-		this.scoreMapper = scoreMapper;
 	}
 
-	public List<ScoreDTO> getScoreBoard() {
-		List<Score> allTimeScoresList = scoreRepository.findAll();
-		return scoreMapper.toScoreDTOList(allTimeScoresList);
-	}
-
-	public List<ScoreDTO> getWeeklyScoreBoard() throws ParseException {
-
-		Date previousDate = Date.valueOf(LocalDate.now().minusDays(7));
-		List<ScoreDTO> weeklyScoresList = scoreRepository.getTableByTime((previousDate));
-		return weeklyScoresList;
-	}
-
-	public List<ScoreDTO> getMonthlyScoreBoard() {
-		Date previousDate = Date.valueOf(LocalDate.now().minusDays(30));
-		List<ScoreDTO> monthlyScoresList = scoreRepository.getTableByTime((previousDate));
-		return monthlyScoresList;
+	public Pair<HttpStatus, ResponseDTO> getScoreBoard(HashMap<String, String> boardType) {
+		List<Map<String, Long>> result = null;
+		if (boardType.containsValue("weekly")) {
+			Date date = Date.valueOf(LocalDate.now().minusDays(7));
+			result = scoreRepository.getScoreBoardWithDate(date);
+		} else if (boardType.containsValue("monthly")) {
+			Date date = Date.valueOf(LocalDate.now().minusDays(30));
+			result = scoreRepository.getScoreBoardWithDate(date);
+		} else {
+			/* boardType == "all" or null; both fetches all times scoreboard */
+			result = scoreRepository.getAllTimeScoreBoard();
+		}
+		return Pair.of(HttpStatus.OK, new ResponseDTO(result, null, APIConstants.RESPONSE_SUCCESS));
 	}
 }
 

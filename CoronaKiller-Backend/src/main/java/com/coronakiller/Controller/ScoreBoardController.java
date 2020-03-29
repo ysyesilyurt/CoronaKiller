@@ -1,17 +1,22 @@
 package com.coronakiller.Controller;
 
-import com.coronakiller.Dto.ScoreDTO;
+import com.coronakiller.Dto.ResponseDTO;
 import com.coronakiller.Service.ScoreBoardService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.ParseException;
-import java.util.List;
+import java.util.HashMap;
 
 @Slf4j
+@Api(value = "ScoreBoard Resource REST Endpoints", description = "Contains endpoints to fetch different types of ScoreBoards according to player game scores recorded in CoronaKiller Game API")
 @RestController
 @RequestMapping(value = "/api/scoreboard", headers = "Accept=application/json")
 public class ScoreBoardController {
@@ -22,37 +27,11 @@ public class ScoreBoardController {
 		this.scoreBoardService = scoreBoardService;
 	}
 
-	@GetMapping("/all")
-	public ResponseEntity<List<ScoreDTO>> getScoreBoard(){
-		List<ScoreDTO> allTimeScoresList = scoreBoardService.getScoreBoard();
-		return ResponseEntity.ok().body(allTimeScoresList);
+	@GetMapping
+	@ApiOperation(value = "Fetch Scoreboard according to given boardType (weekly, monthly or all) in query string.", response = ResponseDTO.class)
+	public ResponseEntity<ResponseDTO> getScoreBoard(@RequestParam HashMap<String, String> boardType) {
+		Pair<HttpStatus, ResponseDTO> response = scoreBoardService.getScoreBoard(boardType);
+		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 	}
-
-	@GetMapping("/weekly")
-	public ResponseEntity<List<ScoreDTO>> getWeeklyScoreBoard() throws ParseException {
-		List<ScoreDTO> weeklyScoresList = scoreBoardService.getWeeklyScoreBoard();
-		return ResponseEntity.ok().body(weeklyScoresList);
-	}
-
-	@GetMapping("/monthly")
-	public ResponseEntity<List<ScoreDTO>> getMonthlyScoreBoard(){
-		List<ScoreDTO> monthlyScoreBoard = scoreBoardService.getMonthlyScoreBoard();
-		return ResponseEntity.ok().body(monthlyScoreBoard);
-	}
-
-
-	/**
-	 *
-	 * ALL methods are checked and working
-	 * TODO: change endpoints to (?type=all or ?type=weekly or ?type=monthly)
-	 * TODO:
-	 * 	1- getScoreBoard -> ALL TIME SCOREBOARD
-	 * 	2- getWeeklyScoreBoard -> Weekly
-	 * 	3- getMonthlyScoreBoard -> monthly
-	 * 		FOR ALL THESE OPERATIONS ONLY 1 ENDPOINT WILL BE USED:
-	 * 			GET /api/scoreboard
- * 			QUERY STRING WILL BE USED TO IDENTIFY BOARD TYPE:
-	 * 			GET /api/scoreboard (?type=all or ?type=weekly or ?type=monthly)
-	 */
 }
 
