@@ -22,11 +22,10 @@ public class GameController {
 
 	/**
 	 * TODO:
-	 * 	1- displayDashboard => GET /api/game/{id}
-	 * 	1- startGame - start with an initial game session => POST /api/game/start/{id}
-	 * 	2- continueGame - first check if game session is not null => POST /api/game/continue/{id}
-	 * 	3- updateGame - Only gameSession update => POST /api/game/update/{id}
-	 * 	4- finishGame - update Score => POST /api/game/finish/{id}
+	 * 	1- startGame - start with an initial game session => POST /api/game/start/{gsid}
+	 * 	2- continueGame - first check if game session is not null => POST /api/game/continue/{gsid}
+	 * 	3- updateGame - Only gameSession update => POST /api/game/update/{gsid}
+	 * 	4- finishGame - update Score => POST /api/game/finish/{gsid}
 	 */
 }
 
