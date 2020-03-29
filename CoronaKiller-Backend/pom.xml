@@ -60,6 +60,13 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
 		</dependency>
+
+		<!-- ADD SUPPORT FOR AUTOMATIC RELOADING -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
