@@ -1,13 +1,13 @@
 package com.coronakiller.Controller;
 
 import com.coronakiller.Dto.PlayerDTO;
+import com.coronakiller.Entity.Player;
+import com.coronakiller.Exception.ResourceNotFoundException;
 import com.coronakiller.Service.PlayerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,12 +28,42 @@ public class PlayerController {
 		return ResponseEntity.ok().body(playerList);
 	}
 
+	@GetMapping("/{playerId}")
+	public ResponseEntity<PlayerDTO> getPlayerById(@PathVariable long playerId){
+		PlayerDTO playerDTO = playerService.getPlayerById(playerId);
+		if(playerDTO != null){
+			return ResponseEntity.ok().body(playerDTO);
+		}
+		else{
+			throw new ResourceNotFoundException(String.format("Player cannot be found with id : %d", playerId));
+		}
+	}
+
+	@PostMapping
+	public ResponseEntity<PlayerDTO> registerPlayer(@RequestBody Player newPlayer){
+		PlayerDTO newPlayerDTO = playerService.registerPlayer(newPlayer);
+		return ResponseEntity.ok().body(newPlayerDTO);
+	}
+
+	@DeleteMapping("/{playerId}")
+	public ResponseEntity<String> removePlayerById(@PathVariable("playerId") long playerID){
+		playerService.removePlayerByID(playerID);
+		return ResponseEntity.ok().body("Player with " + playerID + " is deleted.");
+	}
+
+	@PutMapping("/{playerId}")
+	public ResponseEntity<PlayerDTO> updatePlayerById(@PathVariable("playerId") long playerId,
+													  @RequestBody PlayerDTO newPlayerDTO){
+		PlayerDTO playerDTO = playerService.updatePlayerById(playerId, newPlayerDTO);
+		return ResponseEntity.ok().body(playerDTO);
+	}
+
 	/**
 	 * TODO:
-	 * 	1- getPlayerById => GET /api/players/{id}
-	 * 	2- registerPlayer (create) => PUT /api/players
-	 * 	3- removePlayer => DELETE /api/players/{id}
-	 * 	4- updatePlayer => POST /api/players/{id}
+	 * 	1- DONE -getPlayerById => GET /api/players/{id}
+	 * 	2- CHECK -registerPlayer (create) => PUT /api/players
+	 * 	3- DONE -removePlayer => DELETE /api/players/{id}
+	 * 	4- CHECK -updatePlayer => POST /api/players/{id}
 	 * 	5- LoginPlayer => WILL BE HANDLED IN ACCORDANCE WITH spring security
 	 */
 }
