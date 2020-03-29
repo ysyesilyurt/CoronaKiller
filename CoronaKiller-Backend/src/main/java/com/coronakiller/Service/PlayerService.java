@@ -7,6 +7,8 @@ import com.coronakiller.Mapper.PlayerMapper;
 import com.coronakiller.Repository.PlayerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,6 +41,16 @@ public class PlayerService {
 		else{
 			throw new ResourceNotFoundException(String.format("Player cannot be found with id : %d", playerId));
 		}
+	}
+
+	public PlayerDTO handleLogin(Authentication authRequest) {
+		User principal = (User) authRequest.getPrincipal();
+		Optional<Player> player = playerRepository.findByUsername(principal.getUsername());
+		if (player.isPresent()) {
+			PlayerDTO playerDTO = playerMapper.toPlayerDTO(player.get());
+			return playerDTO;
+		}
+		return null;
 	}
 
 	public PlayerDTO registerPlayer(Player newPlayer) {

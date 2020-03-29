@@ -7,6 +7,7 @@ import com.coronakiller.Service.PlayerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,17 @@ public class PlayerController {
 		}
 		else{
 			throw new ResourceNotFoundException(String.format("Player cannot be found with id : %d", playerId));
+		}
+	}
+
+	@PostMapping(value = "/login")
+	public ResponseEntity<PlayerDTO> login(Authentication authRequest) {
+		if (authRequest != null) {
+			PlayerDTO playerDTO = playerService.handleLogin(authRequest);
+			return ResponseEntity.ok().body(playerDTO);
+		} else {
+			log.warn("BAD REQUEST on login - missing Authorization Header in the request.");
+			return ResponseEntity.badRequest().body(null);
 		}
 	}
 

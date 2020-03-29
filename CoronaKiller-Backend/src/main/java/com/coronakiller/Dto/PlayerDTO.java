@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlayerDTO {
+	private Long id;
 	private String username;
 	private String password;
 	private Long totalScore;
