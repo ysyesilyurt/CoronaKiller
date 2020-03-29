@@ -29,21 +29,17 @@ public class ScoreBoardService {
 		return scoreMapper.toScoreDTOList(allTimeScoresList);
 	}
 
-	//TODO : Should we subtract 7 or 8 ?
-
 	public List<ScoreDTO> getWeeklyScoreBoard() throws ParseException {
 
-		Date previousWeekDate = Date.valueOf(LocalDate.now().minusDays(7));
-		List<Score> weeklyScoresList = scoreRepository.findByLastModifiedAtGreaterThanEqual((previousWeekDate));
-		return scoreMapper.toScoreDTOList(weeklyScoresList);
+		Date previousDate = Date.valueOf(LocalDate.now().minusDays(7));
+		List<ScoreDTO> weeklyScoresList = scoreRepository.getTableByTime((previousDate));
+		return weeklyScoresList;
 	}
 
-	//TODO : Should we subtract 30 or 31 ?
-
 	public List<ScoreDTO> getMonthlyScoreBoard() {
-		Date previousWeekDate = Date.valueOf(LocalDate.now().minusDays(30));
-		List<Score> weeklyScoresList = scoreRepository.findByLastModifiedAtGreaterThanEqual((previousWeekDate));
-		return scoreMapper.toScoreDTOList(weeklyScoresList);
+		Date previousDate = Date.valueOf(LocalDate.now().minusDays(30));
+		List<ScoreDTO> monthlyScoresList = scoreRepository.getTableByTime((previousDate));
+		return monthlyScoresList;
 	}
 }
 
