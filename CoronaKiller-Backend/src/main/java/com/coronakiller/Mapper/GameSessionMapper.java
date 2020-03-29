@@ -19,4 +19,8 @@ public interface GameSessionMapper {
     @Mapping(source = "spaceship.health", target = "shipHealth")
     @Mapping(source = "spaceship.type", target = "shipType")
     GameSessionDTO toGameSessionDTO(GameSession gameSession);
+
+    @Mapping(source = "shipHealth", target = "spaceship.health")
+    @Mapping(source = "shipType", target = "spaceship.type")
+    GameSession toGameSession(GameSessionDTO newGameSessionDTO);
 }
