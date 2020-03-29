@@ -1,18 +1,20 @@
 package com.coronakiller.Controller;
 
+import com.coronakiller.Constant.APIConstants;
 import com.coronakiller.Dto.PlayerDTO;
-import com.coronakiller.Entity.Player;
-import com.coronakiller.Exception.ResourceNotFoundException;
+import com.coronakiller.Dto.ResponseDTO;
 import com.coronakiller.Service.PlayerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Slf4j
+@Api(value = "Player Resource REST Endpoints", description = "Contains endpoints to interact with the Players/Users in CoronaKiller Game API")
 @RestController
 @RequestMapping(value = "/api/players", headers = "Accept=application/json")
 public class PlayerController {
@@ -24,59 +26,52 @@ public class PlayerController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<PlayerDTO>> getAllPlayers(Pageable pageable) {
-		List<PlayerDTO> playerList = playerService.getAllPlayers(pageable);
-		return ResponseEntity.ok().body(playerList);
+	@ApiOperation(value = "Fetch all players", response = ResponseDTO.class)
+	public ResponseEntity<ResponseDTO> getAllPlayers() {
+		Pair<HttpStatus, ResponseDTO> response = playerService.getAllPlayers();
+		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 	}
 
 	@GetMapping("/{playerId}")
-	public ResponseEntity<PlayerDTO> getPlayerById(@PathVariable long playerId){
-		PlayerDTO playerDTO = playerService.getPlayerById(playerId);
-		if(playerDTO != null){
-			return ResponseEntity.ok().body(playerDTO);
-		}
-		else{
-			throw new ResourceNotFoundException(String.format("Player cannot be found with id : %d", playerId));
-		}
+	@ApiOperation(value = "Fetch player by specified id", response = ResponseDTO.class)
+	public ResponseEntity<ResponseDTO> getPlayerById(@PathVariable Long playerId) {
+		Pair<HttpStatus, ResponseDTO> response = playerService.getPlayerById(playerId);
+		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 	}
 
 	@PostMapping(value = "/login")
-	public ResponseEntity<PlayerDTO> login(Authentication authRequest) {
+	@ApiOperation(value = "Login player into system", response = ResponseDTO.class)
+	public ResponseEntity<ResponseDTO> login(Authentication authRequest) {
 		if (authRequest != null) {
-			PlayerDTO playerDTO = playerService.handleLogin(authRequest);
-			return ResponseEntity.ok().body(playerDTO);
+			Pair<HttpStatus, ResponseDTO> response = playerService.handleLogin(authRequest);
+			return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 		} else {
 			log.warn("BAD REQUEST on login - missing Authorization Header in the request.");
-			return ResponseEntity.badRequest().body(null);
+			return ResponseEntity.badRequest().body(new ResponseDTO(null,
+					"Missing Authorization Header in the request.", APIConstants.RESPONSE_FAIL));
 		}
 	}
 
-	@PostMapping
-	public ResponseEntity<String> registerPlayer(@RequestBody PlayerDTO newPlayerDTO){
-		playerService.registerPlayer(newPlayerDTO);
-		return ResponseEntity.ok().body("New player is registered successfully");
+	@PostMapping(value = "/register")
+	@ApiOperation(value = "Register player into the system (New player creation)", response = ResponseDTO.class)
+	public ResponseEntity<ResponseDTO> registerPlayer(@RequestBody PlayerDTO newPlayerDTO) {
+		Pair<HttpStatus, ResponseDTO> response = playerService.registerPlayer(newPlayerDTO);
+		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 	}
 
 	@DeleteMapping("/{playerId}")
-	public ResponseEntity<String> removePlayerById(@PathVariable("playerId") long playerID){
-		playerService.removePlayerByID(playerID);
-		return ResponseEntity.ok().body("Player with " + playerID + " is deleted.");
+	@ApiOperation(value = "Remove player from the system with id", response = ResponseDTO.class)
+	public ResponseEntity<ResponseDTO> removePlayerById(@PathVariable("playerId") Long playerId) {
+		Pair<HttpStatus, ResponseDTO> response = playerService.removePlayerByID(playerId);
+		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 	}
 
 	@PutMapping("/{playerId}")
-	public ResponseEntity<PlayerDTO> updatePlayerById(@PathVariable("playerId") long playerId,
-													  @RequestBody PlayerDTO newPlayerDTO){
-		PlayerDTO playerDTO = playerService.updatePlayerById(playerId, newPlayerDTO);
-		return ResponseEntity.ok().body(playerDTO);
+	@ApiOperation(value = "Remove player from the system with id", response = ResponseDTO.class)
+	public ResponseEntity<ResponseDTO> updatePlayerById(@PathVariable("playerId") Long playerId,
+														@RequestBody PlayerDTO newPlayerDTO) {
+		Pair<HttpStatus, ResponseDTO> response = playerService.updatePlayerById(playerId, newPlayerDTO);
+		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 	}
-
-	/**
-	 * TODO:
-	 * 	1- DONE -getPlayerById => GET /api/players/{id}
-	 * 	2- CHECK -registerPlayer (create) => PUT /api/players
-	 * 	3- DONE -removePlayer => DELETE /api/players/{id}
-	 * 	4- CHECK -updatePlayer => POST /api/players/{id}
-	 * 	5- LoginPlayer => WILL BE HANDLED IN ACCORDANCE WITH spring security
-	 */
 }
 

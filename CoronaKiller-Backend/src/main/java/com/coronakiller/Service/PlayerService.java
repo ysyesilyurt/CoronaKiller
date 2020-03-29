@@ -1,12 +1,14 @@
 package com.coronakiller.Service;
 
+import com.coronakiller.Constant.APIConstants;
 import com.coronakiller.Dto.PlayerDTO;
+import com.coronakiller.Dto.ResponseDTO;
 import com.coronakiller.Entity.Player;
-import com.coronakiller.Exception.ResourceNotFoundException;
 import com.coronakiller.Mapper.PlayerMapper;
 import com.coronakiller.Repository.PlayerRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
@@ -27,66 +29,114 @@ public class PlayerService {
 		this.playerMapper = playerMapper;
 	}
 
-	public List<PlayerDTO> getAllPlayers(Pageable pageable) {
-		//Page<Player> playerList = playerRepository.findAll(pageable); TODO: check, remove if not gonna be used
-		List<Player> playerList = playerRepository.findAll();
-		return playerMapper.toPlayerDTOList(playerList);
+	public Pair<HttpStatus, ResponseDTO> getAllPlayers() {
+		List<PlayerDTO> playerDTOList = playerMapper.toPlayerDTOList(playerRepository.findAll());
+		return Pair.of(HttpStatus.OK, new ResponseDTO(playerDTOList, null, APIConstants.RESPONSE_SUCCESS));
 	}
 
-	public PlayerDTO getPlayerById(long playerId) {
+	public Pair<HttpStatus, ResponseDTO> getPlayerById(Long playerId) {
 		Optional<Player> queryResult = playerRepository.findById(playerId);
-		if(queryResult.isPresent()){
-			return playerMapper.toPlayerDTO(queryResult.get());
-		}
-		else{
-			throw new ResourceNotFoundException(String.format("Player cannot be found with id : %d", playerId));
+		if (queryResult.isPresent()) {
+			PlayerDTO playerDTO = playerMapper.toPlayerDTO(queryResult.get());
+			return Pair.of(HttpStatus.OK, new ResponseDTO(playerDTO, null, APIConstants.RESPONSE_SUCCESS));
+		} else {
+			log.warn("Player not found with id:{}", playerId);
+			return Pair.of(HttpStatus.NOT_FOUND, new ResponseDTO(null,
+					String.format("Player not found with id:%s", playerId), APIConstants.RESPONSE_FAIL));
 		}
 	}
 
-	public PlayerDTO handleLogin(Authentication authRequest) {
+	public Pair<HttpStatus, ResponseDTO> handleLogin(Authentication authRequest) {
 		User principal = (User) authRequest.getPrincipal();
 		Optional<Player> player = playerRepository.findByUsername(principal.getUsername());
 		if (player.isPresent()) {
 			PlayerDTO playerDTO = playerMapper.toPlayerDTO(player.get());
-			return playerDTO;
+			return Pair.of(HttpStatus.OK, new ResponseDTO(playerDTO, null, APIConstants.RESPONSE_SUCCESS));
 		}
-		return null;
+		log.warn("User not found with username:{}", principal.getUsername());
+		return Pair.of(HttpStatus.NOT_FOUND, new ResponseDTO(null,
+				String.format("User not found with username:%s", principal.getUsername()), APIConstants.RESPONSE_FAIL));
 	}
 
-	public void registerPlayer(PlayerDTO newPlayerDTO) {
-		Player newPlayer = playerMapper.toPlayer(newPlayerDTO);
-		playerRepository.save(newPlayer);
-	}
-
-	public void removePlayerByID(long playerID) {
-		Optional<Player> queryResult = playerRepository.findById(playerID);
-		if(queryResult.isPresent()) {
-			playerRepository.delete(queryResult.get());
+	public Pair<HttpStatus, ResponseDTO> registerPlayer(PlayerDTO playerDTO) {
+		String validationResult = validateRegister(playerDTO);
+		if (validationResult.equals("")) {
+			if (!playerRepository.findByUsername(playerDTO.getUsername()).isPresent()) {
+				Player player = playerMapper.toPlayer(playerDTO);
+				playerRepository.save(player);
+				return Pair.of(HttpStatus.OK, new ResponseDTO(null,
+						String.format("Player is successfully created with username:%s", player.getUsername()), APIConstants.RESPONSE_SUCCESS));
+			}
+			else {
+				log.warn("Username exists, could not complete user registration for username:{}", playerDTO.getUsername());
+				return Pair.of(HttpStatus.OK, new ResponseDTO(null,
+						String.format("Username:%s already exists, please choose another and try again",
+								playerDTO.getUsername()), APIConstants.RESPONSE_FAIL));
+			}
+		}
+		else {
+			return Pair.of(HttpStatus.BAD_REQUEST, new ResponseDTO(null,
+					String.format("BAD REQUEST while registering user - following constraints must be met:%s", validationResult),
+					APIConstants.RESPONSE_FAIL));
 		}
 	}
 
-	public PlayerDTO updatePlayerById(long playerId,
-									  PlayerDTO newPlayerDTO) {
+	private String validateRegister(PlayerDTO playerDTO) {
+		StringBuilder result = new StringBuilder("");
+		if (playerDTO != null) {
+			if (playerDTO.getId() != null)
+				result.append("|Can not set ID field of a player");
+			if (playerDTO.getUsername() == null)
+				result.append("|Missing username field");
+			if (playerDTO.getPassword() == null)
+				result.append("|Missing password field");
+			if (playerDTO.getTotalScore() != null)
+				result.append("|Can not set total score of a player");
+			if (playerDTO.getGameSessionId() != null)
+				result.append("|Can not set game session of a player");
+		}
+		else {
+			result.append("Missing player register credentials as a whole");
+		}
+		return result.toString();
+	}
+
+	public Pair<HttpStatus, ResponseDTO> removePlayerByID(Long playerId) {
 		Optional<Player> queryResult = playerRepository.findById(playerId);
-		if(queryResult.isEmpty()){
-			throw new ResourceNotFoundException(String.format("Player is not found with id : %d", playerId));
+		if (queryResult.isPresent()) {
+			playerRepository.delete(queryResult.get());
+			return Pair.of(HttpStatus.OK, new ResponseDTO(null,
+					String.format("Player with id:%s successfully removed", playerId), APIConstants.RESPONSE_SUCCESS));
+		}
+		log.warn("Player not found with id:{}", playerId);
+		return Pair.of(HttpStatus.NOT_FOUND, new ResponseDTO(null,
+				String.format("Player not found with id:%s", playerId), APIConstants.RESPONSE_FAIL));
+	}
+
+	public Pair<HttpStatus, ResponseDTO> updatePlayerById(Long playerId, PlayerDTO playerDTO) {
+		Optional<Player> queryResult = playerRepository.findById(playerId);
+		if (queryResult.isEmpty()) {
+			log.warn("Player not found with id:{}", playerId);
+			return Pair.of(HttpStatus.NOT_FOUND, new ResponseDTO(null,
+					String.format("Player not found with id:%s", playerId), APIConstants.RESPONSE_FAIL));
 		}
 
 		Player player = queryResult.get();
 
-		if(newPlayerDTO.getUsername() != null){
-			player.setUsername(newPlayerDTO.getUsername());
+		if (playerDTO.getUsername() != null) {
+			player.setUsername(playerDTO.getUsername());
 		}
 
-		if(newPlayerDTO.getPassword() != null){
-			player.setPassword(newPlayerDTO.getPassword());
+		if (playerDTO.getPassword() != null) {
+			player.setPassword(playerDTO.getPassword());
 		}
 
-		if(newPlayerDTO.getTotalScore() != null){
-			player.setTotalScore(newPlayerDTO.getTotalScore());
+		if (playerDTO.getTotalScore() != null) {
+			player.setTotalScore(playerDTO.getTotalScore());
 		}
 		playerRepository.save(player);
-		return playerMapper.toPlayerDTO(player);
+		return Pair.of(HttpStatus.OK, new ResponseDTO(null,
+				String.format("Player with id:%s successfully updated", playerId), APIConstants.RESPONSE_SUCCESS));
 	}
 }
 

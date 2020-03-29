@@ -48,9 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			http.csrf().disable()
 					// "/api/forgotPassword"
 				.authorizeRequests()
-					/* User Registration and Login requests shouldn't be authenticated */
-					.antMatchers(HttpMethod.POST, "/api/players/login").permitAll()
-					.antMatchers(HttpMethod.POST, "/api/players").permitAll()
+					/* Swagger Doc, User Registration and Login requests shouldn't be authenticated */
+					.antMatchers("/swagger-ui.html", "/api/players/login", "/api/players/register").permitAll()
 				.anyRequest().authenticated() /* all other requests need to be authenticated */
 				.and()
 				.httpBasic()
