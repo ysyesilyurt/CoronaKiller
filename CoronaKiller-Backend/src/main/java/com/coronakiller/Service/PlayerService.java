@@ -53,9 +53,9 @@ public class PlayerService {
 		return null;
 	}
 
-	public PlayerDTO registerPlayer(Player newPlayer) {
+	public void registerPlayer(PlayerDTO newPlayerDTO) {
+		Player newPlayer = playerMapper.toPlayer(newPlayerDTO);
 		playerRepository.save(newPlayer);
-		return playerMapper.toPlayerDTO(newPlayer);
 	}
 
 	public void removePlayerByID(long playerID) {

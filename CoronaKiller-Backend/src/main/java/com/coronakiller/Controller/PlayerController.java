@@ -52,9 +52,9 @@ public class PlayerController {
 	}
 
 	@PostMapping
-	public ResponseEntity<PlayerDTO> registerPlayer(@RequestBody Player newPlayer){
-		PlayerDTO newPlayerDTO = playerService.registerPlayer(newPlayer);
-		return ResponseEntity.ok().body(newPlayerDTO);
+	public ResponseEntity<String> registerPlayer(@RequestBody PlayerDTO newPlayerDTO){
+		playerService.registerPlayer(newPlayerDTO);
+		return ResponseEntity.ok().body("New player is registered successfully");
 	}
 
 	@DeleteMapping("/{playerId}")

@@ -16,4 +16,8 @@ public interface PlayerMapper {
 
     @Mapping(source = "gameSession.id", target = "gameSessionId")
     PlayerDTO toPlayerDTO(Player player);
+
+    @Mapping(source = "gameSessionId", target = "gameSession.id")
+    Player toPlayer(PlayerDTO playerDTO);
+
 }
