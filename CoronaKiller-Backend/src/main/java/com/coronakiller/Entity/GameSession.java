@@ -1,8 +1,7 @@
 package com.coronakiller.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,6 +10,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity(name = "GameSession")
@@ -34,7 +36,7 @@ public class GameSession {
 	private Integer currentLevel;
 
 	@Column(name = "session_score", nullable = false)
-	private Integer sessionScore;
+	private Long sessionScore;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "ship_id", nullable = false)

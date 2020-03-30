@@ -1,9 +1,7 @@
 package com.coronakiller.Entity;
 
 import com.coronakiller.Enum.PlayerRole;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -13,6 +11,9 @@ import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.List;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity(name = "Player")
