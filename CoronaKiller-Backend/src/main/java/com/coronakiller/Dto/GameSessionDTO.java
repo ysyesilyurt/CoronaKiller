@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class GameSessionDTO {
 	private Integer currentLevel;
-	private Integer sessionScore;
+	private Long sessionScore;
 	private Integer shipHealth;
 	private ShipType shipType;
 }

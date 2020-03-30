@@ -26,11 +26,11 @@ public class GameSession {
 
 	@CreatedDate
 	@Column(name = "created_at", nullable = false, updatable = false)
-	private Date createdAt;
+	private long createdAt;
 
 	@LastModifiedDate
 	@Column(name = "last_modified_at", nullable = false)
-	private Date lastModifiedAt;
+	private long lastModifiedAt;
 
 	@Column(name = "current_level", nullable = false)
 	private Integer currentLevel;
@@ -42,7 +42,6 @@ public class GameSession {
 	@JoinColumn(name = "ship_id", nullable = false)
 	private Spaceship spaceship;
 
-	@NotNull // A session can not exist without a player
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "gameSession")
 	private Player player;
 
