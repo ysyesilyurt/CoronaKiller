@@ -6,18 +6,12 @@ This module consists of the implementations for our server-side development.
 
 ## Build and run:
 
-!!!!!!!!!!!!!!!!!* On a Docker Container: YAVUZZZZZZZZ
-```
-mvn clean package
-sudo docker build -t potential-playlist .
-sudo docker run -e"SPRING_PROFILES_ACTIVE=dev" --network="host" -d --rm --name potential-playlist potential-playlist
-```
+Development is performed in 2 platforms, namely `dev` and `prod`. `dev` refers to our local environment which we connect to our local database and `prod` refers to the server environment which we connect to the database that is given to us. For the environment changes for our development process we have used `Spring Profiles`. We have defined 2 `application.yml` files (`application-dev.yml`, `application-prod.yml`) under the `resources` folder. And to actually use them, we have specified which active profile we want to use. For below configurations, we specify `prod` profile.
 
-* On host machine:
-```
-mvn clean install
-java -jar -Dspring.profiles.active=prod target/CoronaKiller-Backend-1.0-SNAPSHOT.jar
-```
+* `git clone http://144.122.71.144:8080/Alper.KOCAMAN/group18.git`
+* Open the project with your favourite IDE (We prefer Intellij IDEA).
+* First let `maven` import all the dependencies, then run `Main.java` in the `com.coronakiller` package with `spring profile = prod` (you can set this by the "Edit Configurations" tab on the up right corner of the IDE)
+* You can now test the application using our Postman Collection or by executing unit tests under `src/java/test`
 
 ## More About the Application
 Simply put, this API is developed for a game named _Corona Killer_ which aims to serve its `JavaFX` users with its SpringBoot Backend and MYSQL DBMS. Game's aim will be to eliminate as much Coronaviruses as possible (:blush:) throughout the different levels of the game using different types of guns. In the game one can _play_ game, _continue_ his/her last game, _display_ different types of scoreboards and also play the game in _multiplayer_ mode (only for the last level of the game).
