@@ -8,14 +8,12 @@ import com.coronakiller.Entity.Player;
 import com.coronakiller.Entity.Score;
 import com.coronakiller.Entity.Spaceship;
 import com.coronakiller.Enum.ShipType;
-import com.coronakiller.Exception.ResourceNotFoundException;
 import com.coronakiller.Mapper.GameSessionMapper;
 import com.coronakiller.Repository.GameSessionRepository;
 import com.coronakiller.Repository.PlayerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
