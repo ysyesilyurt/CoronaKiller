@@ -1,0 +1,340 @@
+{
+	"info": {
+		"_postman_id": "875b50d6-989d-47c1-a718-5bfeb3257dd9",
+		"name": "CoronaKiller-Backend",
+		"description": "Contains sample requests to consume endpoints of CoronaKiller application's Backend structure. Folders indicate different controllers. Structure uses HTTP Basic Authentication for its Authentication mechanism.\n\nIMPORTANT NOTE: Authentication information is applied at the \"Collection Level\" so that it can be added to the Authorization header of each request by default. In the request Authorization header of Postman, you will see that it inherits from the parent. Added Authentication information is as follows (of course assumes there exists a user with such credentials in database):\n\nusername: test_user\n\npassword: $2a$10$azQtlM8QR/.HtayQiDx1cO6JD4MFEwo3BkeO7MVpMP2jD31RiSkFe\n\n(password is actually \"123\" but it is sent in BCrypt Encoded form, it is assumed that UI encodes passwords with BCrypt before sending them)\n\nSUGGESTED USAGE: first create a user with Register User request, since it will create a user with the above credentials you will be able to perform all the other requests as authenticated easily.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Players",
+			"item": [
+				{
+					"name": "Get all players",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/players",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/players/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"players",
+								"login"
+							]
+						},
+						"description": "Login endpoint that uses the authentication information provided by parent collection to send login data"
+					},
+					"response": []
+				},
+				{
+					"name": "Get player by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/players/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"players",
+								"1"
+							]
+						},
+						"description": "Fetches player by id, example is given for a player with id = 1"
+					},
+					"response": []
+				},
+				{
+					"name": "Register user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"test_user\",\n\t\"password\": \"$2a$10$azQtlM8QR/.HtayQiDx1cO6JD4MFEwo3BkeO7MVpMP2jD31RiSkFe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/players/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"players",
+								"register"
+							]
+						},
+						"description": "Registers user with given credentials, username and password must be set in the request body (and other fields must not) otherwise an error response is sent back to user. Example credential is as follows:\n\nusername: test_user_2\npassword: $2a$10$dEtXYyBvHxCaBOhULnAA9OB.EbuHbW24lFNgSxVT9m36bCYULvHcm\n\n(password is BCrypt encoded form of \"qwerty\")"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/players/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"players",
+								"1"
+							]
+						},
+						"description": "Deletes user with given id on the path. For this e.g request 1 is given"
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"updated_test_user\",\n\t\"password\": \"$2a$10$q0u3.0k6bDAjr/lOlwCuZ.EycC8rA.N1e.oPykQe7ru9diii/cRU6\",\n\t\"totalScore\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/players/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"players",
+								"1"
+							]
+						},
+						"description": "Updates user with given id with provided request body. Updatable fields from this endpoint are username, password and totalScore. For this example following update is being done on user with id:1\n\nusername: updated_test_user\npassword: $2a$10$q0u3.0k6bDAjr/lOlwCuZ.EycC8rA.N1e.oPykQe7ru9diii/cRU6\ntotalScore: 100"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ScoreBoard",
+			"item": [
+				{
+					"name": "Get ScoreBoard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/scoreboard?type=weekly",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"scoreboard"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "weekly"
+								}
+							]
+						},
+						"description": "Fetches the scoreboard according to given boardType in query string. Query String can be one of the following:\n\n- weekly => fetches the weekly scoreboard,\n- monthly => fetches the monthly scoreboard,\n- all (or nothing) => fetches the all times scoreboard"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Game",
+			"item": [
+				{
+					"name": "Start a new game",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/game/start/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"game",
+								"start",
+								"1"
+							]
+						},
+						"description": "Starts a new game for the player with specified id"
+					},
+					"response": []
+				},
+				{
+					"name": "Continue to Game Session",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/game/continue/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"game",
+								"continue",
+								"1"
+							]
+						},
+						"description": "Requests to get an ongoing game session of player with specified id if exists (if not responses with error)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Game Session",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"currentLevel\": 2,\n\t\"sessionScore\": 50,\n\t\"shipHealth\": 85,\n\t\"shipType\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/game/update/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"game",
+								"update",
+								"1"
+							]
+						},
+						"description": "Requests to Update an ongoing game after a level up in the game session of player with specified id"
+					},
+					"response": []
+				},
+				{
+					"name": "Finish Game Session",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"currentLevel\": 4,\n\t\"sessionScore\": 500,\n\t\"shipHealth\": 20,\n\t\"shipType\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/game/finish/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"game",
+								"finish",
+								"1"
+							]
+						},
+						"description": "Requests to Finish the game session of player specified by id"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "$2a$10$azQtlM8QR/.HtayQiDx1cO6JD4MFEwo3BkeO7MVpMP2jD31RiSkFe",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "test_user",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "019b3e67-02da-4d75-8463-6f569137e90e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ad297a53-3f64-496a-af98-9b8cbd283b46",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

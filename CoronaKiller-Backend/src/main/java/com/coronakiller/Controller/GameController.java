@@ -2,7 +2,6 @@ package com.coronakiller.Controller;
 
 import com.coronakiller.Dto.GameSessionDTO;
 import com.coronakiller.Dto.ResponseDTO;
-import com.coronakiller.Enum.ShipType;
 import com.coronakiller.Service.GameService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -53,14 +52,5 @@ public class GameController {
 		Pair<HttpStatus, ResponseDTO> response = gameService.finishGameSession(playerId, finishedGameSessionDTO);
 		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 	}
-
-	/**
-	 * TODO:
-	 * 	1- NO NEED - displayDashboard => GET /api/game/{id}
-	 * 	1- startGame - start with an initial game session => POST /api/game/start/{id}
-	 * 	2- continueGame - first check if game session is not null => PUT /api/game/continue/{id}
-	 * 	3- updateGame - Only gameSession update => POST /api/game/update/{id}
-	 * 	4- finishGame - update Score => POST /api/game/finish/{id}
-	 */
 }
 
