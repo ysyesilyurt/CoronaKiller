@@ -27,21 +27,19 @@ public class Spaceship {
 
 	@CreatedDate
 	@Column(name = "created_at", nullable = false, updatable = false)
-	private Date createdAt;
+	private long createdAt;
 
 	@LastModifiedDate
 	@Column(name = "last_modified_at", nullable = false)
-	private Date lastModifiedAt;
+	private long lastModifiedAt;
 
 	@Column(name = "health", nullable = false)
 	private Integer health;
 
-	@NotNull
 	@Enumerated(EnumType.ORDINAL) // TODO: check
 	@Column(name = "type", nullable = false)
 	private ShipType type;
 
-	@NotNull // A ship can not exist without a session
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "spaceship")
 	private GameSession gameSession;
 

@@ -25,6 +25,14 @@ public class Player {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@CreatedDate
+	@Column(name = "created_at", nullable = false, updatable = false)
+	private long createdAt;
+
+	@LastModifiedDate
+	@Column(name = "last_modified_at", nullable = false)
+	private long lastModifiedAt;
+
 	@Column(name = "username", length = 255, nullable = false, unique = true)
 	private String username;
 

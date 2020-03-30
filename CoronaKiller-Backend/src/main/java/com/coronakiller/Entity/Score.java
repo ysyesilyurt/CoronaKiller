@@ -25,11 +25,11 @@ public class Score {
 
 	@CreatedDate
 	@Column(name = "created_at", nullable = false, updatable = false)
-	private Date createdAt;
+	private long createdAt;
 
 	@LastModifiedDate
 	@Column(name = "last_modified_at", nullable = false)
-	private Date lastModifiedAt;
+	private long lastModifiedAt;
 
 	@Column(name = "score", nullable = false)
 	private Long score;

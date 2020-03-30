@@ -21,7 +21,7 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
 			"\tGROUP BY s.player_id\n) AS tempTable\n" +
 			"WHERE tempTable.pid = p.id\n" +
 			"ORDER BY tempTable.score DESC", nativeQuery = true)
-	List<Map<String, Long>> getScoreBoardWithDate(@Param("date") Date date);
+	List<Map<String, Long>> getScoreBoardWithDate(@Param("date") Long date);
 
 
 	@Query(value = "SELECT p.username, tempTable.score\n" +

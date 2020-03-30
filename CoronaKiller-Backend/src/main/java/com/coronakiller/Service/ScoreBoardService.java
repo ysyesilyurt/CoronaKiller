@@ -28,10 +28,10 @@ public class ScoreBoardService {
 		List<Map<String, Long>> result = null;
 		if (boardType.containsValue("weekly")) {
 			Date date = Date.valueOf(LocalDate.now().minusDays(7));
-			result = scoreRepository.getScoreBoardWithDate(date);
+			result = scoreRepository.getScoreBoardWithDate(date.getTime());
 		} else if (boardType.containsValue("monthly")) {
 			Date date = Date.valueOf(LocalDate.now().minusDays(30));
-			result = scoreRepository.getScoreBoardWithDate(date);
+			result = scoreRepository.getScoreBoardWithDate(date.getTime());
 		} else {
 			/* boardType == "all" or null; both fetches all times scoreboard */
 			result = scoreRepository.getAllTimeScoreBoard();
