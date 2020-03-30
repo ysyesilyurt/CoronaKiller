@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.List;
 
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

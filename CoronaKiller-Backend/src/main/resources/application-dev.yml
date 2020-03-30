@@ -13,7 +13,7 @@ spring:
                 format_sql: true
     datasource:
         driver-class-name: org.mariadb.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/ceng453_local # TODO: ?useSSL=false
+        url: jdbc:mysql://localhost:3306/ceng453_local
         username: yavuz
         password: p@ssw0rd
 

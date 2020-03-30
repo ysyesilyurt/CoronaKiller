@@ -11,12 +11,3 @@ public class Main {
         SpringApplication.run(Main.class, args);
     }
 }
-
-/**
- * TODO:
- *  - Finish Impl of Cont-Service-Repo => ALPER + YAVUZ
- *  - Security => YAVUZ
- *  - Unit Testing + PROD DB PREPARATION => ALPER
- *  - Swagger + README + DB DESIGN => YAVUZ
- *  - Postman Collections => YAVUZ + ALPER
- */

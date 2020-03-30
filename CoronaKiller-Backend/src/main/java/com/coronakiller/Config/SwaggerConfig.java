@@ -20,14 +20,14 @@ public class SwaggerConfig {
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors
-						.basePackage("com.coronakiller.Controller"))
+						.basePackage("com.coronakiller"))
 				.paths(PathSelectors.regex("/.*"))
 				.build().apiInfo(apiEndPointsInfo());
 	}
 	private ApiInfo apiEndPointsInfo() {
 		return new ApiInfoBuilder().title("Corona Killer REST API")
-				.description("Documentation of CoronaKiller Game's Backend endpoints")
-				.contact(new Contact("Yavuz Selim Yesilyurt", "user.ceng.metu.edu.tr/~e2259166", "yesilyurt.selim@metu.edu.tr"))
+				.description("CoronaKiller Game API Documentation")
+				.contact(new Contact("Yavuz Selim Yesilyurt, Alper Kocaman", "user.ceng.metu.edu.tr/~e2259166", "yesilyurt.selim@metu.edu.tr"))
 				.license("MIT")
 				.licenseUrl("https://opensource.org/licenses/MIT")
 				.version("1.0.0")

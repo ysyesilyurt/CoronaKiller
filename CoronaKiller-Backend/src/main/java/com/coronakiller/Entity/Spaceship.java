@@ -36,7 +36,7 @@ public class Spaceship {
 	@Column(name = "health", nullable = false)
 	private Integer health;
 
-	@Enumerated(EnumType.ORDINAL) // TODO: check
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "type", nullable = false)
 	private ShipType type;
 

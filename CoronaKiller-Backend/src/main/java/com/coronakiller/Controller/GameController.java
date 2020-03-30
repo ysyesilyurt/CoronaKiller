@@ -31,14 +31,14 @@ public class GameController {
 	}
 
 	@PutMapping("/continue/{playerId}")
-	@ApiOperation(value = "Continue an ongoing game session for player with specified id", response = ResponseDTO.class) //TODO
+	@ApiOperation(value = "Continue an ongoing game session for player with specified id", response = ResponseDTO.class)
 	public ResponseEntity<ResponseDTO> continueGameSession(@PathVariable Long playerId) {
 		Pair<HttpStatus, ResponseDTO> response = gameService.continueGameSession(playerId);
 		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 	}
 
 	@PutMapping("/update/{playerId}")
-	@ApiOperation(value = "Update an ongoing game session after a level up", response = ResponseDTO.class) //TODO
+	@ApiOperation(value = "Update an ongoing game session after a level up", response = ResponseDTO.class)
 	public ResponseEntity<ResponseDTO> updateGameSession(@PathVariable Long playerId,
 														 @RequestBody GameSessionDTO newGameSessionDTO) {
 		Pair<HttpStatus, ResponseDTO> response = gameService.updateGameSession(playerId, newGameSessionDTO);
@@ -46,7 +46,7 @@ public class GameController {
 	}
 
 	@PutMapping("/finish/{playerId}")
-	@ApiOperation(value = "Finish the game session of player specified by id", response = ResponseDTO.class) //TODO
+	@ApiOperation(value = "Finish the game session of player specified by id", response = ResponseDTO.class)
 	public ResponseEntity<ResponseDTO> finishGameSession(@PathVariable Long playerId,
 													 @RequestBody GameSessionDTO finishedGameSessionDTO) {
 		Pair<HttpStatus, ResponseDTO> response = gameService.finishGameSession(playerId, finishedGameSessionDTO);
