@@ -43,10 +43,6 @@ public class GameService {
 	public Pair<HttpStatus, ResponseDTO> startNewGame(Long playerId) {
 		Optional<Player> player = playerRepository.findById(playerId);
 		if (player.isPresent()) {
-			Spaceship spaceship = Spaceship.builder()
-					.health(APIConstants.INITIAL_SHIP_HEALTH)
-					.type(ShipType.ROOKIE)
-					.build();
 
 			GameSession gameSession;
 			/* Player's previous Game Session gets overwritten (if exists) */
@@ -54,9 +50,16 @@ public class GameService {
 				gameSession = player.get().getGameSession();
 				gameSession.setCurrentLevel(1);
 				gameSession.setSessionScore(0L);
-				gameSession.setSpaceship(spaceship);
+				gameSession.getSpaceship().setHealth(APIConstants.INITIAL_SHIP_HEALTH);
+				gameSession.getSpaceship().setType(ShipType.ROOKIE);
+
 			}
 			else {
+				Spaceship spaceship = Spaceship.builder()
+						.health(APIConstants.INITIAL_SHIP_HEALTH)
+						.type(ShipType.ROOKIE)
+						.build();
+
 				 gameSession = GameSession.builder()
 						.currentLevel(1)
 						.sessionScore(0L)
