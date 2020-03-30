@@ -44,7 +44,12 @@ Relationships between entities are listed as:
 
 ### Testing
 #### Unit Tests
-!!!!!!!!!!!!!!!!ALPER!!!!!!!!!!!!!!!!!!!
+Unit tests for each RestApiController can be found in `src/test/java/com.coronakiller/ControllerTest`. 
+All methods in `src/main/java/com.coronakiller/Conroller` package are tested and 
+verified by these tests. Similarly, for each RestApiService has also unit test which can be found in 
+`src/test/java/com.coronakiller/ServiceTest`. You can run all tests in IntelliJ IDEA by applying
+right click on CoronoKiller-Backend in the project section than select `Run 'All Tests'`
+ option.
 #### Postman
 You can find the corresponding postman collection `CoronaKiller-Backend.postman_collection.json` under the main folder, which has a request collection that covers pretty much all possible requests that can be applied to the API endpoints. Both parent collection and requests have their descriptions. For manual testing of the endpoints using this collection, there is a guide in the collection description.
 
