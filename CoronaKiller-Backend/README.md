@@ -20,11 +20,12 @@ java -jar -Dspring.profiles.active=prod target/CoronaKiller-Backend-1.0-SNAPSHOT
 ```
 
 ## More About the Application
-Simply put, this application is a backend that aims to serve services to multiple _potential-playlist_ users as a song and playlist platform (Just as Spotify's backend :blush:) 
-from where users can create and maintain their favourite playlists and songs of their favourite albums and artists.
+Simply put, this API is developed for a game named _Corona Killer_ which aims to serve its `JavaFX` users with its SpringBoot Backend and MYSQL DBMS. Game's aim will be to eliminate as much Coronaviruses as possible (:blush:) throughout the different levels of the game using different types of guns. In the game one can _play_ game, _continue_ his/her last game, _display_ different types of scoreboards and also play the game in _multiplayer_ mode (only for the last level of the game).
 
-Currently there are 5 main models in various relations with each other in the app, which are Playlists, Songs, Albums, Artists and Users 
-(Pretty much the users that application authenticates and authorizes). Below ER diagram illustrates the relations of models with each other (attributes except primary keys are excluded due to brevity):
+##### Currently API provides endpoints for:
+*  _Player/User Management_ (`/api/players/*`), which basically keeps the necessary services to apply CRUD operations on the users as well as their `login` and `register` processes,
+*  _Game Management_ (`/api/game/*`), which basically constructs main medium that game sessions modifications (newgame, continue, level-up, finish) can be applied through,
+*  _ScoreBoard Management_ (`/api/scoreboard`), which provides access to the services that creates requested (can be weekly, monthly or all times) scoreboard on the fly (has only 1 endpoint, different board types are specified through the query strings).
 
 ## DB Design
 In this project, there are 4 different type of entities.
