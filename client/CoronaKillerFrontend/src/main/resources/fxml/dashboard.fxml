@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+			prefWidth="600.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/8"
+			xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.DashboardController">
+	<Text fill="#d02424" layoutX="141.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THIS IS DASHBOARD PAGE"
+		  textAlignment="CENTER" wrappingWidth="317.2060546875" AnchorPane.leftAnchor="141.0"
+		  AnchorPane.rightAnchor="141.7939453125" AnchorPane.topAnchor="55.0">
+		<font>
+			<Font name="Arial Bold" size="36.0"/>
+		</font>
+	</Text>
+</AnchorPane>
