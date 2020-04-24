@@ -43,7 +43,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 			Parent parent = fxmlLoader.load();
 			/* Get the JavaFX stage from the event */
 			Stage stage = event.getStage();
-			stage.setScene(new Scene(parent, 800, 600));
+			stage.setScene(new Scene(parent, 600, 800));
 			stage.setTitle(this.applicationTitle);
 			stage.show();
 		} catch (IOException e) {

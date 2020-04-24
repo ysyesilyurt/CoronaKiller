@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class LoginController {
+public class RegisterController {
 
 	@FXML
 	private TextField nameField;
@@ -26,13 +26,13 @@ public class LoginController {
 	private PasswordField passwordField;
 
 	@FXML
-	private Button loginButton;
+	private Button backToLoginButton;
 
 	@FXML
-	private Button goToRegisterButton;
+	private Button registerButton;
 
 	@FXML
-	protected void onClickLogin(ActionEvent event) throws IOException {
+	protected void onClickRegister(ActionEvent event) throws IOException {
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashboard.fxml"));
 		Scene scene = new Scene(dashboardPage, 600, 800);
@@ -41,10 +41,10 @@ public class LoginController {
 	}
 
 	@FXML
-	protected void onClickGoToRegister(ActionEvent event) throws IOException {
+	protected void onClickBackToLogin(ActionEvent event) throws IOException {
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent registerPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/register.fxml"));
-		Scene scene = new Scene(registerPage, 600, 800);
+		Parent loginPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/login.fxml"));
+		Scene scene = new Scene(loginPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
 	}

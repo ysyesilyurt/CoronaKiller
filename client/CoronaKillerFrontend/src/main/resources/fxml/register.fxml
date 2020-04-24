@@ -10,11 +10,11 @@
 <?import javafx.scene.control.Button?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
 			prefWidth="600.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/8"
-			xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.LoginController">
+			xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.RegisterController">
 	<ImageView fitHeight="821.0" fitWidth="612.0">
 		<Image url="@../images/background.png"/>
 	</ImageView>
-	<Text fill="#d02424" layoutX="141.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THIS IS LOGIN PAGE"
+	<Text fill="#d02424" layoutX="141.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THIS IS REGISTER PAGE"
 		  textAlignment="CENTER" wrappingWidth="317.2060546875" AnchorPane.leftAnchor="141.0"
 		  AnchorPane.rightAnchor="141.7939453125" AnchorPane.topAnchor="55.0">
 		<font>
@@ -43,9 +43,9 @@
 		</Text>
 		<PasswordField fx:id="passwordField" layoutX="73.0" layoutY="401.0" prefHeight="38.0" prefWidth="230.0"
 					   AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="74.0"/>
-		<Button fx:id="loginButton" layoutX="74.0" layoutY="464.0" mnemonicParsing="false"
-				onAction="#onClickLogin" prefHeight="27.0" prefWidth="99.0" text="Sign In"/>
-		<Button fx:id="goToRegisterButton" layoutX="193.0" layoutY="464.0" mnemonicParsing="false"
-				onAction="#onClickGoToRegister" prefHeight="27.0" prefWidth="99.0" text="Not Have an Existing Account? Sign Up"/>
+		<Button fx:id="registerButton" layoutX="74.0" layoutY="464.0" mnemonicParsing="false"
+				onAction="#onClickRegister" prefHeight="27.0" prefWidth="99.0" text="Sign Up"/>
+		<Button fx:id="backToLoginButton" layoutX="193.0" layoutY="464.0" mnemonicParsing="false"
+				onAction="#onClickBackToLogin" prefHeight="27.0" prefWidth="99.0" text="Already Have an Account? Sign In"/>
 	</AnchorPane>
 </AnchorPane>
