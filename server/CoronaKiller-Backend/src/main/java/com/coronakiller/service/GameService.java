@@ -156,6 +156,7 @@ public class GameService {
 						.build();
 
 				player.get().getScoreList().add(newScore);
+				player.get().setTotalScore(player.get().getTotalScore() + newScore.getScore());
 				playerRepository.save(player.get());
 				return Pair.of(HttpStatus.OK, new ResponseDTO(null,
 						String.format("Game Session of player with id:%s is finished and player's session score is successfully updated.", playerId),

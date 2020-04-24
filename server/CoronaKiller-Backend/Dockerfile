@@ -1,5 +1,5 @@
 # Start with a base image containing Java runtime
-FROM openjdk13:jdk-13.0.2_8
+FROM adoptopenjdk/openjdk13
 
 # Add Maintainer Info
 LABEL maintainer="yesilyurt.selim@metu.edu.tr"
@@ -17,7 +17,7 @@ ARG JAR_FILE=target/CoronaKiller-Backend-1.0-SNAPSHOT.jar
 ADD ${JAR_FILE} coronakiller-backend.jar
 
 # Run the jar file
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-jar","/potential-playlist.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-jar","coronakiller-backend.jar"]
 
 #######
 # sudo docker build -t coronakiller-backend .
