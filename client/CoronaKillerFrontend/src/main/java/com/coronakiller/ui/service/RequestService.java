@@ -37,7 +37,7 @@ public class RequestService {
 	/**
 	 * This method post request to rest service and return the result as a player.
 	 *
-	 * @param user User to login
+	 * @param player User to login
 	 * @return User
 	 */
 	public static Pair<Player, String> login(Player player) {
@@ -82,7 +82,7 @@ public class RequestService {
 	 * Register player by given credentials.
 	 * Beware no authorization header is provided, since this endpoint is not authorized.
 	 *
-	 * @param user Credentials of Player to Register
+	 * @param player Credentials of Player to Register
 	 * @return Pair<Boolean, String> - first field indicates operation result, second field returns its message
 	 */
 	public static Pair<Player, String> register(Player player) {
@@ -157,6 +157,31 @@ public class RequestService {
 		}
 		else {
 			return null; // TODO ERROR
+		}
+	}
+
+	public static List getLeaderBoard(Player currentUser, String leaderBoardType){
+		/* Construct the password first */
+		OkHttpClient client = new OkHttpClient();
+		String authorizationHeader = Credentials.basic(currentUser.getUsername(), currentUser.getPassword());
+		Request request = new Request.Builder()
+				.url(UiConstants.BACKEND_BASE_URL + "/scoreboard?type=" + leaderBoardType)
+				.method("GET", null)
+				.addHeader("Authorization", authorizationHeader)
+				.build();
+		try {
+			Response response = client.newCall(request).execute();
+			Gson gson = new Gson();
+			ResponseBody responseBody = response.body();
+			RestApiResponse mappedResponse = gson.fromJson(responseBody.string(), RestApiResponse.class);
+			if (mappedResponse.getResult().equals("success")) {
+				return gson.fromJson(mappedResponse.getData().toString(), List.class);
+			} else {
+				return null;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null; // TODO
 		}
 	}
 }
