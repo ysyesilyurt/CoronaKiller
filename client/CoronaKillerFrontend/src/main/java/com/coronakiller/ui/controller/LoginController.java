@@ -45,14 +45,19 @@ public class LoginController {
 	private AnchorPane loginPane;
 
 	@FXML
+	public void initialize() {
+		loginPane.getStylesheets().add("css/styles.css");
+	}
+
+	@FXML
 	protected void onClickLogin(ActionEvent event) throws IOException {
 		JFXSnackbar snackbar = new JFXSnackbar(loginPane);
 		if (nameField.getText().isEmpty()) {
-			snackbarContent.setText("Please enter your username!");
+			snackbarContent.setText("Please enter your username");
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			return;
 		} else if (passwordField.getText().isEmpty()) {
-			snackbarContent.setText("Please enter your password!");
+			snackbarContent.setText("Please enter your password");
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			return;
 		}
