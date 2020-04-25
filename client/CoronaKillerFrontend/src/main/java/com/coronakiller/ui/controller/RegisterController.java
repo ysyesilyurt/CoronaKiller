@@ -27,6 +27,9 @@ import java.io.IOException;
 public class RegisterController {
 
 	@FXML
+	public PasswordField secondPasswordField;
+
+	@FXML
 	private TextField nameField;
 
 	@FXML
@@ -45,14 +48,28 @@ public class RegisterController {
 	private AnchorPane registerPane;
 
 	@FXML
+	public void initialize() {
+		registerPane.getStylesheets().add("css/styles.css");
+	}
+
+	@FXML
 	protected void onClickRegister(ActionEvent event) throws IOException {
 		JFXSnackbar snackbar = new JFXSnackbar(registerPane);
+
 		if (nameField.getText().isEmpty()) {
-			snackbarContent.setText("Please enter your username!");
+			snackbarContent.setText("Please enter your username");
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			return;
 		} else if (passwordField.getText().isEmpty()) {
-			snackbarContent.setText("Please enter your password!");
+			snackbarContent.setText("Please enter your password");
+			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
+			return;
+		} else if (secondPasswordField.getText().isEmpty()) {
+			snackbarContent.setText("Please enter your password again");
+			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
+			return;
+		} else if (!secondPasswordField.getText().equals(passwordField.getText())) {
+			snackbarContent.setText("Passwords does not match");
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			return;
 		}

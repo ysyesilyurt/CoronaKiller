@@ -1,52 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.Button?>
-<AnchorPane fx:id="registerPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
-			prefWidth="600.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/8"
-			xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.RegisterController">
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="registerPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.RegisterController">
 	<ImageView fitHeight="821.0" fitWidth="612.0">
-		<Image url="@../images/background.png"/>
+		<Image url="@../images/bgroundSigns.jpg" />
 	</ImageView>
-	<Text fill="#d02424" layoutX="141.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THIS IS REGISTER PAGE"
-		  textAlignment="CENTER" wrappingWidth="317.2060546875" AnchorPane.leftAnchor="141.0"
-		  AnchorPane.rightAnchor="141.7939453125" AnchorPane.topAnchor="55.0">
-		<font>
-			<Font name="Arial Bold" size="36.0"/>
-		</font>
-	</Text>
-	<AnchorPane layoutX="118.0" layoutY="98.0" prefHeight="559.0" prefWidth="377.0" AnchorPane.bottomAnchor="164.0"
-				AnchorPane.leftAnchor="117.5" AnchorPane.rightAnchor="117.5" AnchorPane.topAnchor="98.0">
-		<ImageView fitHeight="74.0" fitWidth="130.0" layoutX="117.0" layoutY="52.0"
-				   AnchorPane.leftAnchor="117.0" AnchorPane.rightAnchor="118.0">
-			<Image url="@../images/alien.png"/>
+	<AnchorPane layoutX="35.0" layoutY="43.0" prefHeight="750.0" prefWidth="539.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="43.0">
+		<ImageView fitHeight="152.0" fitWidth="142.0" layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="383.0">
+			<Image url="@../images/signup.png" />
 		</ImageView>
-		<Text fill="WHITE" layoutX="74.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0"
-			  text="Username">
+		<Text fill="WHITE" layoutX="74.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
 			<font>
-				<Font name="Arial" size="18.0"/>
+				<Font name="DejaVu Sans Oblique" size="18.0" />
 			</font>
 		</Text>
-		<TextField fx:id="nameField" layoutX="73.0" layoutY="321.0" prefHeight="38.0" prefWidth="230.0"
-				   AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="74.0"/>
-		<Text fill="WHITE" layoutX="74.0" layoutY="392.0" strokeType="OUTSIDE" strokeWidth="0.0"
-			  text="Password">
+		<TextField fx:id="nameField" layoutX="73.0" layoutY="261.0" prefHeight="38.0" prefWidth="230.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="74.0">
+         <font>
+            <Font name="DejaVu Sans Bold" size="13.0" />
+         </font></TextField>
+		<Text fill="WHITE" layoutX="73.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
 			<font>
-				<Font name="Arial" size="18.0"/>
+				<Font name="DejaVu Sans Oblique" size="18.0" />
 			</font>
 		</Text>
-		<PasswordField fx:id="passwordField" layoutX="73.0" layoutY="401.0" prefHeight="38.0" prefWidth="230.0"
-					   AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="74.0"/>
-		<Button fx:id="registerButton" layoutX="74.0" layoutY="464.0" mnemonicParsing="false"
-				onAction="#onClickRegister" prefHeight="27.0" prefWidth="99.0" text="Sign Up"/>
-		<Button fx:id="backToLoginButton" layoutX="193.0" layoutY="464.0" mnemonicParsing="false"
-				onAction="#onClickBackToLogin" prefHeight="27.0" prefWidth="99.0" text="Already Have an Account? Sign In"/>
+		<PasswordField fx:id="passwordField" layoutX="74.0" layoutY="332.0" prefHeight="38.0" prefWidth="230.0" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="73.0" />
+		<Text fill="WHITE" layoutX="73.0" layoutY="392.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password Again" wrappingWidth="172.1015625">
+			<font>
+				<Font name="DejaVu Sans Oblique" size="18.0" />
+			</font>
+		</Text>
+		<PasswordField fx:id="secondPasswordField" layoutX="73.0" layoutY="396.0" prefHeight="38.0" prefWidth="392.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="74.0">
+         <font>
+            <Font name="DejaVu Sans Bold" size="13.0" />
+         </font></PasswordField>
+		<JFXButton fx:id="registerButton" buttonType="RAISED" layoutX="227.0" layoutY="446.0" onAction="#onClickRegister" prefHeight="33.0" prefWidth="100.0" ripplerFill="#00f2e1" styleClass="jfx-button-raised" text="Sign Up" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="DejaVu Sans" size="18.0" />
+         </font></JFXButton>
+		<JFXButton fx:id="backToLoginButton" layoutX="120.0" layoutY="490.0" onAction="#onClickBackToLogin" prefHeight="26.0" prefWidth="317.0" ripplerFill="#00f2e1" text="Already Have an Account? Sign In" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="DejaVu Sans Bold" size="13.0" />
+         </font></JFXButton>
+   	<Text fill="WHITE" layoutX="120.0" layoutY="233.416015625" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGN UP" textAlignment="CENTER" wrappingWidth="326.2060546875" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="101.7939453125" AnchorPane.topAnchor="200.0">
+   		<font>
+   			<Font name="DejaVu Sans Bold" size="40.0" />
+   		</font>
+   	</Text>
 	</AnchorPane>
 	<Text fx:id="snackbarContent" fill="WHITE" fontSmoothingType="LCD" layoutX="275.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
 		<font>
