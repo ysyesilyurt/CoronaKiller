@@ -2,6 +2,7 @@ package com.coronakiller.ui.application;
 
 import com.coronakiller.ui.application.FxApplication.StageReadyEvent;
 import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.model.Player;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,6 +28,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 	@Value("classpath:/fxml/login.fxml")
 	private Resource loginResource;
 	private final ApplicationContext applicationContext;
+	public static Player currentPlayer;
 
 	public StageInitializer(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;

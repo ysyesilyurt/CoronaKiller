@@ -1,5 +1,6 @@
 package com.coronakiller.ui.controller;
 
+import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.service.RequestService;
@@ -67,7 +68,9 @@ public class LoginController {
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			return;
 		} else {
-			/* Route to Dashboard */
+			/* Set the application's current user for global access */
+			StageInitializer.currentPlayer = player;
+			/* Then Route to Dashboard */
 			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashboard.fxml"));
 			Scene scene = new Scene(dashboardPage, 600, 800);

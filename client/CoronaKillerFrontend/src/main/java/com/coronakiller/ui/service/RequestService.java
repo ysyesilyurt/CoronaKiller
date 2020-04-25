@@ -1,5 +1,6 @@
 package com.coronakiller.ui.service;
 
+import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.model.RestApiResponse;
@@ -89,28 +90,33 @@ public class RequestService {
 	/**
 	 * Dummy request for example usage
 	 */
-	public static Player getPlayerById(Player currentUser, Long pid) {
+	public static Player getPlayerById(Long playerIdToGet) {
 		/* Construct the password first */
-		OkHttpClient client = new OkHttpClient();
-		String authorizationHeader = Credentials.basic(currentUser.getUsername(), currentUser.getPassword());
-		Request request = new Request.Builder()
-				.url(UiConstants.BACKEND_BASE_URL + "/players/" + pid.toString())
-				.method("GET", null)
-				.addHeader("Authorization", authorizationHeader)
-				.build();
-		try {
-			Response response = client.newCall(request).execute();
-			Gson gson = new Gson();
-			ResponseBody responseBody = response.body();
-			RestApiResponse mappedResponse = gson.fromJson(responseBody.string(), RestApiResponse.class);
-			if (mappedResponse.getResult().equals("success")) {
-				return gson.fromJson(mappedResponse.getData().toString(), Player.class);
-			} else {
-				return null;
+		if (StageInitializer.currentPlayer != null) {
+			OkHttpClient client = new OkHttpClient();
+			String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
+			Request request = new Request.Builder()
+					.url(UiConstants.BACKEND_BASE_URL + "/players/" + playerIdToGet.toString())
+					.method("GET", null)
+					.addHeader("Authorization", authorizationHeader)
+					.build();
+			try {
+				Response response = client.newCall(request).execute();
+				Gson gson = new Gson();
+				ResponseBody responseBody = response.body();
+				RestApiResponse mappedResponse = gson.fromJson(responseBody.string(), RestApiResponse.class);
+				if (mappedResponse.getResult().equals("success")) {
+					return gson.fromJson(mappedResponse.getData().toString(), Player.class);
+				} else {
+					return null;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null; // TODO
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null; // TODO
+		}
+		else {
+			return null; // TODO ERROR
 		}
 	}
 }
