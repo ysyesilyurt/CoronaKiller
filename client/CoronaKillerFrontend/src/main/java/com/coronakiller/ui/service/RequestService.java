@@ -71,7 +71,7 @@ public class RequestService {
 				return Pair.with(null, responseString);
 			}
 		} catch (ConnectException e) {
-			return Pair.with(null, UiConstants.HTTP_404);
+			return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return Pair.with(null, UiConstants.CLIENT_ERROR);
@@ -118,7 +118,7 @@ public class RequestService {
 				return Pair.with(null, responseString);
 			}
 		} catch (ConnectException e) {
-			return Pair.with(null, UiConstants.HTTP_404);
+			return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return Pair.with(null, UiConstants.CLIENT_ERROR);
@@ -128,6 +128,7 @@ public class RequestService {
 	/**
 	 * Dummy request for example usage
 	 */
+	@Deprecated // TODO: Remove before submission
 	public static Player getPlayerById(Long playerIdToGet) {
 		/* Construct the password first */
 		if (StageInitializer.currentPlayer != null) {
@@ -154,13 +155,12 @@ public class RequestService {
 				e.printStackTrace();
 				return null; // TODO
 			}
-		}
-		else {
+		} else {
 			return null; // TODO ERROR
 		}
 	}
 
-	public static List getLeaderBoard(Player currentUser, String leaderBoardType){
+	public static List getLeaderBoard(Player currentUser, String leaderBoardType) {
 		/* Construct the password first */
 		OkHttpClient client = new OkHttpClient();
 		String authorizationHeader = Credentials.basic(currentUser.getUsername(), currentUser.getPassword());
