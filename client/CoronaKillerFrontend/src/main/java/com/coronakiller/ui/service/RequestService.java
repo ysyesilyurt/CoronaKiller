@@ -160,10 +160,10 @@ public class RequestService {
 		}
 	}
 
-	public static List getLeaderBoard(Player currentUser, String leaderBoardType) {
+	public static List getLeaderBoard(String leaderBoardType) {
 		/* Construct the password first */
 		OkHttpClient client = new OkHttpClient();
-		String authorizationHeader = Credentials.basic(currentUser.getUsername(), currentUser.getPassword());
+		String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
 		Request request = new Request.Builder()
 				.url(UiConstants.BACKEND_BASE_URL + "/scoreboard?type=" + leaderBoardType)
 				.method("GET", null)

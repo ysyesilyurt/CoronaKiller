@@ -79,7 +79,7 @@ public class LoginController {
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			if (result.getValue0() != null) {
 				/* Set the application's current user for global access */
-				StageInitializer.currentPlayer = player;
+				StageInitializer.currentPlayer = result.getValue0();
 				/* Then Route to Dashboard */
 				Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashboard.fxml"));

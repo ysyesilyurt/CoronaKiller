@@ -18,6 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -33,6 +34,7 @@ import java.util.ResourceBundle;
  * This view can be accessible from dashboard.
  */
 
+@Component
 public class LeaderBoardController implements Initializable {
 
 	@FXML
@@ -61,7 +63,7 @@ public class LeaderBoardController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle){
-		leaderBoardData = RequestService.getLeaderBoard(StageInitializer.currentPlayer, "all");
+		leaderBoardData = RequestService.getLeaderBoard("all");
 		leaderboard = new TableView<>();
 		scores = new ArrayList<>();
 		userNames = new ArrayList<>();
@@ -133,15 +135,15 @@ public class LeaderBoardController implements Initializable {
 		String selectedItem = timeBox.getSelectionModel().getSelectedItem();
 		if(selectedItem.equals("All Time Leaderboard")){
 			leaderBoardData.clear();
-			leaderBoardData = RequestService.getLeaderBoard(StageInitializer.currentPlayer, "all");
+			leaderBoardData = RequestService.getLeaderBoard("all");
 		}
 		else if(selectedItem.equals("Monthly Leaderboard")){
 			leaderBoardData.clear();
-			leaderBoardData = RequestService.getLeaderBoard(StageInitializer.currentPlayer, "monthly");
+			leaderBoardData = RequestService.getLeaderBoard("monthly");
 		}
 		else{
 			leaderBoardData.clear();
-			leaderBoardData = RequestService.getLeaderBoard(StageInitializer.currentPlayer, "weekly");
+			leaderBoardData = RequestService.getLeaderBoard("weekly");
 		}
 
 		loadLeaderBoardContents();

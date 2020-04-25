@@ -21,9 +21,7 @@ public class DashboardController {
 	@FXML
 	public void handleLeaderBoardButtonAction(ActionEvent event)throws IOException {
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/fxml/leaderBoard.fxml"));
-		Parent leaderBoardPage = loader.load();
+		Parent leaderBoardPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/leaderBoard.fxml"));
 		Scene scene = new Scene(leaderBoardPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
