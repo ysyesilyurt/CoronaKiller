@@ -55,11 +55,6 @@ public class RegisterController {
 	private AnchorPane registerPane;
 
 	@FXML
-	public void initialize() {
-		registerPane.getStylesheets().add("css/styles.css");
-	}
-
-	@FXML
 	protected void onClickRegister(ActionEvent event) throws IOException {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);

@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="loginPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.LoginController">
 	<ImageView fitHeight="821.0" fitWidth="612.0">
-		<Image url="@../images/bgroundSigns.jpg" />
+		<Image url="@../images/bGround1.jpg" />
 	</ImageView>
 	<AnchorPane fx:id="innerPane" layoutX="35.0" layoutY="43.0" prefHeight="750.0" prefWidth="539.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="43.0">
-		<ImageView fitHeight="152.0" fitWidth="142.0" layoutX="14.0" layoutY="12.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="383.0">
-			<Image url="@../images/singin.png" />
+		<ImageView fitHeight="101.0" fitWidth="92.0" layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="433.0">
+			<Image url="@../images/signin.png" />
 		</ImageView>
-		<Text fill="WHITE" layoutX="74.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+		<Text fill="WHITE" layoutX="74.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
 			<font>
-				<Font name="DejaVu Sans Oblique" size="18.0" />
+				<Font name="Dyuthi" size="27.0" />
 			</font>
 		</Text>
-		<TextField fx:id="nameField" layoutX="73.0" layoutY="261.0" prefHeight="38.0" prefWidth="230.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="74.0">
+		<JFXTextField fx:id="nameField" layoutX="74.0" layoutY="242.0" prefHeight="38.0" prefWidth="230.0" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="73.0">
 			<font>
 				<Font name="DejaVu Sans Bold" size="13.0" />
-			</font></TextField>
-		<Text fill="WHITE" layoutX="73.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+			</font></JFXTextField>
+		<Text fill="WHITE" layoutX="73.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
 			<font>
-				<Font name="DejaVu Sans Oblique" size="18.0" />
+				<Font name="Dyuthi" size="27.0" />
 			</font>
 		</Text>
-		<PasswordField fx:id="passwordField" layoutX="74.0" layoutY="332.0" prefHeight="38.0" prefWidth="230.0" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="73.0" />
-		<JFXButton fx:id="loginButton" buttonType="RAISED" layoutX="229.0" layoutY="393.0" onAction="#onClickLogin" prefHeight="33.0" prefWidth="100.0" ripplerFill="#00f2e1" styleClass="jfx-button-raised" text="Sign In" textAlignment="CENTER" textFill="WHITE">
+		<JFXPasswordField fx:id="passwordField" layoutX="73.0" layoutY="323.0" prefHeight="38.0" prefWidth="230.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="74.0" />
+		<JFXButton fx:id="loginButton" layoutX="217.0" layoutY="450.0" onAction="#onClickLogin" prefHeight="63.0" prefWidth="125.0" ripplerFill="#00f2e1" text="Sign In" textAlignment="CENTER" textFill="WHITE">
 			<font>
-				<Font name="DejaVu Sans Bold" size="18.0" />
+				<Font name="Dyuthi" size="27.0" />
 			</font></JFXButton>
-		<JFXButton fx:id="goToRegisterButton" layoutX="132.0" layoutY="437.0" onAction="#onClickGoToRegister" prefHeight="0.0" prefWidth="295.0" ripplerFill="#00f2e1" text="Not have an account? Sign Up" textAlignment="CENTER" textFill="WHITE">
+		<JFXButton fx:id="goToRegisterButton" layoutX="101.0" layoutY="513.0" onAction="#onClickGoToRegister" prefHeight="41.0" prefWidth="338.0" ripplerFill="#00f2e1" text="Not have an existing account? Sign Up Now" textAlignment="CENTER" textFill="WHITE">
 			<font>
-				<Font name="DejaVu Sans Bold" size="13.0" />
+				<Font name="Dyuthi" size="17.0" />
 			</font></JFXButton>
-		<Text fill="WHITE" layoutX="107.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGN IN" textAlignment="CENTER" wrappingWidth="326.2060546875" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="105.7939453125" AnchorPane.topAnchor="13.87109375">
+		<Text fill="WHITE" layoutX="115.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGN IN" textAlignment="CENTER" wrappingWidth="326.2060546875" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="97.7939453125" AnchorPane.topAnchor="13.87109375">
 			<font>
-				<Font name="DejaVu Sans Bold" size="40.0" />
+				<Font name="Dyuthi" size="40.0" />
 			</font>
 		</Text>
 	</AnchorPane>

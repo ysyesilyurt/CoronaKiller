@@ -53,11 +53,6 @@ public class LoginController {
 	private AnchorPane loginPane;
 
 	@FXML
-	public void initialize() {
-		loginPane.getStylesheets().add("css/styles.css");
-	}
-
-	@FXML
 	protected void onClickLogin(ActionEvent event) throws IOException {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
