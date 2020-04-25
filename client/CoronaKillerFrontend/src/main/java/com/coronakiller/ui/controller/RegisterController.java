@@ -16,14 +16,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.javatuples.Pair;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
-public class LoginController {
+public class RegisterController {
 
 	@FXML
 	private TextField nameField;
@@ -32,20 +32,20 @@ public class LoginController {
 	private PasswordField passwordField;
 
 	@FXML
-	private Button loginButton;
+	private Button backToLoginButton;
 
 	@FXML
-	private Button goToRegisterButton;
+	private Button registerButton;
 
 	@FXML
 	private Text snackbarContent;
 
 	@FXML
-	private AnchorPane loginPane;
+	private AnchorPane registerPane;
 
 	@FXML
-	protected void onClickLogin(ActionEvent event) throws IOException {
-		JFXSnackbar snackbar = new JFXSnackbar(loginPane);
+	protected void onClickRegister(ActionEvent event) throws IOException {
+		JFXSnackbar snackbar = new JFXSnackbar(registerPane);
 		if (nameField.getText().isEmpty()) {
 			snackbarContent.setText("Please enter your username!");
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
@@ -61,12 +61,10 @@ public class LoginController {
 				.password(passwordField.getText())
 				.build();
 
-		player = RequestService.login(player);
-		if (player == null) {
-			snackbarContent.setText("Username or password is wrong!");
-			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
-			return;
-		} else {
+		Pair<Boolean, String> result = RequestService.register(player);
+		snackbarContent.setText(result.getValue1());
+		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
+		if (result.getValue0()) {
 			/* Route to Dashboard */
 			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashboard.fxml"));
@@ -74,13 +72,14 @@ public class LoginController {
 			currentStage.setScene(scene);
 			currentStage.show();
 		}
+		return;
 	}
 
 	@FXML
-	protected void onClickGoToRegister(ActionEvent event) throws IOException {
+	protected void onClickBackToLogin(ActionEvent event) throws IOException {
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent registerPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/register.fxml"));
-		Scene scene = new Scene(registerPage, 600, 800);
+		Parent loginPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/login.fxml"));
+		Scene scene = new Scene(loginPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
 	}

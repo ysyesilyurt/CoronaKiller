@@ -1,6 +1,7 @@
 package com.coronakiller.ui.application;
 
 import com.coronakiller.ui.application.FxApplication.StageReadyEvent;
+import com.coronakiller.ui.constants.UiConstants;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,12 +26,9 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
 	@Value("classpath:/fxml/login.fxml")
 	private Resource loginResource;
-	private final String applicationTitle;
 	private final ApplicationContext applicationContext;
 
-	public StageInitializer(@Value("${spring.application.ui.window.title}") String title,
-							ApplicationContext applicationContext) {
-		this.applicationTitle = title;
+	public StageInitializer(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
 
@@ -43,8 +41,8 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 			Parent parent = fxmlLoader.load();
 			/* Get the JavaFX stage from the event */
 			Stage stage = event.getStage();
-			stage.setScene(new Scene(parent, 800, 600));
-			stage.setTitle(this.applicationTitle);
+			stage.setScene(new Scene(parent, 600, 800));
+			stage.setTitle(UiConstants.WINDOW_TITLE);
 			stage.show();
 		} catch (IOException e) {
 			log.error("IOException while trying to set the stage from stage initializer.");
