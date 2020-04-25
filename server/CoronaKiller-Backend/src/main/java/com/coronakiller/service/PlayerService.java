@@ -64,7 +64,8 @@ public class PlayerService {
 			if (!playerRepository.findByUsername(playerDTO.getUsername()).isPresent()) {
 				Player player = playerMapper.toPlayer(playerDTO);
 				playerRepository.save(player);
-				return Pair.of(HttpStatus.OK, new ResponseDTO(null,
+				PlayerDTO playerDTOtoRespond = playerMapper.toPlayerDTO(player);
+				return Pair.of(HttpStatus.OK, new ResponseDTO(playerDTOtoRespond,
 						String.format("Player is successfully created with username:%s", player.getUsername()), APIConstants.RESPONSE_SUCCESS));
 			}
 			else {

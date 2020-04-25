@@ -62,10 +62,10 @@ public class RegisterController {
 				.password(passwordField.getText())
 				.build();
 
-		Pair<Boolean, String> result = RequestService.register(player);
+		Pair<Player, String> result = RequestService.register(player);
 		snackbarContent.setText(result.getValue1());
 		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
-		if (result.getValue0()) {
+		if (result.getValue0() != null) {
 			/* Set the application's current user for global access */
 			StageInitializer.currentPlayer = player;
 			/* Then Route to Dashboard */

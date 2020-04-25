@@ -5,12 +5,14 @@ import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.model.RestApiResponse;
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import com.squareup.okhttp.*;
 import org.javatuples.Pair;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.List;
 
 @Service
@@ -40,7 +42,10 @@ public class RequestService {
 			ResponseBody responseBody = response.body();
 			RestApiResponse mappedResponse = gson.fromJson(responseBody.string(), RestApiResponse.class);
 			if (mappedResponse.getResult().equals("success")) {
-				return gson.fromJson(mappedResponse.getData().toString(), Player.class);
+				JsonReader reader = new JsonReader(new StringReader(mappedResponse.getData().toString()));
+				reader.setLenient(true);
+				Player loggedInPlayer = gson.fromJson(reader, Player.class);
+				return loggedInPlayer;
 			} else {
 				return null;
 			}
@@ -57,7 +62,7 @@ public class RequestService {
 	 * @param user Credentials of Player to Register
 	 * @return Pair<Boolean, String> - first field indicates operation result, second field returns its message
 	 */
-	public static Pair<Boolean, String> register(Player player) {
+	public static Pair<Player, String> register(Player player) {
 		/* Construct the password first */
 		String encodedPassword = BCrypt.hashpw(player.getPassword(), UiConstants.HASH_SALT);
 		OkHttpClient client = new OkHttpClient();
@@ -77,9 +82,12 @@ public class RequestService {
 			ResponseBody responseBody = response.body();
 			RestApiResponse mappedResponse = gson.fromJson(responseBody.string(), RestApiResponse.class);
 			if (mappedResponse.getResult().equals("success")) {
-				return Pair.with(true, mappedResponse.getMessage());
+				JsonReader reader = new JsonReader(new StringReader(mappedResponse.getData().toString()));
+				reader.setLenient(true);
+				Player createdPlayer = gson.fromJson(reader, Player.class);
+				return Pair.with(createdPlayer, mappedResponse.getMessage());
 			} else {
-				return Pair.with(false, mappedResponse.getMessage());
+				return Pair.with(null, mappedResponse.getMessage());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -106,7 +114,9 @@ public class RequestService {
 				ResponseBody responseBody = response.body();
 				RestApiResponse mappedResponse = gson.fromJson(responseBody.string(), RestApiResponse.class);
 				if (mappedResponse.getResult().equals("success")) {
-					return gson.fromJson(mappedResponse.getData().toString(), Player.class);
+					JsonReader reader = new JsonReader(new StringReader(mappedResponse.getData().toString()));
+					reader.setLenient(true);
+					return gson.fromJson(reader, Player.class);
 				} else {
 					return null;
 				}
