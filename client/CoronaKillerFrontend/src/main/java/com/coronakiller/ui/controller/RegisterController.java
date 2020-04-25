@@ -1,5 +1,9 @@
 package com.coronakiller.ui.controller;
 
+import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.model.Player;
+import com.coronakiller.ui.service.RequestService;
+import com.jfoenix.controls.JFXSnackbar;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,9 +13,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
+import org.javatuples.Pair;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -32,12 +38,41 @@ public class RegisterController {
 	private Button registerButton;
 
 	@FXML
+	private Text snackbarContent;
+
+	@FXML
+	private AnchorPane registerPane;
+
+	@FXML
 	protected void onClickRegister(ActionEvent event) throws IOException {
-		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashboard.fxml"));
-		Scene scene = new Scene(dashboardPage, 600, 800);
-		currentStage.setScene(scene);
-		currentStage.show();
+		JFXSnackbar snackbar = new JFXSnackbar(registerPane);
+		if (nameField.getText().isEmpty()) {
+			snackbarContent.setText("Please enter your username!");
+			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
+			return;
+		} else if (passwordField.getText().isEmpty()) {
+			snackbarContent.setText("Please enter your password!");
+			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
+			return;
+		}
+
+		Player player = Player.builder()
+				.username(nameField.getText())
+				.password(passwordField.getText())
+				.build();
+
+		Pair<Boolean, String> result = RequestService.register(player);
+		snackbarContent.setText(result.getValue1());
+		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
+		if (result.getValue0()) {
+			/* Route to Dashboard */
+			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashboard.fxml"));
+			Scene scene = new Scene(dashboardPage, 600, 800);
+			currentStage.setScene(scene);
+			currentStage.show();
+		}
+		return;
 	}
 
 	@FXML

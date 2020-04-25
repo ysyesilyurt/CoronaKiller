@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Button?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+<AnchorPane fx:id="registerPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
 			prefWidth="600.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/8"
 			xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.RegisterController">
 	<ImageView fitHeight="821.0" fitWidth="612.0">
@@ -48,4 +48,9 @@
 		<Button fx:id="backToLoginButton" layoutX="193.0" layoutY="464.0" mnemonicParsing="false"
 				onAction="#onClickBackToLogin" prefHeight="27.0" prefWidth="99.0" text="Already Have an Account? Sign In"/>
 	</AnchorPane>
+	<Text fx:id="snackbarContent" fill="WHITE" fontSmoothingType="LCD" layoutX="275.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+		<font>
+			<Font name="Arial" size="18.0" />
+		</font>
+	</Text>
 </AnchorPane>
