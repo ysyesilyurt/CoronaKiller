@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.LeaderBoardController">
+    <ChoiceBox fx:id="timeBox" layoutX="56.0" layoutY="635.0" onAction="#getLeaderBoardContents" value="All Time Leaderboard">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="All Time Leaderboard" />
+                <String fx:value="Monthly Leaderboard" />
+                <String fx:value="Weekly Leaderboard" />
+            </FXCollections>
+        </items>
+    </ChoiceBox>
+    <JFXButton fx:id="backToDashboardButton" onAction="#handleBackToDashboardButtonAction" layoutX="312.0" layoutY="635.0" text="Return to Dashboard" textAlignment="CENTER" />
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="86.0" layoutY="38.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../images/leaderBoardIcon.png"/>
+    </ImageView>
+   <Text layoutX="366.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEADERS">
+      <font>
+         <Font size="20.0" />
+      </font>
+   </Text>
+    
+</AnchorPane>
