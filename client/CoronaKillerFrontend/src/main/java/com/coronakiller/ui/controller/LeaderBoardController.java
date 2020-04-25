@@ -1,5 +1,7 @@
 package com.coronakiller.ui.controller;
 
+import com.coronakiller.ui.application.StageInitializer;
+import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyLongWrapper;
@@ -18,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +61,7 @@ public class LeaderBoardController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle){
-		//leaderBoardData = getAllTimeTable();
+		leaderBoardData = RequestService.getLeaderBoard(StageInitializer.currentPlayer, "all");
 		leaderboard = new TableView<>();
 		scores = new ArrayList<>();
 		userNames = new ArrayList<>();
@@ -112,12 +115,11 @@ public class LeaderBoardController implements Initializable {
 	private void parseLeaderBoardData(){
 		scores.clear();
 		userNames.clear();
-		for (Object leaderBoardDatum : leaderBoardData) {
-			Map<String,Long> tempMap = (Map) leaderBoardDatum;
-			for(Map.Entry<String, Long> entry : tempMap.entrySet()){
-				userNames.add(entry.getKey());
-				scores.add(entry.getValue());
-			}
+		for (Map<String,Long> leaderBoardDatum : leaderBoardData) {
+			Object[] tempArray = leaderBoardDatum.values().toArray();
+			userNames.add((String) tempArray[0]);
+			Double d = (Double) tempArray[1];
+			scores.add(d.longValue());
 		}
 	}
 
@@ -131,15 +133,15 @@ public class LeaderBoardController implements Initializable {
 		String selectedItem = timeBox.getSelectionModel().getSelectedItem();
 		if(selectedItem.equals("All Time Leaderboard")){
 			leaderBoardData.clear();
-			//leaderBoardData = getAllTimeTable();
+			leaderBoardData = RequestService.getLeaderBoard(StageInitializer.currentPlayer, "all");
 		}
 		else if(selectedItem.equals("Monthly Leaderboard")){
 			leaderBoardData.clear();
-			//leaderBoardData = getMonthlyTimeTable();
+			leaderBoardData = RequestService.getLeaderBoard(StageInitializer.currentPlayer, "monthly");
 		}
 		else{
 			leaderBoardData.clear();
-			//leaderBoardData = getWeeklyTimeTable();
+			leaderBoardData = RequestService.getLeaderBoard(StageInitializer.currentPlayer, "weekly");
 		}
 
 		loadLeaderBoardContents();
