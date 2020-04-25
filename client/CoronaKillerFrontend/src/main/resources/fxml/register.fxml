@@ -12,7 +12,10 @@
 	</ImageView>
 	<AnchorPane fx:id="innerPane" layoutX="35.0" layoutY="43.0" prefHeight="750.0" prefWidth="539.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="43.0">
 		<ImageView fitHeight="101.0" fitWidth="92.0" layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="433.0">
-			<Image url="@../images/signup.png" />
+			<Image url="@../images/virIcon-that-points.png" />
+		</ImageView>
+		<ImageView fitHeight="101.0" fitWidth="92.0" layoutX="433.0" layoutY="14.0" AnchorPane.leftAnchor="433.0" AnchorPane.rightAnchor="14.0">
+			<Image url="@../images/virIcon8.png" />
 		</ImageView>
 		<Text fill="WHITE" layoutX="74.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
 			<font>
@@ -36,11 +39,11 @@
 			</font>
 		</Text>
 		<PasswordField fx:id="secondPasswordField" layoutX="73.0" layoutY="412.0" prefHeight="38.0" prefWidth="230.0" styleClass="custom-text-field" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="74.0" />
-		<JFXButton fx:id="registerButton" layoutX="217.0" layoutY="450.0" onAction="#onClickRegister" prefHeight="63.0" prefWidth="125.0" ripplerFill="#00f2e1" styleClass="jfx-button-flat" text="Sign Up" textAlignment="CENTER" textFill="WHITE">
+		<JFXButton fx:id="registerButton" layoutX="216.0" layoutY="472.0" onAction="#onClickRegister" prefHeight="63.0" prefWidth="125.0" ripplerFill="#00f2e1" styleClass="jfx-button-flat" text="Sign Up" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Dyuthi" size="27.0" />
          </font></JFXButton>
-		<JFXButton fx:id="backToLoginButton" layoutX="121.0" layoutY="513.0" onAction="#onClickBackToLogin" prefHeight="26.0" prefWidth="317.0" ripplerFill="#00f2e1" styleClass="jfx-button-flat" text="Already Have an Account? Sign In" textAlignment="CENTER" textFill="WHITE">
+		<JFXButton fx:id="backToLoginButton" layoutX="120.0" layoutY="545.0" onAction="#onClickBackToLogin" prefHeight="26.0" prefWidth="317.0" ripplerFill="#00f2e1" styleClass="jfx-button-flat" text="Already Have an Account? Sign In" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Dyuthi" size="17.0" />
          </font>
@@ -51,7 +54,7 @@
    		</font>
    	</Text>
 	</AnchorPane>
-	<Text fx:id="snackbarContent" styleClass="custom-snackbar" layoutX="73.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+	<Text fx:id="snackbarContent" layoutX="73.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="custom-snackbar" textAlignment="CENTER">
 		<font>
 			<Font name="Dyuthi" size="27.0" />
 		</font>
