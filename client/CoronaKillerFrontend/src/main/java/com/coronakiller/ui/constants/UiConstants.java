@@ -8,4 +8,11 @@ public class UiConstants {
 	public static final int WINDOW_WIDTH = 600;
 	public static final int WINDOW_HEIGHT = 800;
 	public static final String HASH_SALT = "$2a$10$3j3gfVtuynuvE6FIVvygdu"; /* A Random Salt value generated with BCrypt.gensalt(10) */
+
+	/* Request Messages*/
+	public static final String CLIENT_ERROR = "Oops! Something went wrong on client";
+	public static final String HTTP_400 = "Oops! Request failed - BAD REQUEST";
+	public static final String HTTP_401 = "Invalid username or password - UNAUTHORIZED";
+	public static final String HTTP_404 = "Oops! Seems like you can't access the game server.\nPlease check your internet connection and try again.";
+	public static final String HTTP_500 = "Oops! Something went wrong on server";
 }

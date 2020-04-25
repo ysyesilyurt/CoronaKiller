@@ -13,10 +13,26 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.ConnectException;
 import java.util.List;
 
 @Service
 public class RequestService {
+
+	public static String resolveHttpCodeString(Integer httpCode) {
+		switch (httpCode) {
+			case 400:
+				return UiConstants.HTTP_400;
+			case 401:
+				return UiConstants.HTTP_401;
+			case 404:
+				return UiConstants.HTTP_404;
+			case 500:
+				return UiConstants.HTTP_500;
+			default:
+				return "Oops! Something went wrong - " + httpCode;
+		}
+	}
 
 	/**
 	 * This method post request to rest service and return the result as a player.
@@ -24,7 +40,7 @@ public class RequestService {
 	 * @param user User to login
 	 * @return User
 	 */
-	public static Player login(Player player) {
+	public static Pair<Player, String> login(Player player) {
 		/* Construct the password first */
 		String encodedPassword = BCrypt.hashpw(player.getPassword(), UiConstants.HASH_SALT);
 		OkHttpClient client = new OkHttpClient();
@@ -41,17 +57,24 @@ public class RequestService {
 			Gson gson = new Gson();
 			ResponseBody responseBody = response.body();
 			RestApiResponse mappedResponse = gson.fromJson(responseBody.string(), RestApiResponse.class);
-			if (mappedResponse.getResult().equals("success")) {
-				JsonReader reader = new JsonReader(new StringReader(mappedResponse.getData().toString()));
-				reader.setLenient(true);
-				Player loggedInPlayer = gson.fromJson(reader, Player.class);
-				return loggedInPlayer;
+			if (response.code() == 200) {
+				if (mappedResponse.getResult().equals("success")) {
+					JsonReader reader = new JsonReader(new StringReader(mappedResponse.getData().toString()));
+					reader.setLenient(true);
+					Player loggedInPlayer = gson.fromJson(reader, Player.class);
+					return Pair.with(loggedInPlayer, mappedResponse.getMessage());
+				} else {
+					return Pair.with(null, mappedResponse.getMessage());
+				}
 			} else {
-				return null;
+				String responseString = resolveHttpCodeString(response.code());
+				return Pair.with(null, responseString);
 			}
+		} catch (ConnectException e) {
+			return Pair.with(null, UiConstants.HTTP_404);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null; // TODO
+			return Pair.with(null, UiConstants.CLIENT_ERROR);
 		}
 	}
 
@@ -81,17 +104,24 @@ public class RequestService {
 			Gson gson = new Gson();
 			ResponseBody responseBody = response.body();
 			RestApiResponse mappedResponse = gson.fromJson(responseBody.string(), RestApiResponse.class);
-			if (mappedResponse.getResult().equals("success")) {
-				JsonReader reader = new JsonReader(new StringReader(mappedResponse.getData().toString()));
-				reader.setLenient(true);
-				Player createdPlayer = gson.fromJson(reader, Player.class);
-				return Pair.with(createdPlayer, mappedResponse.getMessage());
+			if (response.code() == 200) {
+				if (mappedResponse.getResult().equals("success")) {
+					JsonReader reader = new JsonReader(new StringReader(mappedResponse.getData().toString()));
+					reader.setLenient(true);
+					Player createdPlayer = gson.fromJson(reader, Player.class);
+					return Pair.with(createdPlayer, mappedResponse.getMessage());
+				} else {
+					return Pair.with(null, mappedResponse.getMessage());
+				}
 			} else {
-				return Pair.with(null, mappedResponse.getMessage());
+				String responseString = resolveHttpCodeString(response.code());
+				return Pair.with(null, responseString);
 			}
+		} catch (ConnectException e) {
+			return Pair.with(null, UiConstants.HTTP_404);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null; // TODO
+			return Pair.with(null, UiConstants.CLIENT_ERROR);
 		}
 	}
 

@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
@@ -67,12 +68,10 @@ public class LoginController {
 				.password(passwordField.getText())
 				.build();
 
-		player = RequestService.login(player);
-		if (player == null) {
-			snackbarContent.setText("Username or password is wrong!");
-			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
-			return;
-		} else {
+		Pair<Player, String> result = RequestService.login(player);
+		snackbarContent.setText(result.getValue1());
+		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
+		if (result.getValue0() != null) {
 			/* Set the application's current user for global access */
 			StageInitializer.currentPlayer = player;
 			/* Then Route to Dashboard */
@@ -82,6 +81,7 @@ public class LoginController {
 			currentStage.setScene(scene);
 			currentStage.show();
 		}
+		return;
 	}
 
 	@FXML
