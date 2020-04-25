@@ -7,5 +7,5 @@ public class UiConstants {
 	public static final String WINDOW_TITLE = "Corona Killer";
 	public static final int WINDOW_WIDTH = 600;
 	public static final int WINDOW_HEIGHT = 800;
-	public static final String HASH_SALT = "$2a$10$3j3gfVtuynuvE6FIVvygdu"; /* A Salt value generated with BCrypt.gensalt(10) */
+	public static final String HASH_SALT = "$2a$10$3j3gfVtuynuvE6FIVvygdu"; /* A Random Salt value generated with BCrypt.gensalt(10) */
 }
