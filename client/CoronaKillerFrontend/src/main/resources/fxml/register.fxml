@@ -10,7 +10,7 @@
 	<ImageView fitHeight="821.0" fitWidth="612.0">
 		<Image url="@../images/bgroundSigns.jpg" />
 	</ImageView>
-	<AnchorPane layoutX="35.0" layoutY="43.0" prefHeight="750.0" prefWidth="539.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="43.0">
+	<AnchorPane fx:id="innerPane" layoutX="35.0" layoutY="43.0" prefHeight="750.0" prefWidth="539.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="43.0">
 		<ImageView fitHeight="152.0" fitWidth="142.0" layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="383.0">
 			<Image url="@../images/signup.png" />
 		</ImageView>
@@ -57,4 +57,5 @@
 			<Font name="Arial" size="18.0" />
 		</font>
 	</Text>
+	<JFXSpinner fx:id="loadingSpinner" layoutX="285.0" layoutY="350.0" visible="false" />
 </AnchorPane>

@@ -5,6 +5,7 @@ import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXSpinner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +35,12 @@ public class LoginController {
 	private PasswordField passwordField;
 
 	@FXML
+	public JFXSpinner loadingSpinner;
+
+	@FXML
+	public AnchorPane innerPane;
+
+	@FXML
 	private Button loginButton;
 
 	@FXML
@@ -52,36 +59,37 @@ public class LoginController {
 
 	@FXML
 	protected void onClickLogin(ActionEvent event) throws IOException {
+		loadingSpinner.setVisible(true);
+		innerPane.setDisable(true);
 		JFXSnackbar snackbar = new JFXSnackbar(loginPane);
 		if (nameField.getText().isEmpty()) {
 			snackbarContent.setText("Please enter your username");
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
-			return;
 		} else if (passwordField.getText().isEmpty()) {
 			snackbarContent.setText("Please enter your password");
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
-			return;
-		}
+		} else {
+			Player player = Player.builder()
+					.username(nameField.getText())
+					.password(passwordField.getText())
+					.build();
 
-		Player player = Player.builder()
-				.username(nameField.getText())
-				.password(passwordField.getText())
-				.build();
-
-		Pair<Player, String> result = RequestService.login(player);
-		snackbarContent.setText(result.getValue1());
-		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
-		if (result.getValue0() != null) {
-			/* Set the application's current user for global access */
-			StageInitializer.currentPlayer = player;
-			/* Then Route to Dashboard */
-			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashboard.fxml"));
-			Scene scene = new Scene(dashboardPage, 600, 800);
-			currentStage.setScene(scene);
-			currentStage.show();
+			Pair<Player, String> result = RequestService.login(player);
+			snackbarContent.setText(result.getValue1());
+			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
+			if (result.getValue0() != null) {
+				/* Set the application's current user for global access */
+				StageInitializer.currentPlayer = player;
+				/* Then Route to Dashboard */
+				Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashboard.fxml"));
+				Scene scene = new Scene(dashboardPage, 600, 800);
+				currentStage.setScene(scene);
+				currentStage.show();
+			}
 		}
-		return;
+		loadingSpinner.setVisible(false);
+		innerPane.setDisable(false);
 	}
 
 	@FXML
