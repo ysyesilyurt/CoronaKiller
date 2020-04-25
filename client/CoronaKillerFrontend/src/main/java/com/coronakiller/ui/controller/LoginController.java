@@ -1,7 +1,6 @@
 package com.coronakiller.ui.controller;
 
 import com.coronakiller.ui.application.StageInitializer;
-import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXSnackbar;
@@ -19,8 +18,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.javatuples.Pair;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -51,6 +48,11 @@ public class LoginController {
 
 	@FXML
 	private AnchorPane loginPane;
+
+	@FXML
+	public void initialize() {
+		loginPane.getStylesheets().add("css/styles.css");
+	}
 
 	@FXML
 	protected void onClickLogin(ActionEvent event) throws IOException {

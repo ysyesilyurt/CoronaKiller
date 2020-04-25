@@ -71,7 +71,7 @@ public class PlayerService {
 			else {
 				log.warn("Username exists, could not complete user registration for username:{}", playerDTO.getUsername());
 				return Pair.of(HttpStatus.OK, new ResponseDTO(null,
-						String.format("Username: %s already exists.\nPlease choose another and try again",
+						String.format("Username already exists.\nPlease choose another and try again",
 								playerDTO.getUsername()), APIConstants.RESPONSE_FAIL));
 			}
 		}
@@ -86,15 +86,15 @@ public class PlayerService {
 		StringBuilder result = new StringBuilder();
 		if (playerDTO != null) {
 			if (playerDTO.getId() != null)
-				result.append("&Can not set ID field of a player");
+				result.append("& Can not set ID field of a player");
 			if (playerDTO.getUsername() == null)
-				result.append("&Missing username field");
+				result.append("& Missing username field");
 			if (playerDTO.getPassword() == null)
-				result.append("&Missing password field");
+				result.append("& Missing password field");
 			if (playerDTO.getTotalScore() != null)
-				result.append("&Can not set total score of a player");
+				result.append("& Can not set total score of a player");
 			if (playerDTO.getGameSessionId() != null)
-				result.append("&Can not set game session of a player");
+				result.append("& Can not set game session of a player");
 		}
 		else {
 			result.append("Missing player register credentials as a whole");
