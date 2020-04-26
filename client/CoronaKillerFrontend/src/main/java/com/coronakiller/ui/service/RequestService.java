@@ -1,7 +1,7 @@
 package com.coronakiller.ui.service;
 
-import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.model.GameData;
 import com.coronakiller.ui.model.GameSession;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.model.RestApiResponse;
@@ -17,6 +17,8 @@ import java.net.ConnectException;
 import java.util.List;
 import java.util.Map;
 
+import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
+
 @Slf4j
 @Service
 public class RequestService {
@@ -27,6 +29,7 @@ public class RequestService {
 	/**
 	 * A static helper method for generic determination of String to respond
 	 * to caller method that is calling the request method
+	 *
 	 * @param httpCode
 	 * @return String
 	 */
@@ -51,6 +54,7 @@ public class RequestService {
 	 * Static login request method. Can be called from any controller code.
 	 * Creates initial Player credentials and makes the request to the backend.
 	 * Responses with logged in player and response message to the caller code.
+	 *
 	 * @param player
 	 * @return Pair<Player, String>
 	 */
@@ -140,48 +144,18 @@ public class RequestService {
 	}
 
 	/**
-	 * Dummy request for example usage
-	 */
-	@Deprecated // TODO: Remove before submission
-	public static Player getPlayerById(Long playerIdToGet) {
-		if (StageInitializer.currentPlayer != null) {
-			String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
-			Request request = new Request.Builder()
-					.url(UiConstants.BACKEND_BASE_URL + "/players/" + playerIdToGet.toString())
-					.method("GET", null)
-					.addHeader("Authorization", authorizationHeader)
-					.build();
-			try {
-				Response response = client.newCall(request).execute();
-				String responseBody = response.body().string();
-				RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
-				if (mappedResponse.getResult().equals("success")) {
-					Player player = objectMapper.convertValue(mappedResponse.getData(), Player.class);
-					return player;
-				} else {
-					return null;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-				return null; // TODO
-			}
-		} else {
-			return null; // TODO ERROR
-		}
-	}
-
-	/**
 	 * Static getLeaderBoard request method. Can be called from any controller code.
 	 * Creates a GET request with the specified type of leaderboard as the GET parameter,
 	 * fetches current Player credentials and makes the request to the backend.
 	 * Responses with leaderboard and response message to the caller code.
 	 *
 	 * @param leaderBoardType
-	 * @return Pair<List<Map<String, Long>>, String>
+	 * @return Pair<List < Map < String, Long>>, String>
 	 */
 	public static Pair<List<Map<String, Long>>, String> getLeaderBoard(String leaderBoardType) {
-		if (StageInitializer.currentPlayer != null) {
-			String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
+		if (gameDataCookie.getPlayerDTO() != null) {
+			String authorizationHeader = Credentials.basic(gameDataCookie.getPlayerDTO().getUsername(),
+					gameDataCookie.getPlayerDTO().getPassword());
 			Request request = new Request.Builder()
 					.url(UiConstants.BACKEND_BASE_URL + "/scoreboard?type=" + leaderBoardType)
 					.method("GET", null)
@@ -218,21 +192,19 @@ public class RequestService {
 	}
 
 	/**
-	 * Static continueGameSession request method. Can be called from any controller code.
-	 * Creates a PUT request with player Id in the cookie and makes the request to the backend.
-	 * Responses with GameSession of the player and response message to the caller code.
+	 * Static getGameDataById request method. Can be called from any controller code.
+	 * Creates a POST request with player Id in the cookie and makes the request to the backend.
+	 * Responses with the newly created GameSession of the player and response message to the caller code.
 	 *
 	 * @return
 	 */
-	public static Pair<GameSession, String> continueGameSession() {
-		// TODO: CHANGE PUT TO GET
-		if (StageInitializer.currentPlayer != null) {
-			String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
-			MediaType mediaType = MediaType.parse("text/plain");
-			RequestBody body = RequestBody.create(mediaType, "");
+	public static Pair<GameData, String> getGameDataById() {
+		if (gameDataCookie.getPlayerDTO() != null) {
+			String authorizationHeader = Credentials.basic(gameDataCookie.getPlayerDTO().getUsername(),
+					gameDataCookie.getPlayerDTO().getPassword());
 			Request request = new Request.Builder()
-					.url(UiConstants.BACKEND_BASE_URL + "/game/continue/" + StageInitializer.currentPlayer.getId().toString())
-					.method("PUT", body)
+					.url(UiConstants.BACKEND_BASE_URL + "/game/" + gameDataCookie.getPlayerDTO().getId())
+					.method("GET", null)
 					.addHeader("Authorization", authorizationHeader)
 					.build();
 			try {
@@ -241,8 +213,8 @@ public class RequestService {
 					String responseBody = response.body().string();
 					RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
 					if (mappedResponse.getResult().equals("success")) {
-						GameSession gameSession = objectMapper.convertValue(mappedResponse.getData(), GameSession.class);
-						return Pair.with(gameSession, mappedResponse.getMessage());
+						GameData gameData = objectMapper.convertValue(mappedResponse.getData(), GameData.class);
+						return Pair.with(gameData, mappedResponse.getMessage());
 					} else {
 						log.warn("Request result is 'fail' on continueGameSession request");
 						return Pair.with(null, mappedResponse.getMessage());
@@ -269,15 +241,17 @@ public class RequestService {
 	 * Static startNewGame request method. Can be called from any controller code.
 	 * Creates a POST request with player Id in the cookie and makes the request to the backend.
 	 * Responses with the newly created GameSession of the player and response message to the caller code.
+	 *
 	 * @return
 	 */
 	public static Pair<GameSession, String> startNewGame() {
-		if (StageInitializer.currentPlayer != null) {
-			String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
+		if (gameDataCookie.getPlayerDTO() != null) {
+			String authorizationHeader = Credentials.basic(gameDataCookie.getPlayerDTO().getUsername(),
+					gameDataCookie.getPlayerDTO().getPassword());
 			MediaType mediaType = MediaType.parse("text/plain");
 			RequestBody body = RequestBody.create(mediaType, "");
 			Request request = new Request.Builder()
-					.url(UiConstants.BACKEND_BASE_URL + "/game/start/" + StageInitializer.currentPlayer.getId().toString())
+					.url(UiConstants.BACKEND_BASE_URL + "/game/start/" + gameDataCookie.getPlayerDTO().getId())
 					.method("POST", body)
 					.addHeader("Authorization", authorizationHeader)
 					.build();

@@ -1,6 +1,5 @@
 package com.coronakiller.ui.controller;
 
-import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXButton;
@@ -31,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
 
 /**
  * This class implements the mechanism that is responsible for the demonstration of requested type(all, monthly, weekly) leaderboard.
@@ -87,8 +88,8 @@ public class LeaderBoardController implements Initializable {
 
 		leaderboardPane.getStylesheets().add("css/styles.css");
 		snackbar = new JFXSnackbar(leaderboardPane);
-		username.setText(String.format("Welcome %s!", StageInitializer.currentPlayer.getUsername()));
-		totalScore.setText(String.format("Your Total Score: %s", StageInitializer.currentPlayer.getTotalScore()));
+		username.setText(String.format("Welcome %s!", gameDataCookie.getPlayerDTO().getUsername()));
+		totalScore.setText(String.format("Your Total Score: %s", gameDataCookie.getPlayerDTO().getTotalScore()));
 
 		Pair<List<Map<String, Long>>, String> result = RequestService.getLeaderBoard("all");
 		snackbarContent.setText(result.getValue1());
@@ -232,13 +233,14 @@ public class LeaderBoardController implements Initializable {
 	/**
 	 * Method that is fired on the logout button click action.
 	 * Clears the application currentPlayer cookie and redirects user to Login page.
+	 *
 	 * @param event
 	 * @throws IOException
 	 */
 	@FXML
 	public void onClickLogout(ActionEvent event) throws IOException {
 		/* Remove player cookie */
-		StageInitializer.currentPlayer = null;
+		gameDataCookie.setPlayerDTO(null);
 		/* Then Route to Login */
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.LOGIN_PAGE));

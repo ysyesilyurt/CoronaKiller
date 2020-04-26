@@ -2,6 +2,7 @@ package com.coronakiller.ui.controller;
 
 import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.model.GameData;
 import com.coronakiller.ui.model.GameSession;
 import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXButton;
@@ -24,6 +25,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
 
 /**
  * Controller that manages Dashboard Page
@@ -68,43 +71,57 @@ public class DashboardController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		// TODO: WHEN PLAYERS RETURNS TO DASHBOARD FROM GAME REQUEST TO GET UPDATED SCORE + GAMESESSION FROM BACKEND OR USE UPDATED PLAYER..
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
 		snackbar = new JFXSnackbar(dashboardPane);
 		dashboardPane.getStylesheets().add(UiConstants.GENERAL_STYLES);
-		username.setText(String.format("Welcome %s!", StageInitializer.currentPlayer.getUsername()));
-		totalScore.setText(String.format("Your Total Score: %s", StageInitializer.currentPlayer.getTotalScore()));
-		continueGameButton.setDisable(StageInitializer.currentPlayer.getGameSessionId() == null);
+
+		/* On each render, this page requests the current "GameData" from the Backend API */
+		Pair<GameData, String> result = RequestService.getGameDataById();
+		snackbarContent.setText(result.getValue1());
+		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
+		if (result.getValue0() != null) {
+			/* Update Cookie in case of a change in the values */
+			gameDataCookie = result.getValue0();
+		}
+
+		username.setText(String.format("Welcome %s!", gameDataCookie.getPlayerDTO().getUsername()));
+		String scoreInfo;
+		if (gameDataCookie.getGameSessionDTO() != null) {
+			scoreInfo = String.format("Your Total Score: %s\nYour Ongoing Game Session Score: %s",
+					gameDataCookie.getPlayerDTO().getTotalScore(), gameDataCookie.getGameSessionDTO().getSessionScore());
+		}
+		else {
+			scoreInfo = String.format("Your Total Score: %s", gameDataCookie.getPlayerDTO().getTotalScore());
+			continueGameButton.setDisable(true);
+		}
+		totalScore.setText(scoreInfo);
 		loadingSpinner.setVisible(false);
 		innerPane.setDisable(false);
 	}
 
 	/**
 	 * Method that is fired on the continue-game button click action.
-	 * First makes a continueGameSession request to backend to get the GameSession of the Player.
-	 * Then checks game session to determine the level where it'll be continued from.
-	 * Finally sets the player game session cookie and redirects user to corresponding Game Level page.
+	 * First checks if cookie has a game session of the player (even though button will be disabled
+	 * if he/she does not have any) then redirects user to corresponding Game Level page (if has a game session).
+	 * Otherwise notifies user that he/she does not have an ongoing game session.
 	 * @param event
 	 */
 	@FXML
 	public void onClickContinueGame(ActionEvent event) throws IOException {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
-		Pair<GameSession, String> result = RequestService.continueGameSession();
-		snackbarContent.setText(result.getValue1());
-		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
-		if (result.getValue0() != null) {
-			/* Set the application's current player game session for global access */
-			StageInitializer.currentPlayerGameSession = result.getValue0();
+		if (gameDataCookie.getGameSessionDTO() != null) {
 			/* Redirect to The Last Checkpoint (Saved Level) */
-			String lastSavedLevel = resolveGameSessionLevel(result.getValue0().getCurrentLevel());
+			String lastSavedLevel = resolveGameSessionLevel(gameDataCookie.getGameSessionDTO().getCurrentLevel());
 			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(lastSavedLevel));
 			Scene scene = new Scene(dashboardPage, 600, 800);
 			currentStage.setScene(scene);
 			currentStage.show();
 		}
+		snackbarContent.setText("You dont have an ongoing Game Session!");
+		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 		loadingSpinner.setVisible(false);
 		innerPane.setDisable(false);
 	}
@@ -124,7 +141,7 @@ public class DashboardController implements Initializable {
 		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 		if (result.getValue0() != null) {
 			/* Set the application's current player game session for global access */
-			StageInitializer.currentPlayerGameSession = result.getValue0();
+			gameDataCookie.setGameSessionDTO(result.getValue0());
 			/* Redirect to The Last Checkpoint (Saved Level) */
 			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.GAME_LEVEL1_PAGE));
@@ -164,7 +181,7 @@ public class DashboardController implements Initializable {
 	@FXML
 	public void onClickLogout(ActionEvent event) throws IOException {
 		/* Remove player cookie */
-		StageInitializer.currentPlayer = null;
+		gameDataCookie.setPlayerDTO(null);
 		/* Then Route to Login */
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.LOGIN_PAGE));

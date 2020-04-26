@@ -1,6 +1,5 @@
 package com.coronakiller.ui.controller;
 
-import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.service.RequestService;
@@ -25,6 +24,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
 
 /**
  * Controller that manages Login Page (Default first scene of the application)
@@ -95,7 +96,7 @@ public class LoginController implements Initializable {
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			if (result.getValue0() != null) {
 				/* Set the application's current user for global access */
-				StageInitializer.currentPlayer = result.getValue0();
+				gameDataCookie.setPlayerDTO(result.getValue0());
 				/* Then Route to Dashboard */
 				Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.DASHBOARD_PAGE));

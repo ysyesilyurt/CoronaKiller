@@ -1,6 +1,5 @@
 package com.coronakiller.ui.controller;
 
-import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.service.RequestService;
@@ -20,12 +19,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.javatuples.Pair;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
 
 /**
  * Controller that manages Register Page
@@ -74,6 +74,7 @@ public class RegisterController implements Initializable {
 	 * Then it makes a register request to backend via static register method.
 	 * On successful login it sets the currentPlayer Cookie and redirects user to Dashboard page.
 	 * Else displays an error toast to user.
+	 *
 	 * @param event
 	 * @throws IOException
 	 */
@@ -104,7 +105,7 @@ public class RegisterController implements Initializable {
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			if (result.getValue0() != null) {
 				/* Set the application's current user for global access */
-				StageInitializer.currentPlayer = result.getValue0();
+				gameDataCookie.setPlayerDTO(result.getValue0());
 				/* Then Route to Dashboard */
 				Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.DASHBOARD_PAGE));
@@ -120,6 +121,7 @@ public class RegisterController implements Initializable {
 	/**
 	 * Method that is fired on the sign-in button click action.
 	 * Redirects user to Login page
+	 *
 	 * @param event
 	 * @throws IOException
 	 */
