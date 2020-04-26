@@ -36,7 +36,7 @@ public class EasyVirus extends Virus {
 	@Override
 	public void virusAutoMove() {
 		this.easyVirusTimeline = new Timeline(
-				new KeyFrame( Duration.millis(500), e ->{
+				new KeyFrame( Duration.millis(1000), e ->{
 					if(moveDirectionFlag) {
 						this.setX(this.getX() - EASY_VIRUS_VELOCITY);
 						moveCounter--;

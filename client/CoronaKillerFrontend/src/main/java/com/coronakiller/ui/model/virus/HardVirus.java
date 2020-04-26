@@ -10,6 +10,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 
+import java.util.Random;
+
 import static com.coronakiller.ui.constants.GameConstants.*;
 import static com.coronakiller.ui.constants.GameConstants.MEDIUM_VIRUS_VELOCITY;
 
@@ -24,8 +26,10 @@ public class HardVirus extends Virus {
 	}
 	@Override
 	public void virusAutoFire(Pane currentPane) {
+		Random rand = new Random();
+		int ms = 800 + rand.nextInt(800);
 		hardVirusFireTimeline = new Timeline(
-				new KeyFrame(Duration.millis(500), e -> {
+				new KeyFrame(Duration.millis(ms), e -> {
 					VirusBullet2 bullet = new VirusBullet2(this.getX()+this.getWidth()/2, this.getY());
 					currentPane.getChildren().add(bullet);
 					bullet.moveBullet(currentPane);
@@ -37,7 +41,7 @@ public class HardVirus extends Virus {
 	@Override
 	public void virusAutoMove() {
 		this.hardVirusMoveTimeline = new Timeline(
-				new KeyFrame( Duration.millis(400), e ->{
+				new KeyFrame( Duration.millis(500), e ->{
 					if(moveCounter == 0){
 						this.setX(this.getX() + HARD_VIRUS_VELOCITY);
 						moveCounter++;
