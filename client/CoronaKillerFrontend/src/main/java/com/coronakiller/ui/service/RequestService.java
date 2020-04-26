@@ -4,8 +4,8 @@ import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.model.RestApiResponse;
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.*;
 import org.javatuples.Pair;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -19,7 +19,9 @@ import java.util.List;
 @Service
 public class RequestService {
 
-	public static String resolveHttpCodeString(Integer httpCode) {
+	private static final ObjectMapper objectMapper = new ObjectMapper();
+
+	public static String resolveHttpCodeResponse(Integer httpCode) {
 		switch (httpCode) {
 			case 400:
 				return UiConstants.HTTP_400;
@@ -54,20 +56,17 @@ public class RequestService {
 				.build();
 		try {
 			Response response = client.newCall(request).execute();
-			Gson gson = new Gson();
-			ResponseBody responseBody = response.body();
-			RestApiResponse mappedResponse = gson.fromJson(responseBody.string(), RestApiResponse.class);
 			if (response.code() == 200) {
+				String responseBody = response.body().string();
+				RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
 				if (mappedResponse.getResult().equals("success")) {
-					JsonReader reader = new JsonReader(new StringReader(mappedResponse.getData().toString()));
-					reader.setLenient(true);
-					Player loggedInPlayer = gson.fromJson(reader, Player.class);
+					Player loggedInPlayer = objectMapper.convertValue(mappedResponse.getData(), Player.class);
 					return Pair.with(loggedInPlayer, mappedResponse.getMessage());
 				} else {
 					return Pair.with(null, mappedResponse.getMessage());
 				}
 			} else {
-				String responseString = resolveHttpCodeString(response.code());
+				String responseString = resolveHttpCodeResponse(response.code());
 				return Pair.with(null, responseString);
 			}
 		} catch (ConnectException e) {
@@ -101,20 +100,17 @@ public class RequestService {
 
 		try {
 			Response response = client.newCall(request).execute();
-			Gson gson = new Gson();
-			ResponseBody responseBody = response.body();
-			RestApiResponse mappedResponse = gson.fromJson(responseBody.string(), RestApiResponse.class);
 			if (response.code() == 200) {
+				String responseBody = response.body().string();
+				RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
 				if (mappedResponse.getResult().equals("success")) {
-					JsonReader reader = new JsonReader(new StringReader(mappedResponse.getData().toString()));
-					reader.setLenient(true);
-					Player createdPlayer = gson.fromJson(reader, Player.class);
+					Player createdPlayer = objectMapper.convertValue(mappedResponse.getData(), Player.class);
 					return Pair.with(createdPlayer, mappedResponse.getMessage());
 				} else {
 					return Pair.with(null, mappedResponse.getMessage());
 				}
 			} else {
-				String responseString = resolveHttpCodeString(response.code());
+				String responseString = resolveHttpCodeResponse(response.code());
 				return Pair.with(null, responseString);
 			}
 		} catch (ConnectException e) {
@@ -141,13 +137,11 @@ public class RequestService {
 					.build();
 			try {
 				Response response = client.newCall(request).execute();
-				Gson gson = new Gson();
-				ResponseBody responseBody = response.body();
-				RestApiResponse mappedResponse = gson.fromJson(responseBody.string(), RestApiResponse.class);
+				String responseBody = response.body().string();
+				RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
 				if (mappedResponse.getResult().equals("success")) {
-					JsonReader reader = new JsonReader(new StringReader(mappedResponse.getData().toString()));
-					reader.setLenient(true);
-					return gson.fromJson(reader, Player.class);
+					Player player = objectMapper.convertValue(mappedResponse.getData(), Player.class);
+					return player;
 				} else {
 					return null;
 				}
@@ -160,7 +154,7 @@ public class RequestService {
 		}
 	}
 
-	public static List getLeaderBoard(String leaderBoardType) {
+	public static Pair<List<?>, String> getLeaderBoard(String leaderBoardType) {
 		/* Construct the password first */
 		OkHttpClient client = new OkHttpClient();
 		String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
@@ -171,17 +165,24 @@ public class RequestService {
 				.build();
 		try {
 			Response response = client.newCall(request).execute();
-			Gson gson = new Gson();
-			ResponseBody responseBody = response.body();
-			RestApiResponse mappedResponse = gson.fromJson(responseBody.string(), RestApiResponse.class);
-			if (mappedResponse.getResult().equals("success")) {
-				return gson.fromJson(mappedResponse.getData().toString(), List.class);
+			if (response.code() == 200) {
+				String responseBody = response.body().string();
+				RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
+				if (mappedResponse.getResult().equals("success")) {
+					List<?> leaderBoard = objectMapper.convertValue(mappedResponse.getData(), List.class);
+					return Pair.with(leaderBoard, mappedResponse.getMessage());
+				} else {
+					return Pair.with(null, mappedResponse.getMessage());
+				}
 			} else {
-				return null;
+				String responseString = resolveHttpCodeResponse(response.code());
+				return Pair.with(null, responseString);
 			}
+		} catch (ConnectException e) {
+			return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null; // TODO
+			return Pair.with(null, UiConstants.CLIENT_ERROR);
 		}
 	}
 }
