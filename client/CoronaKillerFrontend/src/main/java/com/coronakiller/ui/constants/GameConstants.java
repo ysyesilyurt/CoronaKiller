@@ -4,9 +4,31 @@ public class GameConstants {
 	/* SpaceShip Constants */
 	public static final int INITIAL_SPACESHIP_X_POSITION = 300;
 	public static final int INITIAL_SPACESHIP_Y_POSITION = 700;
-	public static final int SPACESHIP_WIDTH = 60;
-	public static final int SPACESHIP_HEIGHT = 100;
-	public static final String SPACESHIP_ICON_URL = "/images/spaceship3.png"; // maybe different spaceships have  different icons
+
+	/* Rookie SpaceShip Constants */
+	public static final int ROOKIE_SPACESHIP_WIDTH = 60;
+	public static final int ROOKIE_SPACESHIP_HEIGHT = 100;
+	public static final String ROOKIE_SPACESHIP_ICON_URL = "/images/spaceship3.png"; // maybe different spaceships have  different icons
+
+	/* Normal SpaceShip Constants */
+	public static final int NORMAL_SPACESHIP_WIDTH = 60;
+	public static final int NORMAL_SPACESHIP_HEIGHT = 100;
+	public static final String NORMAL_SPACESHIP_ICON_URL = "/images/spaceship3.png"; // maybe different spaceships have  different icons
+
+	/* Veteran SpaceShip Constants */
+	public static final int VETERAN_SPACESHIP_WIDTH = 60;
+	public static final int VETERAN_SPACESHIP_HEIGHT = 100;
+	public static final String VETERAN_SPACESHIP_ICON_URL = "/images/spaceship3.png"; // maybe different spaceships have  different icons
+
+	/* Powerful Guns SpaceShip Constants */
+	public static final int POWERFUL_GUNS_SPACESHIP_WIDTH = 60;
+	public static final int POWERFUL_GUNS_SPACESHIP_HEIGHT = 100;
+	public static final String POWERFUL_GUNS_SPACESHIP_ICON_URL = "/images/spaceship3.png"; // maybe different spaceships have  different icons
+
+	/* Big Guns SpaceShip Constants */
+	public static final int BIG_GUNS_SPACESHIP_WIDTH = 60;
+	public static final int BIG_GUNS_SPACESHIP_HEIGHT = 100;
+	public static final String BIG_GUNS_SPACESHIP_ICON_URL = "/images/spaceship3.png"; // maybe different spaceships have  different icons
 
 	/* SpaceShip Bullet 1 Constants */
 	public static final int SPACESHIP_BULLET1_VELOCITY = 5;
