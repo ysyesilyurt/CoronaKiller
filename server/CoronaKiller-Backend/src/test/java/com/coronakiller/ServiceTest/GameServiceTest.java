@@ -46,7 +46,11 @@ public class GameServiceTest {
 		GameSessionDTO gameSessionDTO = GameSessionDTO.builder().currentLevel(2).sessionScore(100L).shipHealth(100).shipType(ShipType.NORMAL).build();
 		GameDataDTO gameDataDTO = GameDataDTO.builder().playerDTO(playerDTO).gameSessionDTO(gameSessionDTO).build();
 		/* Entity */
-		Player player = Player.builder().id(1L).username("yavuz").password("alper").totalScore(16515616L).build();
+		Player player = new Player();
+		player.setId(1L);
+		player.setUsername("yavuz");
+		player.setUsername("alper");
+		player.setTotalScore(16515616L);
 		Spaceship spaceship = Spaceship.builder().health(100).type(ShipType.NORMAL).build();
 		GameSession gameSession = GameSession.builder().id(1L).player(player).currentLevel(2).sessionScore(100L).spaceship(spaceship).build();
 		player.setGameSession(gameSession);

@@ -49,7 +49,7 @@ public class GameService {
 		Pair<HttpStatus, ResponseDTO> result = playerService.getPlayerById(playerId);
 		if (result.getSecond().getResult().equals("success")) {
 			PlayerDTO playerDTO = ((PlayerDTO) result.getSecond().getData());
-			if (playerDTO.getGameSessionId() != null) {
+			if (playerDTO.getHasOngoingSession()) {
 				Optional<GameSession> gameSession = gameSessionRepository.findById(playerDTO.getGameSessionId());
 				GameSessionDTO gameSessionDTO = gameSessionMapper.toGameSessionDTO(gameSession.get());
 				GameDataDTO gameDataDTO = new GameDataDTO(playerDTO, gameSessionDTO);
@@ -99,6 +99,7 @@ public class GameService {
 			}
 
 			player.get().setGameSession(gameSession);
+			player.get().setHasOngoingSession(true);
 			playerRepository.save(player.get());
 			GameSessionDTO gameSessionDTOtoRespond = gameSessionMapper.toGameSessionDTO(gameSession);
 			return Pair.of(HttpStatus.OK, new ResponseDTO(gameSessionDTOtoRespond,
@@ -121,7 +122,7 @@ public class GameService {
 	public Pair<HttpStatus, ResponseDTO> updateGameSession(Long playerId, GameSessionDTO newGameSessionDTO) {
 		Optional<Player> player = playerRepository.findById(playerId);
 		if (player.isPresent()) {
-			if (player.get().getGameSession() != null) {
+			if (player.get().getHasOngoingSession() && player.get().getGameSession() != null) {
 				GameSession gameSession = player.get().getGameSession();
 				gameSession.setCurrentLevel(newGameSessionDTO.getCurrentLevel());
 				gameSession.setSessionScore(newGameSessionDTO.getSessionScore());
@@ -156,7 +157,7 @@ public class GameService {
 	public Pair<HttpStatus, ResponseDTO> finishGameSession(Long playerId, GameSessionDTO finishedGameSessionDTO) {
 		Optional<Player> player = playerRepository.findById(playerId);
 		if (player.isPresent()) {
-			if (player.get().getGameSession() != null) {
+			if (player.get().getHasOngoingSession() && player.get().getGameSession() != null) {
 				Score newScore = Score.builder()
 						.score(finishedGameSessionDTO.getSessionScore())
 						.player(player.get())
@@ -164,6 +165,7 @@ public class GameService {
 
 				player.get().getScoreList().add(newScore);
 				player.get().setTotalScore(player.get().getTotalScore() + newScore.getScore());
+				player.get().setHasOngoingSession(false);
 				playerRepository.save(player.get());
 				return Pair.of(HttpStatus.OK, new ResponseDTO(null,
 						String.format("Game Session of player with id:%s is finished and player's session score is successfully updated.", playerId),

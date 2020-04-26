@@ -29,5 +29,6 @@ public interface PlayerMapper {
         player.setRole(PlayerRole.USER);
         player.setGameSession(null);
         player.setScoreList(null);
+        player.setHasOngoingSession(false);
     }
 }

@@ -10,7 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Builder
+/* Note: Lombok's @Builder conflicts with Mapstruct's AfterMapping */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -41,6 +41,9 @@ public class Player {
 
 	@Column(name = "total_score", nullable = false)
 	private Long totalScore;
+
+	@Column(name = "has_ongoing_session", nullable = false)
+	private Boolean hasOngoingSession;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)

@@ -62,7 +62,7 @@ public class PlayerController {
 	@DeleteMapping("/{playerId}")
 	@ApiOperation(value = "Remove player from the system with id", response = ResponseDTO.class)
 	public ResponseEntity<ResponseDTO> removePlayerById(@PathVariable("playerId") Long playerId) {
-		Pair<HttpStatus, ResponseDTO> response = playerService.removePlayerByID(playerId);
+		Pair<HttpStatus, ResponseDTO> response = playerService.removePlayerById(playerId);
 		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 	}
 

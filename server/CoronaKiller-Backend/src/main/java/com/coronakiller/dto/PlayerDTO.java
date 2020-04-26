@@ -12,6 +12,7 @@ public class PlayerDTO {
 	private String username;
 	private String password;
 	private Long totalScore;
-	private Long gameSessionId; /* Could be null,
-							       in that case player does not have any ongoing gameSession to continue */
+	private Boolean hasOngoingSession;
+	private Long gameSessionId; /* Refers to the ongoing game session of the player if hasOngoingSession is true,
+	 							otherwise refers to the last (finished) gamesession of the player */
 }

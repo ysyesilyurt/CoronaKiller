@@ -102,7 +102,7 @@ public class PlayerService {
 		return result.toString();
 	}
 
-	public Pair<HttpStatus, ResponseDTO> removePlayerByID(Long playerId) {
+	public Pair<HttpStatus, ResponseDTO> removePlayerById(Long playerId) {
 		Optional<Player> queryResult = playerRepository.findById(playerId);
 		if (queryResult.isPresent()) {
 			playerRepository.delete(queryResult.get());

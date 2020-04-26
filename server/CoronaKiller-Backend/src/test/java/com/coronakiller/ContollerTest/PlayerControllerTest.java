@@ -67,7 +67,7 @@ public class PlayerControllerTest {
 	@Test
 	public void removePlayerByIDTest(){
 		Long playerId = (long)13;
-		when(playerService.removePlayerByID((playerId))).thenReturn(Pair.of(HttpStatus.OK, new ResponseDTO(null,
+		when(playerService.removePlayerById((playerId))).thenReturn(Pair.of(HttpStatus.OK, new ResponseDTO(null,
 				String.format("Player with id:%s successfully removed", playerId), APIConstants.RESPONSE_SUCCESS)));
 		Assert.assertEquals("Player with id:13 successfully removed",
 				playerController.removePlayerById(playerId).getBody().getMessage());
