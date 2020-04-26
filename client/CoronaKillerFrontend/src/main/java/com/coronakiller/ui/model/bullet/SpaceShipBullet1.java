@@ -22,9 +22,7 @@ import static com.coronakiller.ui.constants.GameConstants.*;
 /**
  * This class represents first type of bullet that can be shot by spaceship(doctor).
  */
-public class SpaceShipBullet1 extends Bullet {
-
-	private int damage;
+public class SpaceShipBullet1 extends SpaceShipBullet {
 
 	/**
 	 * Constructor method of the SpaceShipBullet1 object.
@@ -35,27 +33,6 @@ public class SpaceShipBullet1 extends Bullet {
 	 */
 	public SpaceShipBullet1(double xPosition, double yPosition, int width, int height){
 		super(xPosition, yPosition, width, height, SPACESHIP_BULLET1_DAMAGE, SPACESHIP_BULLET1_VELOCITY);
-	}
-
-	@Override
-	public void checkCollision(Pane currentPane) {
-		Iterator<Virus> virusIterator = GameLevel1Controller.levelViruses.iterator();
-		while (virusIterator.hasNext()) {
-			Virus virus = virusIterator.next();
-			if(virus.getBoundsInParent().intersects(this.getBoundsInParent())){
-				super.getBulletTimeline().stop();
-				currentPane.getChildren().remove(this);
-				virus.getShot(SPACESHIP_BULLET1_DAMAGE);
-				if(virus.getVirusHealth() <= 0){
-					virus.stopFireAndMove();
-					currentPane.getChildren().remove(virus);
-					virusIterator.remove();
-				}
-				break;
-			}
-		}
-		if(GameLevel1Controller.levelViruses.isEmpty()) GameLevel1Controller.levelCompleted();
-
 	}
 
 	@Override
