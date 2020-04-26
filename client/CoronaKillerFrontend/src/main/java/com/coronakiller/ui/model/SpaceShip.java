@@ -14,7 +14,7 @@ import lombok.Setter;
 
 import java.net.URISyntaxException;
 
-import static com.coronakiller.ui.constants.UiConstants.*;
+import static com.coronakiller.ui.constants.GameConstants.*;
 
 @Getter
 @Setter

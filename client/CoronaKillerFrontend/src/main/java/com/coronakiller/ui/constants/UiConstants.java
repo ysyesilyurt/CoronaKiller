@@ -1,7 +1,5 @@
 package com.coronakiller.ui.constants;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
 public class UiConstants {
 	/* General Application Constants */
 	public static final String BACKEND_BASE_URL = "http://localhost:8080/api";
@@ -28,5 +26,7 @@ public class UiConstants {
 	public static final String GAME_LEVEL2_PAGE = "fxml/game-level2.fxml";
 	public static final String GAME_LEVEL3_PAGE = "fxml/game-level3.fxml";
 	public static final String GAME_LEVEL4_PAGE = "fxml/game-level4.fxml";
+
+
 
 }

@@ -13,7 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static com.coronakiller.ui.constants.UiConstants.*;
+import static com.coronakiller.ui.constants.GameConstants.*;
 
 @Setter
 @Getter

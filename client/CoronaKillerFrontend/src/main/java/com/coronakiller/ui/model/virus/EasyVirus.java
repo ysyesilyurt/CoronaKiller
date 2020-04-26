@@ -8,7 +8,7 @@ import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.coronakiller.ui.constants.UiConstants.*;
+import static com.coronakiller.ui.constants.GameConstants.*;
 
 @Getter
 @Setter
