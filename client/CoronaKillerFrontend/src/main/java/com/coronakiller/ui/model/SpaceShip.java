@@ -35,6 +35,11 @@ public class SpaceShip extends Rectangle {
 		this.currentHealth = 100;
 	}
 
+	public int getShot(int damage){
+		this.currentHealth -= damage;
+		return this.currentHealth;
+	}
+
 	public void setMouseDraggableObject(){
 		this.setOnMouseDragged(me -> {
 			this.setX(me.getX() - this.getWidth()/2);
@@ -50,8 +55,7 @@ public class SpaceShip extends Rectangle {
 	public void autofire(Pane currentPane){
 		autofireTimeline = new Timeline(
 				new KeyFrame(Duration.millis(500), e -> {
-					SpaceShipBullet1 bullet = new SpaceShipBullet1(this.getX()+this.getWidth()/2,
-							this.getY(), SPACESHIP_BULLET1_WIDTH, SPACESHIP_BULLET1_HEIGHT );
+					SpaceShipBullet1 bullet = new SpaceShipBullet1(this.getX()+this.getWidth()/2, this.getY());
 					currentPane.getChildren().add(bullet);
 					bullet.moveBullet(currentPane);
 				}));

@@ -26,8 +26,12 @@ public class GameLevel1Controller implements Initializable {
 	public static SpaceShip spaceShip;
 	public static ArrayList<Virus> levelViruses = new ArrayList<>();
 
-	public static void levelCompleted() {
+	public static void levelSuccessfullyCompleted() {
 	}
+
+	public static void levelFailed() {
+	}
+
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
