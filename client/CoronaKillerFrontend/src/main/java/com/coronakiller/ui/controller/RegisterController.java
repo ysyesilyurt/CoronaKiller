@@ -107,10 +107,14 @@ public class RegisterController implements Initializable {
 
 	@FXML
 	protected void onClickBackToLogin(ActionEvent event) throws IOException {
+		loadingSpinner.setVisible(true);
+		innerPane.setDisable(true);
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Parent loginPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.LOGIN_PAGE));
 		Scene scene = new Scene(loginPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
+		loadingSpinner.setVisible(false);
+		innerPane.setDisable(false);
 	}
 }

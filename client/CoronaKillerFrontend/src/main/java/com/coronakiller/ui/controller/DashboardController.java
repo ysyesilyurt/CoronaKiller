@@ -4,6 +4,7 @@ import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXSpinner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +27,8 @@ public class DashboardController implements Initializable {
 	private JFXSnackbar snackbar;
 
 	@FXML
+	public JFXSpinner loadingSpinner;
+	@FXML
 	public AnchorPane dashboardPane;
 	@FXML
 	public AnchorPane innerPane;
@@ -46,29 +49,45 @@ public class DashboardController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
+		loadingSpinner.setVisible(true);
+		innerPane.setDisable(true);
 		snackbar = new JFXSnackbar(dashboardPane);
 		dashboardPane.getStylesheets().add(UiConstants.GENERAL_STYLES);
 		username.setText(String.format("Welcome %s!", StageInitializer.currentPlayer.getUsername()));
 		totalScore.setText(String.format("Your Total Score: %s", StageInitializer.currentPlayer.getTotalScore()));
 		continueGameButton.setDisable(StageInitializer.currentPlayer.getGameSessionId() == null);
+		loadingSpinner.setVisible(false);
+		innerPane.setDisable(false);
 	}
 
 	@FXML
 	public void onClickContinueGame(ActionEvent event) {
+		loadingSpinner.setVisible(true);
+		innerPane.setDisable(true);
 
+		loadingSpinner.setVisible(false);
+		innerPane.setDisable(false);
 	}
 
 	@FXML
 	public void onClickNewGame(ActionEvent event) {
+		loadingSpinner.setVisible(true);
+		innerPane.setDisable(true);
 
+		loadingSpinner.setVisible(false);
+		innerPane.setDisable(false);
 	}
 
 	@FXML
 	public void onClickGoToLeaderboard(ActionEvent event) throws IOException {
+		loadingSpinner.setVisible(true);
+		innerPane.setDisable(true);
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Parent leaderBoardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.LEADERBOARD_PAGE));
 		Scene scene = new Scene(leaderBoardPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
+		loadingSpinner.setVisible(false);
+		innerPane.setDisable(false);
 	}
 }
