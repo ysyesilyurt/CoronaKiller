@@ -1,7 +1,9 @@
 package com.coronakiller.service;
 
 import com.coronakiller.constant.APIConstants;
+import com.coronakiller.dto.GameDataDTO;
 import com.coronakiller.dto.GameSessionDTO;
+import com.coronakiller.dto.PlayerDTO;
 import com.coronakiller.dto.ResponseDTO;
 import com.coronakiller.entity.GameSession;
 import com.coronakiller.entity.Player;
@@ -24,21 +26,50 @@ public class GameService {
 
 	private GameSessionRepository gameSessionRepository;
 	private GameSessionMapper gameSessionMapper;
+	private PlayerService playerService;
 	private PlayerRepository playerRepository;
 
 	public GameService(GameSessionRepository gameSessionRepository,
 					   GameSessionMapper gameSessionMapper,
+					   PlayerService playerService,
 					   PlayerRepository playerRepository) {
 		this.gameSessionRepository = gameSessionRepository;
 		this.gameSessionMapper = gameSessionMapper;
+		this.playerService = playerService;
 		this.playerRepository = playerRepository;
+	}
+
+	/**
+	 * Fetches the current Player and his/her ongoing the GameSession (if exists)
+	 * information and wraps those DTOs in a GameDataDTO, then returns that
+	 * @param gameSessionId
+	 * @return Pair<HttpStatus, ResponseDTO>
+	 */
+	public Pair<HttpStatus, ResponseDTO> getGameDataById(Long playerId) {
+		Pair<HttpStatus, ResponseDTO> result = playerService.getPlayerById(playerId);
+		if (result.getSecond().getResult().equals("success")) {
+			PlayerDTO playerDTO = ((PlayerDTO) result.getSecond().getData());
+			Optional<GameSession> gameSession = gameSessionRepository.findById(playerDTO.getGameSessionId());
+			if (gameSession.isPresent()) {
+				GameSessionDTO gameSessionDTO = gameSessionMapper.toGameSessionDTO(gameSession.get());
+				GameDataDTO gameDataDTO = new GameDataDTO(playerDTO, gameSessionDTO);
+				return Pair.of(HttpStatus.OK, new ResponseDTO(gameDataDTO, null, APIConstants.RESPONSE_SUCCESS));
+			} else {
+				GameDataDTO gameDataDTO = new GameDataDTO(playerDTO, null);
+				return Pair.of(HttpStatus.OK, new ResponseDTO(gameDataDTO, null, APIConstants.RESPONSE_SUCCESS));
+			}
+		} else {
+			log.warn("Player not exists with id:{}", playerId);
+			return Pair.of(HttpStatus.NOT_FOUND, new ResponseDTO(null,
+					String.format("Player not exists with id:%s", playerId), APIConstants.RESPONSE_FAIL));
+		}
 	}
 
 	/**
 	 * Service for starting a new game session for player with id "playerId".
 	 * If player has a previous game session from earlier, it gets overwritten by this service and a new one gets generated (with default values).
 	 * @param playerId
-	 * @return
+	 * @return Pair<HttpStatus, ResponseDTO>
 	 */
 	public Pair<HttpStatus, ResponseDTO> startNewGame(Long playerId) {
 		Optional<Player> player = playerRepository.findById(playerId);
@@ -80,37 +111,12 @@ public class GameService {
 	}
 
 	/**
-	 * Service for requesting ongoing game session for player with "playerId".
-	 * If player has an ongoing gameSession his/her gameSessionDTO is returned.
-	 * Otherwise errors are returned.
-	 * @param playerId
-	 * @return
-	 */
-	public Pair<HttpStatus, ResponseDTO> continueGameSession(Long playerId) {
-		Optional<Player> player = playerRepository.findById(playerId);
-		if (player.isPresent()) {
-			if (player.get().getGameSession() != null) {
-				GameSessionDTO gameSessionDTO = gameSessionMapper.toGameSessionDTO(player.get().getGameSession());
-				return Pair.of(HttpStatus.OK, new ResponseDTO(gameSessionDTO, null, APIConstants.RESPONSE_SUCCESS));
-			} else {
-				log.warn("Player with id:{}, does not have an ongoing game session!", playerId);
-				return Pair.of(HttpStatus.NOT_FOUND, new ResponseDTO(null,
-						String.format("Player with id:%s, does not have an ongoing game session!", playerId), APIConstants.RESPONSE_FAIL));
-			}
-		} else {
-			log.warn("Player not exists with id:{}", playerId);
-			return Pair.of(HttpStatus.NOT_FOUND, new ResponseDTO(null,
-					String.format("Player not exists with id:%s", playerId), APIConstants.RESPONSE_FAIL));
-		}
-	}
-
-	/**
 	 * Updates specified session by the provided one.
 	 * Updates are designed to be only performed when player finishes a level.
 	 * Player's score is kept in game session score until the game session ends (i.e. game finishes)
 	 * @param playerId
 	 * @param newGameSessionDTO
-	 * @return
+	 * @return Pair<HttpStatus, ResponseDTO>
 	 */
 	public Pair<HttpStatus, ResponseDTO> updateGameSession(Long playerId, GameSessionDTO newGameSessionDTO) {
 		Optional<Player> player = playerRepository.findById(playerId);
@@ -145,7 +151,7 @@ public class GameService {
 	 * Game finishes if player dies or player successfully finishes all levels of the game.
 	 * @param playerId
 	 * @param finishedGameSessionDTO
-	 * @return
+	 * @return Pair<HttpStatus, ResponseDTO>
 	 */
 	public Pair<HttpStatus, ResponseDTO> finishGameSession(Long playerId, GameSessionDTO finishedGameSessionDTO) {
 		Optional<Player> player = playerRepository.findById(playerId);

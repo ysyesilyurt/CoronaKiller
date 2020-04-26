@@ -23,17 +23,19 @@ public class GameController {
 		this.gameService = gameService;
 	}
 
+	@GetMapping("/{playerId}")
+	@ApiOperation(value = "Fetches the current game data of player by specified playerId." +
+			" Namely returns a GameDataDTO object which contains PlayerDTO and a GameSessionDTO (if exists) that is" +
+			" wrapped into ResponseDTO", response = ResponseDTO.class)
+	public ResponseEntity<ResponseDTO> getGameDataById(@PathVariable Long playerId) {
+		Pair<HttpStatus, ResponseDTO> response = gameService.getGameDataById(playerId);
+		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
+	}
+
 	@PostMapping("/start/{playerId}")
 	@ApiOperation(value = "Start a new game session for player with specified id", response = ResponseDTO.class)
 	public ResponseEntity<ResponseDTO> startNewGame(@PathVariable Long playerId) {
 		Pair<HttpStatus, ResponseDTO> response = gameService.startNewGame(playerId);
-		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
-	}
-
-	@PutMapping("/continue/{playerId}")
-	@ApiOperation(value = "Continue an ongoing game session for player with specified id", response = ResponseDTO.class)
-	public ResponseEntity<ResponseDTO> continueGameSession(@PathVariable Long playerId) {
-		Pair<HttpStatus, ResponseDTO> response = gameService.continueGameSession(playerId);
 		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 	}
 
@@ -48,7 +50,7 @@ public class GameController {
 	@PutMapping("/finish/{playerId}")
 	@ApiOperation(value = "Finish the game session of player specified by id", response = ResponseDTO.class)
 	public ResponseEntity<ResponseDTO> finishGameSession(@PathVariable Long playerId,
-													 @RequestBody GameSessionDTO finishedGameSessionDTO) {
+														 @RequestBody GameSessionDTO finishedGameSessionDTO) {
 		Pair<HttpStatus, ResponseDTO> response = gameService.finishGameSession(playerId, finishedGameSessionDTO);
 		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 	}

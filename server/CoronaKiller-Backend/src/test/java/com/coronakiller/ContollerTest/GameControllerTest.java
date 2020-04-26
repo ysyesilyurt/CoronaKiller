@@ -2,7 +2,9 @@ package com.coronakiller.ContollerTest;
 
 import com.coronakiller.constant.APIConstants;
 import com.coronakiller.controller.GameController;
+import com.coronakiller.dto.GameDataDTO;
 import com.coronakiller.dto.GameSessionDTO;
+import com.coronakiller.dto.PlayerDTO;
 import com.coronakiller.dto.ResponseDTO;
 import com.coronakiller.enums.ShipType;
 import com.coronakiller.service.GameService;
@@ -29,7 +31,17 @@ public class GameControllerTest {
 	GameService gameService;
 
 	@Test
-	public void startNewGameTest(){
+	public void getGameDataByIdTest() {
+		PlayerDTO playerDTO = PlayerDTO.builder().id(1L).username("yavuz").password("alper").totalScore(16515616L).gameSessionId(1L).build();
+		GameSessionDTO gameSessionDTO = GameSessionDTO.builder().currentLevel(2).sessionScore(100L).shipHealth(100).shipType(ShipType.NORMAL).build();
+		GameDataDTO gameDataDTO = GameDataDTO.builder().playerDTO(playerDTO).gameSessionDTO(gameSessionDTO).build();
+		when(gameService.getGameDataById((long) 1)).thenReturn(Pair.of(HttpStatus.OK,
+				new ResponseDTO(gameDataDTO, null, APIConstants.RESPONSE_SUCCESS)));
+		Assert.assertEquals(gameDataDTO, gameController.getGameDataById((long) 1).getBody().getData());
+	}
+
+	@Test
+	public void startNewGameTest() {
 		Long playerId = (long) 1;
 		when(gameService.startNewGame(playerId)).thenReturn(Pair.of(HttpStatus.OK, new ResponseDTO(null,
 				String.format("Started a new game for player with id:%s", playerId), APIConstants.RESPONSE_SUCCESS)));
@@ -38,36 +50,28 @@ public class GameControllerTest {
 	}
 
 	@Test
-	public void continueGameSessionTest(){
-		Long playerId = (long) 336;
-		when(gameService.continueGameSession(playerId)).thenReturn(Pair.of(HttpStatus.NOT_FOUND, new ResponseDTO(null,
-				String.format("Player not exists with id:%s", playerId), APIConstants.RESPONSE_FAIL)));
-		Assert.assertEquals("Player not exists with id:" + playerId,
-				gameController.continueGameSession(playerId).getBody().getMessage());
-	}
-
-	@Test
-	public void updateGameSessionTest(){
+	public void updateGameSessionTest() {
 		Long playerId = (long) 1;
 		GameSessionDTO newGameSessionDTO = new GameSessionDTO();
 		newGameSessionDTO.setShipType(ShipType.ROOKIE);
 		newGameSessionDTO.setShipHealth(100);
 		newGameSessionDTO.setCurrentLevel(1);
-		newGameSessionDTO.setSessionScore((long)22);
+		newGameSessionDTO.setSessionScore((long) 22);
 		when(gameService.updateGameSession(playerId, newGameSessionDTO)).thenReturn(Pair.of(HttpStatus.OK, new ResponseDTO(null,
-				String.format("Game Session of player with id:%s is successfully updated", playerId), APIConstants.RESPONSE_SUCCESS)));;
+				String.format("Game Session of player with id:%s is successfully updated", playerId), APIConstants.RESPONSE_SUCCESS)));
+		;
 		Assert.assertEquals(APIConstants.RESPONSE_SUCCESS,
 				gameController.updateGameSession(playerId, newGameSessionDTO).getBody().getResult());
 	}
 
 	@Test
-	public void finishGameSessionTest(){
+	public void finishGameSessionTest() {
 		Long playerId = (long) 2;
 		GameSessionDTO finishedGameSessionDTO = new GameSessionDTO();
 		finishedGameSessionDTO.setShipType(ShipType.NORMAL);
 		finishedGameSessionDTO.setShipHealth(0);
 		finishedGameSessionDTO.setCurrentLevel(3);
-		finishedGameSessionDTO.setSessionScore((long)1036);
+		finishedGameSessionDTO.setSessionScore((long) 1036);
 		when(gameService.finishGameSession(playerId, finishedGameSessionDTO)).thenReturn(Pair.of(HttpStatus.OK, new ResponseDTO(null,
 				String.format("Game Session of player with id:%s is finished and player's session score is successfully updated.", playerId),
 				APIConstants.RESPONSE_SUCCESS)));
