@@ -53,6 +53,11 @@
    			<Font name="Dyuthi" size="40.0" />
    		</font>
    	</Text>
+		<Text layoutX="194.0" layoutY="751.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MIT © 2020 ysyesilyurt alperkman" textAlignment="CENTER" wrappingWidth="168.30322265625">
+			<font>
+				<Font name="Dyuthi" size="12.0" />
+			</font>
+		</Text>
 	</AnchorPane>
 	<Text fx:id="snackbarContent" layoutX="73.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="custom-snackbar" textAlignment="CENTER">
 		<font>
