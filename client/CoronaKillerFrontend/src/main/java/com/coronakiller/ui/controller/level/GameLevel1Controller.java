@@ -1,10 +1,10 @@
 package com.coronakiller.ui.controller.level;
 
-import com.coronakiller.ui.constants.UiConstants;
-import com.coronakiller.ui.model.SpaceShip;
-import com.coronakiller.ui.model.virus.EasyVirus;
+import com.coronakiller.ui.model.spaceship.PowerfulGunsSpaceShip;
+import com.coronakiller.ui.model.spaceship.RookieSpaceShip;
+import com.coronakiller.ui.model.spaceship.SpaceShip;
+import com.coronakiller.ui.model.spaceship.VeteranSpaceShip;
 import com.coronakiller.ui.model.virus.HardVirus;
-import com.coronakiller.ui.model.virus.MediumVirus;
 import com.coronakiller.ui.model.virus.Virus;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,10 +45,7 @@ public class GameLevel1Controller implements Initializable {
 	}
 
 	public void handleSpaceInitialization(){
-		spaceShip = new SpaceShip(INITIAL_SPACESHIP_X_POSITION,
-				INITIAL_SPACESHIP_Y_POSITION,
-				SPACESHIP_WIDTH,
-				SPACESHIP_HEIGHT);
+		spaceShip = new PowerfulGunsSpaceShip(100);
 		//spaceShip.changeIconofSpaceShip();
 		spaceShip.setMouseDraggableObject();
 		spaceShip.autofire(anchorPane);
