@@ -41,8 +41,14 @@ public class GameConstants {
 	public static final String VIRUS_BULLET2_ICON_URL = "";
 
 	/* Easy Virus Constants */
-	public static final int EASY_VIRUS_VELOCITY = 5;
+	public static final int EASY_VIRUS_VELOCITY = 10;
 	public static final int EASY_VIRUS_HEALTH = 2;
 	public static final int EASY_VIRUS_WIDTH = 30;
 	public static final int EASY_VIRUS_HEIGHT = 50;
+
+	/* Medium Virus Constants */
+	public static final int MEDIUM_VIRUS_VELOCITY = 15;
+	public static final int MEDIUM_VIRUS_HEALTH = 4;
+	public static final int MEDIUM_VIRUS_WIDTH = 40;
+	public static final int MEDIUM_VIRUS_HEIGHT = 70;
 }

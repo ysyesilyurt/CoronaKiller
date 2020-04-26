@@ -19,9 +19,11 @@ public class EasyVirus extends Virus {
 
 	private int virusHealth;
 	private Timeline easyVirusTimeline;
+	private int moveCounter = 4;
+	private boolean moveDirectionFlag = true;
 
-	public EasyVirus(double xPosition, double yPosition, int width, int height) {
-		super(xPosition, yPosition, width, height, EASY_VIRUS_HEALTH);
+	public EasyVirus(double xPosition, double yPosition) {
+		super(xPosition, yPosition, EASY_VIRUS_WIDTH, EASY_VIRUS_HEIGHT, EASY_VIRUS_HEALTH);
 	}
 
 	@Override
@@ -32,8 +34,19 @@ public class EasyVirus extends Virus {
 	@Override
 	public void virusAutoMove() {
 		this.easyVirusTimeline = new Timeline(
-				new KeyFrame( Duration.millis(10), e ->{
-					this.setX(this.getX()- EASY_VIRUS_VELOCITY);
+				new KeyFrame( Duration.millis(500), e ->{
+					if(moveDirectionFlag) {
+						this.setX(this.getX() - EASY_VIRUS_VELOCITY);
+						moveCounter--;
+						if(moveCounter == 0)
+							moveDirectionFlag = false;
+					}
+					else{
+						this.setX(this.getX() + EASY_VIRUS_VELOCITY);
+						moveCounter++;
+						if(moveCounter == 4)
+							moveDirectionFlag = true;
+					}
 				})
 		);
 		this.easyVirusTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -42,6 +55,6 @@ public class EasyVirus extends Virus {
 
 	@Override
 	public void stopFireAndMove() {
-
+		this.easyVirusTimeline.stop();
 	}
 }

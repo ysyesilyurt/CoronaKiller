@@ -3,6 +3,7 @@ package com.coronakiller.ui.controller.level;
 import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.SpaceShip;
 import com.coronakiller.ui.model.virus.EasyVirus;
+import com.coronakiller.ui.model.virus.MediumVirus;
 import com.coronakiller.ui.model.virus.Virus;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,9 +28,11 @@ public class GameLevel1Controller implements Initializable {
 	public static ArrayList<Virus> levelViruses = new ArrayList<>();
 
 	public static void levelSuccessfullyCompleted() {
+		System.out.println("LEVEL SUCCESSFULLY COMPLETED");
 	}
 
 	public static void levelFailed() {
+		System.out.println("LEVEL FAILED");
 	}
 
 
@@ -52,8 +55,9 @@ public class GameLevel1Controller implements Initializable {
 
 	public void handleVirusInitialization(){
 		 for(int i=1; i<6 ; ++i){
-		 	EasyVirus virus = new EasyVirus(100*i, 50, EASY_VIRUS_WIDTH, EASY_VIRUS_HEIGHT );
-		 	//virus.virusAutoMove();
+		 	MediumVirus virus = new MediumVirus(100*i, 50);
+		 	virus.virusAutoMove();
+		 	virus.virusAutoFire(anchorPane);
 		 	levelViruses.add(virus);
 		 	anchorPane.getChildren().add(virus);
 		 }
