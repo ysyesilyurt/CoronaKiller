@@ -1,6 +1,7 @@
 package com.coronakiller.ui.controller;
 
 import com.coronakiller.ui.application.StageInitializer;
+import com.coronakiller.ui.constants.UiConstants;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSnackbar;
 import javafx.event.ActionEvent;
@@ -46,7 +47,7 @@ public class DashboardController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		snackbar = new JFXSnackbar(dashboardPane);
-		dashboardPane.getStylesheets().add("css/styles.css");
+		dashboardPane.getStylesheets().add(UiConstants.GENERAL_STYLES);
 		username.setText(String.format("Welcome %s!", StageInitializer.currentPlayer.getUsername()));
 		totalScore.setText(String.format("Your Total Score: %s", StageInitializer.currentPlayer.getTotalScore()));
 		continueGameButton.setDisable(StageInitializer.currentPlayer.getGameSessionId() == null);
@@ -65,7 +66,7 @@ public class DashboardController implements Initializable {
 	@FXML
 	public void onClickGoToLeaderboard(ActionEvent event) throws IOException {
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent leaderBoardPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/leaderBoard.fxml"));
+		Parent leaderBoardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.LEADERBOARD_PAGE));
 		Scene scene = new Scene(leaderBoardPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();

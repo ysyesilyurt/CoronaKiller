@@ -1,6 +1,7 @@
 package com.coronakiller.ui.controller;
 
 import com.coronakiller.ui.application.StageInitializer;
+import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXSnackbar;
@@ -56,7 +57,7 @@ public class LoginController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		loginPane.getStylesheets().add("css/styles.css");
+		loginPane.getStylesheets().add(UiConstants.GENERAL_STYLES);
 		snackbar = new JFXSnackbar(loginPane);
 	}
 
@@ -84,7 +85,7 @@ public class LoginController implements Initializable {
 				StageInitializer.currentPlayer = result.getValue0();
 				/* Then Route to Dashboard */
 				Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-				Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashboard.fxml"));
+				Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.DASHBOARD_PAGE));
 				Scene scene = new Scene(dashboardPage, 600, 800);
 				currentStage.setScene(scene);
 				currentStage.show();
@@ -97,7 +98,7 @@ public class LoginController implements Initializable {
 	@FXML
 	protected void onClickGoToRegister(ActionEvent event) throws IOException {
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent registerPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/register.fxml"));
+		Parent registerPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.REGISTER_PAGE));
 		Scene scene = new Scene(registerPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
