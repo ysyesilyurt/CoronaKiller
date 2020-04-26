@@ -2,6 +2,8 @@ package com.coronakiller.ui.controller;
 
 import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.model.GameSession;
+import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSpinner;
@@ -15,6 +17,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
+import org.javatuples.Pair;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -24,6 +28,7 @@ import java.util.ResourceBundle;
 /**
  * Controller that manages Dashboard Page
  */
+@Slf4j
 @Component
 public class DashboardController implements Initializable {
 	private JFXSnackbar snackbar;
@@ -63,6 +68,7 @@ public class DashboardController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
+		// TODO: WHEN PLAYERS RETURNS TO DASHBOARD FROM GAME REQUEST TO GET UPDATED SCORE + GAMESESSION FROM BACKEND OR USE UPDATED PLAYER..
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
 		snackbar = new JFXSnackbar(dashboardPane);
@@ -78,14 +84,27 @@ public class DashboardController implements Initializable {
 	 * Method that is fired on the continue-game button click action.
 	 * First makes a continueGameSession request to backend to get the GameSession of the Player.
 	 * Then checks game session to determine the level where it'll be continued from.
-	 * Finally redirects user to corresponding Game Level page.
+	 * Finally sets the player game session cookie and redirects user to corresponding Game Level page.
 	 * @param event
 	 */
 	@FXML
-	public void onClickContinueGame(ActionEvent event) {
+	public void onClickContinueGame(ActionEvent event) throws IOException {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
-		// TODO: WHEN PLAYERS RETURNS TO DASHBOARD FROM GAME REQUEST TO GET UPDATED SCORE + GAMESESSION FROM BACKEND OR USE UPDATED PLAYER..
+		Pair<GameSession, String> result = RequestService.continueGameSession();
+		snackbarContent.setText(result.getValue1());
+		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
+		if (result.getValue0() != null) {
+			/* Set the application's current player game session for global access */
+			StageInitializer.currentPlayerGameSession = result.getValue0();
+			/* Redirect to The Last Checkpoint (Saved Level) */
+			String lastSavedLevel = resolveGameSessionLevel(result.getValue0().getCurrentLevel());
+			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(lastSavedLevel));
+			Scene scene = new Scene(dashboardPage, 600, 800);
+			currentStage.setScene(scene);
+			currentStage.show();
+		}
 		loadingSpinner.setVisible(false);
 		innerPane.setDisable(false);
 	}
@@ -93,14 +112,26 @@ public class DashboardController implements Initializable {
 	/**
 	 * Method that is fired on the new-game button click action.
 	 * First makes a startGameSession request to backend to get the an initial GameSession of the Player.
-	 * Then redirects user to first level of the game.
+	 * Then sets the player game session cookie and redirects user to first level of the game.
 	 * @param event
 	 */
 	@FXML
-	public void onClickNewGame(ActionEvent event) {
+	public void onClickNewGame(ActionEvent event) throws IOException {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
-		// TODO: WHEN PLAYERS RETURNS TO DASHBOARD FROM GAME REQUEST TO GET UPDATED SCORE + GAMESESSION FROM BACKEND OR USE UPDATED PLAYER..
+		Pair<GameSession, String> result = RequestService.startNewGame();
+		snackbarContent.setText(result.getValue1());
+		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
+		if (result.getValue0() != null) {
+			/* Set the application's current player game session for global access */
+			StageInitializer.currentPlayerGameSession = result.getValue0();
+			/* Redirect to The Last Checkpoint (Saved Level) */
+			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.GAME_LEVEL1_PAGE));
+			Scene scene = new Scene(dashboardPage, 600, 800);
+			currentStage.setScene(scene);
+			currentStage.show();
+		}
 		loadingSpinner.setVisible(false);
 		innerPane.setDisable(false);
 	}
@@ -140,5 +171,23 @@ public class DashboardController implements Initializable {
 		Scene scene = new Scene(dashboardPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
+	}
+
+	private String resolveGameSessionLevel(Integer level) {
+		switch (level) {
+			case 1:
+				return UiConstants.GAME_LEVEL1_PAGE;
+			case 2:
+				return UiConstants.GAME_LEVEL2_PAGE;
+			case 3:
+				return UiConstants.GAME_LEVEL3_PAGE;
+			case 4:
+				return UiConstants.GAME_LEVEL4_PAGE;
+			default: {
+				/* Error case, log and redirect to Dashboard */
+				log.error("Invalid level:{} when trying to resolve game session level", level);
+				return UiConstants.DASHBOARD_PAGE;
+			}
+		}
 	}
 }

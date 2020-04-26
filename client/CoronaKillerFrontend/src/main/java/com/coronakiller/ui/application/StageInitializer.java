@@ -2,6 +2,7 @@ package com.coronakiller.ui.application;
 
 import com.coronakiller.ui.application.FxApplication.StageReadyEvent;
 import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.model.GameSession;
 import com.coronakiller.ui.model.Player;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,9 +30,10 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 	@Value("classpath:/fxml/login.fxml")
 	private Resource loginResource;
 	private final ApplicationContext applicationContext;
-	/* We keep current user information in this static variable
-	* to access it from everywhere through the application. (A Cookie-like mechanism) */
+	/* We keep current user information and game session information (if exists) in these
+	 * static variables to access them from everywhere through the application. (A Cookie-like mechanism) */
 	public static Player currentPlayer;
+	public static GameSession currentPlayerGameSession;
 
 	public StageInitializer(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;

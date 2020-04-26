@@ -2,25 +2,27 @@ package com.coronakiller.ui.service;
 
 import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.model.GameSession;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.model.RestApiResponse;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.*;
+import lombok.extern.slf4j.Slf4j;
 import org.javatuples.Pair;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.net.ConnectException;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class RequestService {
 
 	private static final ObjectMapper objectMapper = new ObjectMapper();
+	private static final OkHttpClient client = new OkHttpClient();
 
 	/**
 	 * A static helper method for generic determination of String to respond
@@ -38,8 +40,10 @@ public class RequestService {
 				return UiConstants.HTTP_404;
 			case 500:
 				return UiConstants.HTTP_500;
-			default:
+			default: {
+				log.warn("Got {} HTTP code after a request", httpCode);
 				return "Oops! Something went wrong - " + httpCode;
+			}
 		}
 	}
 
@@ -53,7 +57,6 @@ public class RequestService {
 	public static Pair<Player, String> login(Player player) {
 		/* Construct the password first */
 		String encodedPassword = BCrypt.hashpw(player.getPassword(), UiConstants.HASH_SALT);
-		OkHttpClient client = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("text/plain");
 		RequestBody body = RequestBody.create(mediaType, "");
 		String authorizationHeader = Credentials.basic(player.getUsername(), encodedPassword);
@@ -97,7 +100,6 @@ public class RequestService {
 	public static Pair<Player, String> register(Player player) {
 		/* Construct the password first */
 		String encodedPassword = BCrypt.hashpw(player.getPassword(), UiConstants.HASH_SALT);
-		OkHttpClient client = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("application/json");
 		RequestBody body = RequestBody.create(mediaType,
 				"{\n\t\"username\": \"" + player.getUsername() + "\"," +
@@ -136,9 +138,7 @@ public class RequestService {
 	 */
 	@Deprecated // TODO: Remove before submission
 	public static Player getPlayerById(Long playerIdToGet) {
-		/* Construct the password first */
 		if (StageInitializer.currentPlayer != null) {
-			OkHttpClient client = new OkHttpClient();
 			String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
 			Request request = new Request.Builder()
 					.url(UiConstants.BACKEND_BASE_URL + "/players/" + playerIdToGet.toString())
@@ -174,34 +174,110 @@ public class RequestService {
 	 * @return Pair<List<Map<String, Long>>, String>
 	 */
 	public static Pair<List<Map<String, Long>>, String> getLeaderBoard(String leaderBoardType) {
-		/* Construct the password first */
-		OkHttpClient client = new OkHttpClient();
-		String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
-		Request request = new Request.Builder()
-				.url(UiConstants.BACKEND_BASE_URL + "/scoreboard?type=" + leaderBoardType)
-				.method("GET", null)
-				.addHeader("Authorization", authorizationHeader)
-				.build();
-		try {
-			Response response = client.newCall(request).execute();
-			if (response.code() == 200) {
-				String responseBody = response.body().string();
-				RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
-				if (mappedResponse.getResult().equals("success")) {
-					List<Map<String, Long>> leaderBoard = objectMapper.convertValue(mappedResponse.getData(), List.class);
-					return Pair.with(leaderBoard, mappedResponse.getMessage());
+		if (StageInitializer.currentPlayer != null) {
+			String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
+			Request request = new Request.Builder()
+					.url(UiConstants.BACKEND_BASE_URL + "/scoreboard?type=" + leaderBoardType)
+					.method("GET", null)
+					.addHeader("Authorization", authorizationHeader)
+					.build();
+			try {
+				Response response = client.newCall(request).execute();
+				if (response.code() == 200) {
+					String responseBody = response.body().string();
+					RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
+					if (mappedResponse.getResult().equals("success")) {
+						List<Map<String, Long>> leaderBoard = objectMapper.convertValue(mappedResponse.getData(), List.class);
+						return Pair.with(leaderBoard, mappedResponse.getMessage());
+					} else {
+						return Pair.with(null, mappedResponse.getMessage());
+					}
 				} else {
-					return Pair.with(null, mappedResponse.getMessage());
+					String responseString = resolveHttpCodeResponse(response.code());
+					return Pair.with(null, responseString);
 				}
-			} else {
-				String responseString = resolveHttpCodeResponse(response.code());
-				return Pair.with(null, responseString);
+			} catch (ConnectException e) {
+				return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return Pair.with(null, UiConstants.CLIENT_ERROR);
 			}
-		} catch (ConnectException e) {
-			return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return Pair.with(null, UiConstants.CLIENT_ERROR);
+		} else {
+			return Pair.with(null, UiConstants.COOKIE_NOTFOUND);
+		}
+	}
+
+	public static Pair<GameSession, String> continueGameSession() {
+		// TODO: CHANGE PUT TO GET
+		if (StageInitializer.currentPlayer != null) {
+			String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
+			MediaType mediaType = MediaType.parse("text/plain");
+			RequestBody body = RequestBody.create(mediaType, "");
+			Request request = new Request.Builder()
+					.url(UiConstants.BACKEND_BASE_URL + "/game/continue/" + StageInitializer.currentPlayer.getId().toString())
+					.method("PUT", body)
+					.addHeader("Authorization", authorizationHeader)
+					.build();
+			try {
+				Response response = client.newCall(request).execute();
+				if (response.code() == 200) {
+					String responseBody = response.body().string();
+					RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
+					if (mappedResponse.getResult().equals("success")) {
+						GameSession gameSession = objectMapper.convertValue(mappedResponse.getData(), GameSession.class);
+						return Pair.with(gameSession, mappedResponse.getMessage());
+					} else {
+						return Pair.with(null, mappedResponse.getMessage());
+					}
+				} else {
+					String responseString = resolveHttpCodeResponse(response.code());
+					return Pair.with(null, responseString);
+				}
+			} catch (ConnectException e) {
+				return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return Pair.with(null, UiConstants.CLIENT_ERROR);
+			}
+		} else {
+			return Pair.with(null, UiConstants.COOKIE_NOTFOUND);
+		}
+	}
+
+	public static Pair<GameSession, String> startNewGame() {
+		if (StageInitializer.currentPlayer != null) {
+			String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
+			MediaType mediaType = MediaType.parse("text/plain");
+			RequestBody body = RequestBody.create(mediaType, "");
+			Request request = new Request.Builder()
+					.url(UiConstants.BACKEND_BASE_URL + "/game/start/" + StageInitializer.currentPlayer.getId().toString())
+					.method("POST", body)
+					.addHeader("Authorization", authorizationHeader)
+					.build();
+			try {
+				Response response = client.newCall(request).execute();
+				if (response.code() == 200) {
+					String responseBody = response.body().string();
+					RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
+					if (mappedResponse.getResult().equals("success")) {
+						GameSession gameSession = objectMapper.convertValue(mappedResponse.getData(), GameSession.class);
+						return Pair.with(gameSession, mappedResponse.getMessage());
+					} else {
+						return Pair.with(null, mappedResponse.getMessage());
+					}
+				} else {
+					String responseString = resolveHttpCodeResponse(response.code());
+					return Pair.with(null, responseString);
+				}
+			} catch (ConnectException e) {
+				return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return Pair.with(null, UiConstants.CLIENT_ERROR);
+			}
+		} else {
+//			log.warn("Player cookie not found");
+			return Pair.with(null, UiConstants.COOKIE_NOTFOUND);
 		}
 	}
 }

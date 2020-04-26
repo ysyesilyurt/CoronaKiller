@@ -69,7 +69,8 @@ public class GameService {
 
 			player.get().setGameSession(gameSession);
 			playerRepository.save(player.get());
-			return Pair.of(HttpStatus.OK, new ResponseDTO(null,
+			GameSessionDTO gameSessionDTOtoRespond = gameSessionMapper.toGameSessionDTO(gameSession);
+			return Pair.of(HttpStatus.OK, new ResponseDTO(gameSessionDTOtoRespond,
 					String.format("Started a new game for player with id:%s", playerId), APIConstants.RESPONSE_SUCCESS));
 		} else {
 			log.warn("Player not exists with id:{}", playerId);

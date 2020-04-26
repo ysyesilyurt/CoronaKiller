@@ -10,6 +10,7 @@ public class UiConstants {
 
 	/* Request Message Constants */
 	public static final String CLIENT_ERROR = "Oops! Something went wrong on client";
+	public static final String COOKIE_NOTFOUND = "Oops! Seems like game cookie that has your login credentials is not found.\nPlease try to logout and then login.";
 	public static final String HTTP_400 = "Oops! Request failed - BAD REQUEST";
 	public static final String HTTP_401 = "Invalid username or password - UNAUTHORIZED";
 	public static final String HTTP_404 = "Oops! Requested data is not found on the game server.";
