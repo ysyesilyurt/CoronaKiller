@@ -29,7 +29,8 @@ public class GameLevel1Controller implements Initializable {
 				INITIAL_SPACESHIP_Y_POSITION,
 				SPACESHIP_WIDTH,
 				SPACESHIP_HEIGHT);
-		spaceShip.changeIconofSpaceShip();
+		//spaceShip.changeIconofSpaceShip();
 		spaceShip.setMouseDraggableObject();
+		spaceShip.autofire(anchorPane);
 	}
 }
