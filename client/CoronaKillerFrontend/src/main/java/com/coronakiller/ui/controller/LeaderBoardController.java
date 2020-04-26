@@ -17,11 +17,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +38,18 @@ import java.util.ResourceBundle;
 public class LeaderBoardController implements Initializable {
 
 	@FXML
-	private AnchorPane anchorPane;
+	public AnchorPane innerPane;
+
+	@FXML
+	private AnchorPane leaderboardPane;
 
 	@FXML
 	private ChoiceBox<String> timeBox;
+
+	@FXML
+	public Text totalScore;
+	@FXML
+	public Text username;
 
 	@FXML
 	public JFXButton backToDashboardButton;
@@ -63,6 +71,10 @@ public class LeaderBoardController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle){
+		leaderboardPane.getStylesheets().add("css/styles.css");
+		username.setText(String.format("Welcome %s!", StageInitializer.currentPlayer.getUsername()));
+		totalScore.setText(String.format("Your Total Score: %s", StageInitializer.currentPlayer.getTotalScore()));
+
 		leaderBoardData = RequestService.getLeaderBoard("all");
 		leaderboard = new TableView<>();
 		scores = new ArrayList<>();
@@ -70,11 +82,11 @@ public class LeaderBoardController implements Initializable {
 		parseLeaderBoardData();
 		formLeaderBoardTable();
 
-		leaderboard.setLayoutX(150);
+		leaderboard.setLayoutX(85);
 		leaderboard.setLayoutY(200);
 		leaderboard.setMinWidth(250);
 
-		anchorPane.getChildren().add(leaderboard);
+		innerPane.getChildren().add(leaderboard);
 	}
 
 	/**
@@ -165,7 +177,7 @@ public class LeaderBoardController implements Initializable {
 	 * @throws IOException ,This method may throw exception.
 	 */
 	@FXML
-	protected void handleBackToDashboardButtonAction(ActionEvent event) throws IOException {
+	protected void onClickBackToDashboard(ActionEvent event) throws IOException {
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/fxml/dashboard.fxml"));

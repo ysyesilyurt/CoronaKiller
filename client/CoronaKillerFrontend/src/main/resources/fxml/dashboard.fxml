@@ -34,14 +34,14 @@
 			<Font name="Dyuthi" size="27.0" />
 		</font>
 	</Text>
-		<Text fx:id="totalScore" fill="WHITE" layoutX="415.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
-			<font>
-				<Font name="Dyuthi" size="18.0" />
-			</font>
-		</Text>
-		<Text fx:id="username" fill="WHITE" layoutX="41.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
-			<font>
-				<Font name="Dyuthi" size="18.0" />
-			</font>
-		</Text>
+	<Text fx:id="totalScore" fill="WHITE" layoutX="415.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+		<font>
+			<Font name="Dyuthi" size="18.0" />
+		</font>
+	</Text>
+	<Text fx:id="username" fill="WHITE" layoutX="41.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+		<font>
+			<Font name="Dyuthi" size="18.0" />
+		</font>
+	</Text>
 </AnchorPane>
