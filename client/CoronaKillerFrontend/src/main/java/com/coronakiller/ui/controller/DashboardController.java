@@ -36,6 +36,9 @@ public class DashboardController implements Initializable {
 	private JFXSnackbar snackbar;
 
 	@FXML
+	public Text ongoingSessionScore;
+
+	@FXML
 	public JFXButton logoutButton;
 
 	@FXML
@@ -70,7 +73,6 @@ public class DashboardController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		// TODO: WHEN PLAYERS RETURNS TO DASHBOARD FROM GAME REQUEST TO GET UPDATED SCORE + GAMESESSION FROM BACKEND OR USE UPDATED PLAYER..
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
 		snackbar = new JFXSnackbar(dashboardPane);
@@ -86,15 +88,12 @@ public class DashboardController implements Initializable {
 		}
 
 		username.setText(String.format("Welcome %s!", gameDataCookie.getPlayerDTO().getUsername()));
-		String scoreInfo;
-		if (gameDataCookie.getGameSessionDTO() != null) {
-			scoreInfo = String.format("Your Total Score: %s\nYour Ongoing Game Session Score: %s",
-					gameDataCookie.getPlayerDTO().getTotalScore(), gameDataCookie.getGameSessionDTO().getSessionScore());
+		totalScore.setText(String.format("Your Total Score: %s", gameDataCookie.getPlayerDTO().getTotalScore()));
+		if (gameDataCookie.getPlayerDTO().getHasOngoingSession()) {
+			ongoingSessionScore.setText(String.format("Ongoing Session Score: %s", gameDataCookie.getGameSessionDTO().getSessionScore()));
 		} else {
-			scoreInfo = String.format("Your Total Score: %s", gameDataCookie.getPlayerDTO().getTotalScore());
 			continueGameButton.setDisable(true);
 		}
-		totalScore.setText(scoreInfo);
 		loadingSpinner.setVisible(false);
 		innerPane.setDisable(false);
 	}
@@ -111,7 +110,7 @@ public class DashboardController implements Initializable {
 	public void onClickContinueGame(ActionEvent event) throws IOException {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
-		if (gameDataCookie.getGameSessionDTO() != null) {
+		if (gameDataCookie.getPlayerDTO().getHasOngoingSession()) {
 			/* Redirect to The Last Checkpoint (Saved Level) */
 			String lastSavedLevel = resolveGameSessionLevel(gameDataCookie.getGameSessionDTO().getCurrentLevel());
 			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

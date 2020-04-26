@@ -2,6 +2,9 @@ package com.coronakiller.ui.model;
 
 import lombok.*;
 
+/**
+ * Model for the cookie of application
+ */
 @Getter
 @Setter
 @Builder

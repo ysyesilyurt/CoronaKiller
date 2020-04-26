@@ -1,6 +1,7 @@
 package com.coronakiller.ui.controller;
 
 import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.model.Score;
 import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSnackbar;
@@ -26,10 +27,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
 
@@ -41,6 +39,9 @@ import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
 @Component
 public class LeaderBoardController implements Initializable {
 	private JFXSnackbar snackbar;
+
+	@FXML
+	public Text ongoingSessionScore;
 
 	@FXML
 	public JFXButton logoutButton;
@@ -70,7 +71,7 @@ public class LeaderBoardController implements Initializable {
 	public JFXButton backToDashboardButton;
 
 	private TableView<Integer> leaderboard;
-	private List<Map<String, Long>> leaderBoardData = new ArrayList<>();
+	private List<Score> leaderBoardData = new ArrayList<>();
 	private List<Long> scores;
 	private List<String> userNames;
 
@@ -90,8 +91,11 @@ public class LeaderBoardController implements Initializable {
 		snackbar = new JFXSnackbar(leaderboardPane);
 		username.setText(String.format("Welcome %s!", gameDataCookie.getPlayerDTO().getUsername()));
 		totalScore.setText(String.format("Your Total Score: %s", gameDataCookie.getPlayerDTO().getTotalScore()));
+		if (gameDataCookie.getPlayerDTO().getHasOngoingSession()) {
+			ongoingSessionScore.setText(String.format("Ongoing Session Score: %s", gameDataCookie.getGameSessionDTO().getSessionScore()));
+		}
 
-		Pair<List<Map<String, Long>>, String> result = RequestService.getLeaderBoard("all");
+		Pair<List<Score>, String> result = RequestService.getLeaderBoard("all");
 		snackbarContent.setText(result.getValue1());
 		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 		if (result.getValue0() != null) {
@@ -152,11 +156,9 @@ public class LeaderBoardController implements Initializable {
 	private void parseLeaderBoardData() {
 		scores.clear();
 		userNames.clear();
-		for (Map<String, Long> leaderBoardDatum : leaderBoardData) {
-			Object[] tempArray = leaderBoardDatum.values().toArray();
-			userNames.add((String) tempArray[0]);
-			Integer d = (Integer) tempArray[1];
-			scores.add(d.longValue());
+		for (Score score : leaderBoardData) {
+			userNames.add(score.getUsername());
+			scores.add(score.getScore());
 		}
 	}
 
@@ -172,7 +174,7 @@ public class LeaderBoardController implements Initializable {
 		String selectedItem = timeBox.getSelectionModel().getSelectedItem();
 		if (selectedItem.equals("All Time Leaderboard")) {
 			leaderBoardData.clear();
-			Pair<List<Map<String, Long>>, String> result = RequestService.getLeaderBoard("all");
+			Pair<List<Score>, String> result = RequestService.getLeaderBoard("all");
 			snackbarContent.setText(result.getValue1());
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			if (result.getValue0() != null) {
@@ -180,7 +182,7 @@ public class LeaderBoardController implements Initializable {
 			}
 		} else if (selectedItem.equals("Monthly Leaderboard")) {
 			leaderBoardData.clear();
-			Pair<List<Map<String, Long>>, String> result = RequestService.getLeaderBoard("monthly");
+			Pair<List<Score>, String> result = RequestService.getLeaderBoard("monthly");
 			snackbarContent.setText(result.getValue1());
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			if (result.getValue0() != null) {
@@ -188,7 +190,7 @@ public class LeaderBoardController implements Initializable {
 			}
 		} else {
 			leaderBoardData.clear();
-			Pair<List<Map<String, Long>>, String> result = RequestService.getLeaderBoard("weekly");
+			Pair<List<Score>, String> result = RequestService.getLeaderBoard("weekly");
 			snackbarContent.setText(result.getValue1());
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			if (result.getValue0() != null) {

@@ -16,10 +16,10 @@
         <ImageView fitHeight="101.0" fitWidth="92.0" layoutX="218.0" layoutY="-18.0" AnchorPane.leftAnchor="218.0" AnchorPane.rightAnchor="241.0">
             <Image url="@../images/leaderBoardIcon.png" />
         </ImageView>
-        <ImageView fitHeight="101.0" fitWidth="92.0" layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="433.0">
+        <ImageView fitHeight="101.0" fitWidth="92.0" layoutX="14.0" layoutY="29.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="433.0">
             <Image url="@../images/virIcon-that-points.png" />
         </ImageView>
-        <ImageView fitHeight="101.0" fitWidth="92.0" layoutX="433.0" layoutY="14.0" AnchorPane.leftAnchor="433.0" AnchorPane.rightAnchor="14.0">
+        <ImageView fitHeight="101.0" fitWidth="92.0" layoutX="433.0" layoutY="29.0" AnchorPane.leftAnchor="433.0" AnchorPane.rightAnchor="14.0">
             <Image url="@../images/virIcon8.png" />
         </ImageView>
         <Text fill="WHITE" layoutX="121.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEADER CORONA KILLERS">
@@ -46,13 +46,18 @@
                 <Font name="Dyuthi" size="18.0" />
             </font>
         </JFXButton>
+        <Text fx:id="ongoingSessionScore" fill="WHITE" layoutX="359.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+            <font>
+                <Font name="Dyuthi" size="18.0" />
+            </font>
+        </Text>
     </AnchorPane>
     <Text fx:id="snackbarContent" layoutX="73.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="custom-snackbar" textAlignment="CENTER">
         <font>
             <Font name="Dyuthi" size="27.0" />
         </font>
     </Text>
-    <Text fx:id="totalScore" fill="WHITE" layoutX="415.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+    <Text fx:id="totalScore" fill="WHITE" layoutX="394.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
         <font>
             <Font name="Dyuthi" size="18.0" />
         </font>

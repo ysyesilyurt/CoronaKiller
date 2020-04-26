@@ -10,10 +10,10 @@
 		<Image url="@../images/bGround2.jpg" />
 	</ImageView>
 	<AnchorPane fx:id="innerPane" layoutX="35.0" layoutY="43.0" prefHeight="750.0" prefWidth="539.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="43.0">
-		<ImageView fitHeight="101.0" fitWidth="92.0" layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="433.0">
+		<ImageView fitHeight="101.0" fitWidth="92.0" layoutX="14.0" layoutY="29.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="433.0">
 			<Image url="@../images/virIcon-that-points.png" />
 		</ImageView>
-		<ImageView fitHeight="101.0" fitWidth="92.0" layoutX="433.0" layoutY="14.0" AnchorPane.leftAnchor="433.0" AnchorPane.rightAnchor="14.0">
+		<ImageView fitHeight="101.0" fitWidth="92.0" layoutX="433.0" layoutY="29.0" AnchorPane.leftAnchor="433.0" AnchorPane.rightAnchor="14.0">
 			<Image url="@../images/virIcon8.png" />
 		</ImageView>
 		<JFXButton fx:id="continueGameButton" layoutX="167.0" layoutY="195.0" onAction="#onClickContinueGame" prefHeight="63.0" prefWidth="206.0" ripplerFill="#cd2026" styleClass="jfx-button-raised" text="Continue Game" textAlignment="CENTER" textFill="WHITE">
@@ -33,13 +33,18 @@
    			<Font name="Dyuthi" size="18.0" />
    		</font>
       </JFXButton>
+   	<Text fx:id="ongoingSessionScore" fill="WHITE" layoutX="359.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+   		<font>
+   			<Font name="Dyuthi" size="18.0" />
+   		</font>
+   	</Text>
 	</AnchorPane>
 	<Text fx:id="snackbarContent" layoutX="73.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="custom-snackbar" textAlignment="CENTER">
 		<font>
 			<Font name="Dyuthi" size="27.0" />
 		</font>
 	</Text>
-	<Text fx:id="totalScore" fill="WHITE" layoutX="415.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+	<Text fx:id="totalScore" fill="WHITE" layoutX="394.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
 		<font>
 			<Font name="Dyuthi" size="18.0" />
 		</font>

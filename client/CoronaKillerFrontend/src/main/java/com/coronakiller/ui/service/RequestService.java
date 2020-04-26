@@ -1,10 +1,8 @@
 package com.coronakiller.ui.service;
 
 import com.coronakiller.ui.constants.UiConstants;
-import com.coronakiller.ui.model.GameData;
-import com.coronakiller.ui.model.GameSession;
-import com.coronakiller.ui.model.Player;
-import com.coronakiller.ui.model.RestApiResponse;
+import com.coronakiller.ui.model.*;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.*;
 import lombok.extern.slf4j.Slf4j;
@@ -82,7 +80,7 @@ public class RequestService {
 					return Pair.with(null, mappedResponse.getMessage());
 				}
 			} else {
-				log.warn("Got HTTP {} from startNewGame request", response.code());
+				log.warn("Got HTTP {} from login request", response.code());
 				String responseString = resolveHttpCodeResponse(response.code());
 				return Pair.with(null, responseString);
 			}
@@ -130,7 +128,7 @@ public class RequestService {
 					return Pair.with(null, mappedResponse.getMessage());
 				}
 			} else {
-				log.warn("Got HTTP {} from startNewGame request", response.code());
+				log.warn("Got HTTP {} from register request", response.code());
 				String responseString = resolveHttpCodeResponse(response.code());
 				return Pair.with(null, responseString);
 			}
@@ -152,7 +150,7 @@ public class RequestService {
 	 * @param leaderBoardType
 	 * @return Pair<List < Map < String, Long>>, String>
 	 */
-	public static Pair<List<Map<String, Long>>, String> getLeaderBoard(String leaderBoardType) {
+	public static Pair<List<Score>, String> getLeaderBoard(String leaderBoardType) {
 		if (gameDataCookie.getPlayerDTO() != null) {
 			String authorizationHeader = Credentials.basic(gameDataCookie.getPlayerDTO().getUsername(),
 					gameDataCookie.getPlayerDTO().getPassword());
@@ -167,14 +165,15 @@ public class RequestService {
 					String responseBody = response.body().string();
 					RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
 					if (mappedResponse.getResult().equals("success")) {
-						List<Map<String, Long>> leaderBoard = objectMapper.convertValue(mappedResponse.getData(), List.class);
+						List<Map<String, Long>> rawLeaderboard = objectMapper.convertValue(mappedResponse.getData(), List.class);
+						List<Score> leaderBoard = objectMapper.convertValue(rawLeaderboard, new TypeReference<List<Score>>() {});
 						return Pair.with(leaderBoard, mappedResponse.getMessage());
 					} else {
 						log.warn("Request result is 'fail' on getLeaderBoard request");
 						return Pair.with(null, mappedResponse.getMessage());
 					}
 				} else {
-					log.warn("Got HTTP {} from startNewGame request", response.code());
+					log.warn("Got HTTP {} from getLeaderBoard request", response.code());
 					String responseString = resolveHttpCodeResponse(response.code());
 					return Pair.with(null, responseString);
 				}
@@ -216,11 +215,11 @@ public class RequestService {
 						GameData gameData = objectMapper.convertValue(mappedResponse.getData(), GameData.class);
 						return Pair.with(gameData, mappedResponse.getMessage());
 					} else {
-						log.warn("Request result is 'fail' on continueGameSession request");
+						log.warn("Request result is 'fail' on getGameDataById request");
 						return Pair.with(null, mappedResponse.getMessage());
 					}
 				} else {
-					log.warn("Got HTTP {} from startNewGame request", response.code());
+					log.warn("Got HTTP {} from getGameDataById request", response.code());
 					String responseString = resolveHttpCodeResponse(response.code());
 					return Pair.with(null, responseString);
 				}
