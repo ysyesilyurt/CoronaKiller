@@ -42,6 +42,9 @@ public class SpaceShipBullet1 extends Bullet {
 		Iterator<Virus> virusIterator = GameLevel1Controller.levelViruses.iterator();
 		while (virusIterator.hasNext()) {
 			Virus virus = virusIterator.next();
+			System.out.println("Virus = "+virus.getBoundsInParent());
+			System.out.println("Bullet = "+super.getBoundsInParent());
+			System.out.println(virus.getBoundsInParent().intersects(super.getBoundsInParent()));
 			if(virus.getBoundsInParent().intersects(this.getBoundsInParent())){
 				super.getBulletTimeline().stop();
 				currentPane.getChildren().remove(this);

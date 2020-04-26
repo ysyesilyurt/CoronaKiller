@@ -33,12 +33,11 @@ public abstract class Bullet extends Rectangle {
 		this.bulletTimeline = new Timeline(
 				new KeyFrame( Duration.millis(10), e ->{
 					this.setY(this.getY()- bulletVelocity);
+					this.checkCollision(currentPane);
 				})
 		);
 		this.bulletTimeline.setCycleCount(Timeline.INDEFINITE);
 		this.bulletTimeline.play();
-
-		this.checkCollision(currentPane);
 	}
 
 	public abstract void checkCollision(Pane currentPane);
