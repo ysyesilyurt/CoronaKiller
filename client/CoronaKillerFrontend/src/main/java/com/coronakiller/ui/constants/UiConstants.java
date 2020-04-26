@@ -27,5 +27,4 @@ public class UiConstants {
 	public static final String GAME_LEVEL2_PAGE = "fxml/game-level2.fxml";
 	public static final String GAME_LEVEL3_PAGE = "fxml/game-level3.fxml";
 	public static final String GAME_LEVEL4_PAGE = "fxml/game-level4.fxml";
-
 }

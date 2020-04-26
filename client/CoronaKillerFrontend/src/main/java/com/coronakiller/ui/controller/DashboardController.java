@@ -1,6 +1,5 @@
 package com.coronakiller.ui.controller;
 
-import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.GameData;
 import com.coronakiller.ui.model.GameSession;
@@ -71,6 +70,7 @@ public class DashboardController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
+		// TODO: WHEN PLAYERS RETURNS TO DASHBOARD FROM GAME REQUEST TO GET UPDATED SCORE + GAMESESSION FROM BACKEND OR USE UPDATED PLAYER..
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
 		snackbar = new JFXSnackbar(dashboardPane);
@@ -90,8 +90,7 @@ public class DashboardController implements Initializable {
 		if (gameDataCookie.getGameSessionDTO() != null) {
 			scoreInfo = String.format("Your Total Score: %s\nYour Ongoing Game Session Score: %s",
 					gameDataCookie.getPlayerDTO().getTotalScore(), gameDataCookie.getGameSessionDTO().getSessionScore());
-		}
-		else {
+		} else {
 			scoreInfo = String.format("Your Total Score: %s", gameDataCookie.getPlayerDTO().getTotalScore());
 			continueGameButton.setDisable(true);
 		}
@@ -105,6 +104,7 @@ public class DashboardController implements Initializable {
 	 * First checks if cookie has a game session of the player (even though button will be disabled
 	 * if he/she does not have any) then redirects user to corresponding Game Level page (if has a game session).
 	 * Otherwise notifies user that he/she does not have an ongoing game session.
+	 *
 	 * @param event
 	 */
 	@FXML
@@ -130,6 +130,7 @@ public class DashboardController implements Initializable {
 	 * Method that is fired on the new-game button click action.
 	 * First makes a startGameSession request to backend to get the an initial GameSession of the Player.
 	 * Then sets the player game session cookie and redirects user to first level of the game.
+	 *
 	 * @param event
 	 */
 	@FXML
@@ -144,8 +145,8 @@ public class DashboardController implements Initializable {
 			gameDataCookie.setGameSessionDTO(result.getValue0());
 			/* Redirect to The Last Checkpoint (Saved Level) */
 			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.GAME_LEVEL1_PAGE));
-			Scene scene = new Scene(dashboardPage, 600, 800);
+			Parent level1Page = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.GAME_LEVEL1_PAGE));
+			Scene scene = new Scene(level1Page, 600, 800);
 			currentStage.setScene(scene);
 			currentStage.show();
 		}
@@ -156,6 +157,7 @@ public class DashboardController implements Initializable {
 	/**
 	 * Method that is fired on the leaderboard button click action.
 	 * Redirects user to Leaderboard page.
+	 *
 	 * @param event
 	 * @throws IOException
 	 */
@@ -175,6 +177,7 @@ public class DashboardController implements Initializable {
 	/**
 	 * Method that is fired on the logout button click action.
 	 * Clears the application currentPlayer cookie and redirects user to Login page.
+	 *
 	 * @param event
 	 * @throws IOException
 	 */
