@@ -1,7 +1,5 @@
 package com.coronakiller.ui.constants;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
 public class UiConstants {
 	/* General Application Constants */
 	public static final String BACKEND_BASE_URL = "http://localhost:8080/api";

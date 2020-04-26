@@ -17,9 +17,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * This class sets up the JavaFX stage when it's ready.
- * Namely it listens the stage ready event that is created
- * and fired in FxApplication.java, then sets up the stage accordingly.
+ * This is a listener class that sets up the JavaFX stage when it's ready.
+ * Namely it listens the stage ready event that is created and fired in
+ * FxApplication.java, then sets up the stage (and application variables) accordingly.
+ * Default first scene is Login Page, so this class first renders the Login Page.
  */
 @Slf4j
 @Component

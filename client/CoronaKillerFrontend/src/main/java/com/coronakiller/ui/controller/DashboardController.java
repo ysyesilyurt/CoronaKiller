@@ -21,30 +21,43 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller that manages Dashboard Page
+ */
 @Component
 public class DashboardController implements Initializable {
 	private JFXSnackbar snackbar;
 
 	@FXML
 	public JFXButton logoutButton;
+
 	@FXML
 	public JFXSpinner loadingSpinner;
+
 	@FXML
 	public AnchorPane dashboardPane;
+
 	@FXML
 	public AnchorPane innerPane;
+
 	@FXML
 	public JFXButton continueGameButton;
+
 	@FXML
 	public JFXButton newGameButton;
+
 	@FXML
 	public JFXButton leaderboardButton;
+
 	@FXML
 	public Text snackbarContent;
+
 	@FXML
 	public Text totalScore;
+
 	@FXML
 	public Text username;
+
 	@FXML
 	private JFXButton leaderBoardButton;
 
@@ -61,6 +74,13 @@ public class DashboardController implements Initializable {
 		innerPane.setDisable(false);
 	}
 
+	/**
+	 * Method that is fired on the continue-game button click action.
+	 * First makes a continueGameSession request to backend to get the GameSession of the Player.
+	 * Then checks game session to determine the level where it'll be continued from.
+	 * Finally redirects user to corresponding Game Level page.
+	 * @param event
+	 */
 	@FXML
 	public void onClickContinueGame(ActionEvent event) {
 		loadingSpinner.setVisible(true);
@@ -70,6 +90,12 @@ public class DashboardController implements Initializable {
 		innerPane.setDisable(false);
 	}
 
+	/**
+	 * Method that is fired on the new-game button click action.
+	 * First makes a startGameSession request to backend to get the an initial GameSession of the Player.
+	 * Then redirects user to first level of the game.
+	 * @param event
+	 */
 	@FXML
 	public void onClickNewGame(ActionEvent event) {
 		loadingSpinner.setVisible(true);
@@ -79,6 +105,12 @@ public class DashboardController implements Initializable {
 		innerPane.setDisable(false);
 	}
 
+	/**
+	 * Method that is fired on the leaderboard button click action.
+	 * Redirects user to Leaderboard page.
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	public void onClickGoToLeaderboard(ActionEvent event) throws IOException {
 		loadingSpinner.setVisible(true);
@@ -92,6 +124,12 @@ public class DashboardController implements Initializable {
 		innerPane.setDisable(false);
 	}
 
+	/**
+	 * Method that is fired on the logout button click action.
+	 * Clears the application currentPlayer cookie and redirects user to Login page.
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	public void onClickLogout(ActionEvent event) throws IOException {
 		/* Remove player cookie */

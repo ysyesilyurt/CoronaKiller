@@ -15,12 +15,19 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.ConnectException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RequestService {
 
 	private static final ObjectMapper objectMapper = new ObjectMapper();
 
+	/**
+	 * A static helper method for generic determination of String to respond
+	 * to caller method that is calling the request method
+	 * @param httpCode
+	 * @return String
+	 */
 	public static String resolveHttpCodeResponse(Integer httpCode) {
 		switch (httpCode) {
 			case 400:
@@ -37,10 +44,11 @@ public class RequestService {
 	}
 
 	/**
-	 * This method post request to rest service and return the result as a player.
-	 *
-	 * @param player User to login
-	 * @return User
+	 * Static login request method. Can be called from any controller code.
+	 * Creates initial Player credentials and makes the request to the backend.
+	 * Responses with logged in player and response message to the caller code.
+	 * @param player
+	 * @return Pair<Player, String>
 	 */
 	public static Pair<Player, String> login(Player player) {
 		/* Construct the password first */
@@ -78,11 +86,13 @@ public class RequestService {
 	}
 
 	/**
-	 * Register player by given credentials.
+	 * Static register request method. Can be called from any controller code.
+	 * Creates initial Player credentials and makes the request to the backend.
+	 * Responses with created player and response message to the caller code.
 	 * Beware no authorization header is provided, since this endpoint is not authorized.
 	 *
-	 * @param player Credentials of Player to Register
-	 * @return Pair<Boolean, String> - first field indicates operation result, second field returns its message
+	 * @param player
+	 * @return Pair<Player, String>
 	 */
 	public static Pair<Player, String> register(Player player) {
 		/* Construct the password first */
@@ -154,7 +164,16 @@ public class RequestService {
 		}
 	}
 
-	public static Pair<List<?>, String> getLeaderBoard(String leaderBoardType) {
+	/**
+	 * Static getLeaderBoard request method. Can be called from any controller code.
+	 * Creates a GET request with the specified type of leaderboard as the GET parameter,
+	 * fetches current Player credentials and makes the request to the backend.
+	 * Responses with created leaderboard and response message to the caller code.
+	 *
+	 * @param leaderBoardType
+	 * @return Pair<List<Map<String, Long>>, String>
+	 */
+	public static Pair<List<Map<String, Long>>, String> getLeaderBoard(String leaderBoardType) {
 		/* Construct the password first */
 		OkHttpClient client = new OkHttpClient();
 		String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
@@ -169,7 +188,7 @@ public class RequestService {
 				String responseBody = response.body().string();
 				RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
 				if (mappedResponse.getResult().equals("success")) {
-					List<?> leaderBoard = objectMapper.convertValue(mappedResponse.getData(), List.class);
+					List<Map<String, Long>> leaderBoard = objectMapper.convertValue(mappedResponse.getData(), List.class);
 					return Pair.with(leaderBoard, mappedResponse.getMessage());
 				} else {
 					return Pair.with(null, mappedResponse.getMessage());

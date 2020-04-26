@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller that manages Login Page (Default first scene of the application)
+ */
 @Component
 public class LoginController implements Initializable {
 
@@ -61,6 +64,16 @@ public class LoginController implements Initializable {
 		snackbar = new JFXSnackbar(loginPane);
 	}
 
+	/**
+	 * Method that is fired on the login button click action.
+	 * It first validates the values of the inputs then it build a player with provided data.
+	 * Then it makes a login request to backend via static login method.
+	 * On successful login it sets the currentPlayer Cookie and redirects user to Dashboard page.
+	 * Else displays an error toast to user.
+	 *
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	protected void onClickLogin(ActionEvent event) throws IOException {
 		loadingSpinner.setVisible(true);
@@ -95,6 +108,13 @@ public class LoginController implements Initializable {
 		innerPane.setDisable(false);
 	}
 
+	/**
+	 * Method that is fired on the sign-up button click action.
+	 * Redirects user to Register page.
+	 *
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	protected void onClickGoToRegister(ActionEvent event) throws IOException {
 		loadingSpinner.setVisible(true);
