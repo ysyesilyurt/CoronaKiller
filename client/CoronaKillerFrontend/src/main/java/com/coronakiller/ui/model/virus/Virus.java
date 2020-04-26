@@ -27,4 +27,5 @@ public abstract class Virus extends Rectangle {
 
 	public abstract void stopFireAndMove();
 
+	public abstract void changeIconOfVirus();
 }

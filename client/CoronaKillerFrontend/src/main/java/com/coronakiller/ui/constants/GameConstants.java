@@ -45,10 +45,22 @@ public class GameConstants {
 	public static final int EASY_VIRUS_HEALTH = 2;
 	public static final int EASY_VIRUS_WIDTH = 30;
 	public static final int EASY_VIRUS_HEIGHT = 50;
+	//TODO:change icon url
+	public static final String EASY_VIRUS_ICON_URL = "";
 
 	/* Medium Virus Constants */
 	public static final int MEDIUM_VIRUS_VELOCITY = 15;
 	public static final int MEDIUM_VIRUS_HEALTH = 4;
 	public static final int MEDIUM_VIRUS_WIDTH = 40;
 	public static final int MEDIUM_VIRUS_HEIGHT = 70;
+	//TODO:change icon url
+	public static final String MEDIUM_VIRUS_ICON_URL = "";
+
+	/* Hard Virus Constants */
+	public static final int HARD_VIRUS_VELOCITY = 20;
+	public static final int HARD_VIRUS_HEALTH = 8;
+	public static final int HARD_VIRUS_WIDTH = 50;
+	public static final int HARD_VIRUS_HEIGHT = 80;
+	//TODO:change icon url
+	public static final String HARD_VIRUS_ICON_URL = "";
 }

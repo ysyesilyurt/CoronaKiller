@@ -4,8 +4,12 @@ import com.coronakiller.ui.model.bullet.SpaceShipBullet1;
 import com.coronakiller.ui.model.bullet.VirusBullet1;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
+
+import java.util.Random;
 
 import static com.coronakiller.ui.constants.GameConstants.*;
 
@@ -22,8 +26,10 @@ public class MediumVirus extends Virus {
 	}
 	@Override
 	public void virusAutoFire(Pane currentPane) {
+		Random rand = new Random();
+		int ms = 1000 + rand.nextInt(1000);
 		mediumVirusFireTimeline = new Timeline(
-				new KeyFrame(Duration.millis(500), e -> {
+				new KeyFrame(Duration.millis(ms), e -> {
 					VirusBullet1 bullet = new VirusBullet1(this.getX()+this.getWidth()/2, this.getY());
 					currentPane.getChildren().add(bullet);
 					bullet.moveBullet(currentPane);
@@ -35,7 +41,7 @@ public class MediumVirus extends Virus {
 	@Override
 	public void virusAutoMove() {
 		this.mediumVirusMoveTimeline = new Timeline(
-				new KeyFrame( Duration.millis(500), e ->{
+				new KeyFrame( Duration.millis(750), e ->{
 					if(moveDirectionFlag) {
 						this.setX(this.getX() - MEDIUM_VIRUS_VELOCITY);
 						moveCounter--;
@@ -58,5 +64,11 @@ public class MediumVirus extends Virus {
 	public void stopFireAndMove() {
 		this.mediumVirusMoveTimeline.stop();
 		this.mediumVirusFireTimeline.stop();
+	}
+
+	@Override
+	public void changeIconOfVirus() {
+		Image mediumVirusIcon = new Image(MEDIUM_VIRUS_ICON_URL);
+		this.setFill(new ImagePattern(mediumVirusIcon));
 	}
 }
