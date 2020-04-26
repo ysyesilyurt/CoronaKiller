@@ -2,9 +2,11 @@ package com.coronakiller.ui.controller;
 
 import com.coronakiller.ui.application.StageInitializer;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXSnackbar;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,9 +16,13 @@ import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 @Component
-public class DashboardController {
+public class DashboardController implements Initializable {
+
+	private JFXSnackbar snackbar;
 
 	@FXML
 	public AnchorPane dashboardPane;
@@ -37,8 +43,9 @@ public class DashboardController {
 	@FXML
 	private JFXButton leaderBoardButton;
 
-	@FXML
-	public void initialize() {
+	@Override
+	public void initialize(URL url, ResourceBundle resourceBundle) {
+		snackbar = new JFXSnackbar(dashboardPane);
 		dashboardPane.getStylesheets().add("css/styles.css");
 		username.setText(String.format("Welcome %s!", StageInitializer.currentPlayer.getUsername()));
 		totalScore.setText(String.format("Your Total Score: %s", StageInitializer.currentPlayer.getTotalScore()));

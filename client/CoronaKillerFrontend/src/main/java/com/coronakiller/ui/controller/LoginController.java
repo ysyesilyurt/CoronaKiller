@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXSpinner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,9 +22,13 @@ import org.javatuples.Pair;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 @Component
-public class LoginController {
+public class LoginController implements Initializable {
+
+	private JFXSnackbar snackbar;
 
 	@FXML
 	private TextField nameField;
@@ -49,16 +54,16 @@ public class LoginController {
 	@FXML
 	private AnchorPane loginPane;
 
-	@FXML
-	public void initialize() {
+	@Override
+	public void initialize(URL url, ResourceBundle resourceBundle) {
 		loginPane.getStylesheets().add("css/styles.css");
+		snackbar = new JFXSnackbar(loginPane);
 	}
 
 	@FXML
 	protected void onClickLogin(ActionEvent event) throws IOException {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
-		JFXSnackbar snackbar = new JFXSnackbar(loginPane);
 		if (nameField.getText().isEmpty()) {
 			snackbarContent.setText("Please enter your username");
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
