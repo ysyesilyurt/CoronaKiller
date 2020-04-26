@@ -4,7 +4,9 @@ import com.coronakiller.ui.model.bullet.SpaceShipBullet1;
 import com.coronakiller.ui.model.bullet.VirusBullet1;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 
 import static com.coronakiller.ui.constants.GameConstants.*;
@@ -58,5 +60,11 @@ public class MediumVirus extends Virus {
 	public void stopFireAndMove() {
 		this.mediumVirusMoveTimeline.stop();
 		this.mediumVirusFireTimeline.stop();
+	}
+
+	@Override
+	public void changeIconOfVirus() {
+		Image mediumVirusIcon = new Image(MEDIUM_VIRUS_ICON_URL);
+		this.setFill(new ImagePattern(mediumVirusIcon));
 	}
 }
