@@ -61,7 +61,7 @@ public class RegisterController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		registerPane.getStylesheets().add("css/styles.css");
+		registerPane.getStylesheets().add(UiConstants.GENERAL_STYLES);
 		snackbar = new JFXSnackbar(registerPane);
 	}
 
@@ -95,7 +95,7 @@ public class RegisterController implements Initializable {
 				StageInitializer.currentPlayer = result.getValue0();
 				/* Then Route to Dashboard */
 				Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-				Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashboard.fxml"));
+				Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.DASHBOARD_PAGE));
 				Scene scene = new Scene(dashboardPage, 600, 800);
 				currentStage.setScene(scene);
 				currentStage.show();
@@ -108,7 +108,7 @@ public class RegisterController implements Initializable {
 	@FXML
 	protected void onClickBackToLogin(ActionEvent event) throws IOException {
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent loginPage = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/login.fxml"));
+		Parent loginPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.LOGIN_PAGE));
 		Scene scene = new Scene(loginPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
