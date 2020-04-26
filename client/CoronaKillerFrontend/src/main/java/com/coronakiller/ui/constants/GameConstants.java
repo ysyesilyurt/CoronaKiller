@@ -24,6 +24,22 @@ public class GameConstants {
 	//TODO:change icon url
 	public static final String SPACESHIP_BULLET2_ICON_URL = "";
 
+	/* Virus Bullet 1 Constants */
+	public static final int VIRUS_BULLET1_VELOCITY = 5;
+	public static final int VIRUS_BULLET1_DAMAGE = 5;
+	public static final int VIRUS_BULLET1_WIDTH = 5;
+	public static final int VIRUS_BULLET1_HEIGHT = 10;
+	//TODO:change icon url
+	public static final String VIRUS_BULLET1_ICON_URL = "";
+
+	/* Virus Bullet 2 Constants */
+	public static final int VIRUS_BULLET2_VELOCITY = 10;
+	public static final int VIRUS_BULLET2_DAMAGE = 10;
+	public static final int VIRUS_BULLET2_WIDTH = 6;
+	public static final int VIRUS_BULLET2_HEIGHT = 12;
+	//TODO:change icon url
+	public static final String VIRUS_BULLET2_ICON_URL = "";
+
 	/* Easy Virus Constants */
 	public static final int EASY_VIRUS_VELOCITY = 5;
 	public static final int EASY_VIRUS_HEALTH = 2;
