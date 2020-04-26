@@ -23,9 +23,10 @@ import java.util.ResourceBundle;
 
 @Component
 public class DashboardController implements Initializable {
-
 	private JFXSnackbar snackbar;
 
+	@FXML
+	public JFXButton logoutButton;
 	@FXML
 	public JFXSpinner loadingSpinner;
 	@FXML
@@ -64,7 +65,7 @@ public class DashboardController implements Initializable {
 	public void onClickContinueGame(ActionEvent event) {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
-
+		// TODO: WHEN PLAYERS RETURNS TO DASHBOARD FROM GAME REQUEST TO GET UPDATED SCORE + GAMESESSION FROM BACKEND OR USE UPDATED PLAYER..
 		loadingSpinner.setVisible(false);
 		innerPane.setDisable(false);
 	}
@@ -73,7 +74,7 @@ public class DashboardController implements Initializable {
 	public void onClickNewGame(ActionEvent event) {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
-
+		// TODO: WHEN PLAYERS RETURNS TO DASHBOARD FROM GAME REQUEST TO GET UPDATED SCORE + GAMESESSION FROM BACKEND OR USE UPDATED PLAYER..
 		loadingSpinner.setVisible(false);
 		innerPane.setDisable(false);
 	}
@@ -89,5 +90,17 @@ public class DashboardController implements Initializable {
 		currentStage.show();
 		loadingSpinner.setVisible(false);
 		innerPane.setDisable(false);
+	}
+
+	@FXML
+	public void onClickLogout(ActionEvent event) throws IOException {
+		/* Remove player cookie */
+		StageInitializer.currentPlayer = null;
+		/* Then Route to Login */
+		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.LOGIN_PAGE));
+		Scene scene = new Scene(dashboardPage, 600, 800);
+		currentStage.setScene(scene);
+		currentStage.show();
 	}
 }

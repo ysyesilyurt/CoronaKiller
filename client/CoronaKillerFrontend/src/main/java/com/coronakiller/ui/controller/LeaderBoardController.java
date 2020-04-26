@@ -1,6 +1,7 @@
 package com.coronakiller.ui.controller;
 
 import com.coronakiller.ui.application.StageInitializer;
+import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSnackbar;
@@ -39,8 +40,10 @@ import java.util.ResourceBundle;
 
 @Component
 public class LeaderBoardController implements Initializable {
-
 	private JFXSnackbar snackbar;
+
+	@FXML
+	public JFXButton logoutButton;
 
 	@FXML
 	public JFXSpinner loadingSpinner;
@@ -220,12 +223,24 @@ public class LeaderBoardController implements Initializable {
 		innerPane.setDisable(true);
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/fxml/dashboard.fxml"));
+		loader.setLocation(getClass().getResource(UiConstants.DASHBOARD_PAGE));
 		Parent dashboardPage = loader.load();
 		Scene scene = new Scene(dashboardPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
 		loadingSpinner.setVisible(false);
 		innerPane.setDisable(false);
+	}
+
+	@FXML
+	public void onClickLogout(ActionEvent event) throws IOException {
+		/* Remove player cookie */
+		StageInitializer.currentPlayer = null;
+		/* Then Route to Login */
+		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.LOGIN_PAGE));
+		Scene scene = new Scene(dashboardPage, 600, 800);
+		currentStage.setScene(scene);
+		currentStage.show();
 	}
 }

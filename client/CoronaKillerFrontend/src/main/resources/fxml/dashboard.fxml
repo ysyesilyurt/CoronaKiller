@@ -28,6 +28,11 @@
 			<font>
 				<Font name="Dyuthi" size="27.0" />
 			</font></JFXButton>
+   	<JFXButton fx:id="logoutButton" layoutX="14.0" layoutY="695.0" onAction="#onClickLogout" prefHeight="24.0" prefWidth="92.0" ripplerFill="#cd2026" styleClass="jfx-button-raised" text="Logout" textAlignment="CENTER" textFill="WHITE">
+   		<font>
+   			<Font name="Dyuthi" size="18.0" />
+   		</font>
+      </JFXButton>
 	</AnchorPane>
 	<Text fx:id="snackbarContent" layoutX="73.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="custom-snackbar" textAlignment="CENTER">
 		<font>
