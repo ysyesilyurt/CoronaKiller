@@ -16,6 +16,14 @@ public class GameConstants {
 	//TODO:change icon url
 	public static final String SPACESHIP_BULLET1_ICON_URL = "";
 
+	/* SpaceShip Bullet 2 Constants */
+	public static final int SPACESHIP_BULLET2_VELOCITY = 8;
+	public static final int SPACESHIP_BULLET2_DAMAGE = 2;
+	public static final int SPACESHIP_BULLET2_WIDTH = 8;
+	public static final int SPACESHIP_BULLET2_HEIGHT = 16;
+	//TODO:change icon url
+	public static final String SPACESHIP_BULLET2_ICON_URL = "";
+
 	/* Easy Virus Constants */
 	public static final int EASY_VIRUS_VELOCITY = 5;
 	public static final int EASY_VIRUS_HEALTH = 2;
