@@ -37,7 +37,6 @@ import java.util.ResourceBundle;
  * It utilizes choiceBox and tableView in JavaFx.
  * This view can be accessible from dashboard.
  */
-
 @Component
 public class LeaderBoardController implements Initializable {
 	private JFXSnackbar snackbar;
@@ -91,18 +90,18 @@ public class LeaderBoardController implements Initializable {
 		username.setText(String.format("Welcome %s!", StageInitializer.currentPlayer.getUsername()));
 		totalScore.setText(String.format("Your Total Score: %s", StageInitializer.currentPlayer.getTotalScore()));
 
-		Pair<List<?>, String> result = RequestService.getLeaderBoard("all");
+		Pair<List<Map<String, Long>>, String> result = RequestService.getLeaderBoard("all");
 		snackbarContent.setText(result.getValue1());
 		snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 		if (result.getValue0() != null) {
-			leaderBoardData = (List<Map<String, Long>>) result.getValue0();
+			leaderBoardData = result.getValue0();
 			leaderboard = new TableView<>();
 			scores = new ArrayList<>();
 			userNames = new ArrayList<>();
 			parseLeaderBoardData();
 			formLeaderBoardTable();
 
-			leaderboard.setLayoutX(85);
+			leaderboard.setLayoutX(80);
 			leaderboard.setLayoutY(200);
 			leaderboard.setMinWidth(250);
 
@@ -172,27 +171,27 @@ public class LeaderBoardController implements Initializable {
 		String selectedItem = timeBox.getSelectionModel().getSelectedItem();
 		if (selectedItem.equals("All Time Leaderboard")) {
 			leaderBoardData.clear();
-			Pair<List<?>, String> result = RequestService.getLeaderBoard("all");
+			Pair<List<Map<String, Long>>, String> result = RequestService.getLeaderBoard("all");
 			snackbarContent.setText(result.getValue1());
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			if (result.getValue0() != null) {
-				leaderBoardData = (List<Map<String, Long>>) result.getValue0();
+				leaderBoardData = result.getValue0();
 			}
 		} else if (selectedItem.equals("Monthly Leaderboard")) {
 			leaderBoardData.clear();
-			Pair<List<?>, String> result = RequestService.getLeaderBoard("monthly");
+			Pair<List<Map<String, Long>>, String> result = RequestService.getLeaderBoard("monthly");
 			snackbarContent.setText(result.getValue1());
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			if (result.getValue0() != null) {
-				leaderBoardData = (List<Map<String, Long>>) result.getValue0();
+				leaderBoardData = result.getValue0();
 			}
 		} else {
 			leaderBoardData.clear();
-			Pair<List<?>, String> result = RequestService.getLeaderBoard("weekly");
+			Pair<List<Map<String, Long>>, String> result = RequestService.getLeaderBoard("weekly");
 			snackbarContent.setText(result.getValue1());
 			snackbar.enqueue(new JFXSnackbar.SnackbarEvent(snackbarContent));
 			if (result.getValue0() != null) {
-				leaderBoardData = (List<Map<String, Long>>) result.getValue0();
+				leaderBoardData = result.getValue0();
 			}
 		}
 
@@ -230,6 +229,12 @@ public class LeaderBoardController implements Initializable {
 		innerPane.setDisable(false);
 	}
 
+	/**
+	 * Method that is fired on the logout button click action.
+	 * Clears the application currentPlayer cookie and redirects user to Login page.
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	public void onClickLogout(ActionEvent event) throws IOException {
 		/* Remove player cookie */

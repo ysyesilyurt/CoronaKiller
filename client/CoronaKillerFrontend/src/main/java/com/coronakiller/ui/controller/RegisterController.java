@@ -27,6 +27,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller that manages Register Page
+ */
 @Component
 public class RegisterController implements Initializable {
 
@@ -65,6 +68,15 @@ public class RegisterController implements Initializable {
 		snackbar = new JFXSnackbar(registerPane);
 	}
 
+	/**
+	 * Method that is fired on the register button click action.
+	 * It first validates the values of the inputs then it build a player with provided data.
+	 * Then it makes a register request to backend via static register method.
+	 * On successful login it sets the currentPlayer Cookie and redirects user to Dashboard page.
+	 * Else displays an error toast to user.
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	protected void onClickRegister(ActionEvent event) throws IOException {
 		loadingSpinner.setVisible(true);
@@ -105,6 +117,12 @@ public class RegisterController implements Initializable {
 		innerPane.setDisable(false);
 	}
 
+	/**
+	 * Method that is fired on the sign-in button click action.
+	 * Redirects user to Login page
+	 * @param event
+	 * @throws IOException
+	 */
 	@FXML
 	protected void onClickBackToLogin(ActionEvent event) throws IOException {
 		loadingSpinner.setVisible(true);

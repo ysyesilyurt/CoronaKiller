@@ -2,6 +2,7 @@ package com.coronakiller.ui.application;
 
 import com.coronakiller.ui.application.FxApplication.StageReadyEvent;
 import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.model.GameSession;
 import com.coronakiller.ui.model.Player;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,9 +18,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * This class sets up the JavaFX stage when it's ready.
- * Namely it listens the stage ready event that is created
- * and fired in FxApplication.java, then sets up the stage accordingly.
+ * This is a listener class that sets up the JavaFX stage when it's ready.
+ * Namely it listens the stage ready event that is created and fired in
+ * FxApplication.java, then sets up the stage (and application variables) accordingly.
+ * Default first scene is Login Page, so this class first renders the Login Page.
  */
 @Slf4j
 @Component
@@ -28,9 +30,10 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 	@Value("classpath:/fxml/login.fxml")
 	private Resource loginResource;
 	private final ApplicationContext applicationContext;
-	/* We keep current user information in this static variable
-	* to access it from everywhere through the application. (A Cookie-like mechanism) */
+	/* We keep current user information and game session information (if exists) in these
+	 * static variables to access them from everywhere through the application. (A Cookie-like mechanism) */
 	public static Player currentPlayer;
+	public static GameSession currentPlayerGameSession;
 
 	public StageInitializer(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
@@ -45,8 +48,13 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 			Parent parent = fxmlLoader.load();
 			/* Get the JavaFX stage from the event */
 			Stage stage = event.getStage();
-			stage.setScene(new Scene(parent, 600, 800));
+			Scene firstScene = new Scene(parent, 600, 800);
+			stage.setScene(firstScene);
 			stage.setTitle(UiConstants.WINDOW_TITLE);
+			stage.setMinWidth(600);
+			stage.setMaxWidth(600);
+			stage.setMinHeight(830); // TODO: CHECK HERE - IF SET HEIGHT TO 800 then a shift occurs on pages
+			stage.setMaxHeight(830);
 			stage.show();
 		} catch (IOException e) {
 			log.error("IOException while trying to set the stage from stage initializer.");

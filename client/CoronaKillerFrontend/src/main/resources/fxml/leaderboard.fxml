@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="leaderboardPane" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.LeaderBoardController">
-    <ImageView fitHeight="821.0" fitWidth="612.0">
+    <ImageView fitHeight="800.0" fitWidth="600.0">
         <Image url="@../images/bGround2.jpg" />
     </ImageView>
     <AnchorPane fx:id="innerPane" layoutX="35.0" layoutY="43.0" prefHeight="750.0" prefWidth="539.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="43.0">
