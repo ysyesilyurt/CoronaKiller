@@ -49,8 +49,8 @@ public class GameService {
 		Pair<HttpStatus, ResponseDTO> result = playerService.getPlayerById(playerId);
 		if (result.getSecond().getResult().equals("success")) {
 			PlayerDTO playerDTO = ((PlayerDTO) result.getSecond().getData());
-			Optional<GameSession> gameSession = gameSessionRepository.findById(playerDTO.getGameSessionId());
-			if (gameSession.isPresent()) {
+			if (playerDTO.getGameSessionId() != null) {
+				Optional<GameSession> gameSession = gameSessionRepository.findById(playerDTO.getGameSessionId());
 				GameSessionDTO gameSessionDTO = gameSessionMapper.toGameSessionDTO(gameSession.get());
 				GameDataDTO gameDataDTO = new GameDataDTO(playerDTO, gameSessionDTO);
 				return Pair.of(HttpStatus.OK, new ResponseDTO(gameDataDTO, null, APIConstants.RESPONSE_SUCCESS));
