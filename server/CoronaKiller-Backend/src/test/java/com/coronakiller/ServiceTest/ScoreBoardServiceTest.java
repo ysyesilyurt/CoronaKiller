@@ -29,19 +29,19 @@ public class ScoreBoardServiceTest {
 	ScoreRepository scoreRepository;
 
 	@Test
-	public void getScoreBoardTest(){
-		HashMap hashMap = new HashMap<String, String>();
+	public void getScoreBoardTest() {
+		HashMap<String, String> hashMap = new HashMap<String, String>();
 		hashMap.put("all", "all");
 		List<Map<String, Long>> result = new ArrayList<>();
-		Map map = new HashMap();
-		map.put("Yavuz", (long)100);
-		map.put("Selim", (long)130);
-		map.put("Alper", (long)80);
+		Map<String, Long> map = new HashMap<String, Long>();
+		map.put("Yavuz", (long) 100);
+		map.put("Selim", (long) 130);
+		map.put("Alper", (long) 80);
 		result.add(map);
-		Map map2 = new HashMap();
-		map2.put("Player1", (long)18);
-		map2.put("Player2", (long)17);
-		map2.put("Player3", (long)9);
+		Map<String, Long> map2 = new HashMap<String, Long>();
+		map2.put("Player1", (long) 18);
+		map2.put("Player2", (long) 17);
+		map2.put("Player3", (long) 9);
 		result.add(map2);
 
 		when(scoreRepository.getAllTimeScoreBoard()).thenReturn(result);

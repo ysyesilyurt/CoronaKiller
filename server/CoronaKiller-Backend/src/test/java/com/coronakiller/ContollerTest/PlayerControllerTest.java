@@ -31,32 +31,37 @@ public class PlayerControllerTest {
 	private PlayerService playerService;
 
 	@Test
-	public void getAllPlayersTest(){
+	public void getAllPlayersTest() {
 		PlayerDTO playerDTO1 = new PlayerDTO();
 		PlayerDTO playerDTO2 = new PlayerDTO();
-		playerDTO1.setUsername("Yavuz"); playerDTO1.setPassword("Yavuz'sPass");
-		playerDTO1.setUsername("Alper"); playerDTO1.setPassword("Alper'sPass");
+		playerDTO1.setUsername("Yavuz");
+		playerDTO1.setPassword("Yavuz'sPass");
+		playerDTO1.setUsername("Alper");
+		playerDTO1.setPassword("Alper'sPass");
 		List<PlayerDTO> playerDTOList = new ArrayList<>();
-		playerDTOList.add(playerDTO1); playerDTOList.add(playerDTO2);
+		playerDTOList.add(playerDTO1);
+		playerDTOList.add(playerDTO2);
 		when(playerService.getAllPlayers()).thenReturn(Pair.of(HttpStatus.OK,
 				new ResponseDTO(playerDTOList, null, APIConstants.RESPONSE_SUCCESS)));
 		Assert.assertEquals(playerDTOList, playerController.getAllPlayers().getBody().getData());
 	}
 
 	@Test
-	public void getPlayerByIdTest(){
+	public void getPlayerByIdTest() {
 		PlayerDTO playerDTO1 = new PlayerDTO();
-		playerDTO1.setUsername("Ceng453"); playerDTO1.setPassword("Ceng453'sPass");
+		playerDTO1.setUsername("Ceng453");
+		playerDTO1.setPassword("Ceng453'sPass");
 		when(playerService.getPlayerById((long) 1)).thenReturn(Pair.of(HttpStatus.OK,
 				new ResponseDTO(playerDTO1, null, APIConstants.RESPONSE_SUCCESS)));
-		Assert.assertEquals(playerDTO1, playerController.getPlayerById((long)1).getBody().getData());
+		Assert.assertEquals(playerDTO1, playerController.getPlayerById((long) 1).getBody().getData());
 	}
 
 
 	@Test
-	public void registerPlayerTest(){
+	public void registerPlayerTest() {
 		PlayerDTO playerDTO = new PlayerDTO();
-		playerDTO.setUsername("Ceng453"); playerDTO.setPassword("Ceng453'sPass");
+		playerDTO.setUsername("Ceng453");
+		playerDTO.setPassword("Ceng453'sPass");
 		Pair<HttpStatus, ResponseDTO> response = Pair.of(HttpStatus.OK, new ResponseDTO(null,
 				String.format("Username:%s already exists, please choose another and try again",
 						playerDTO.getUsername()), APIConstants.RESPONSE_FAIL));
@@ -65,8 +70,8 @@ public class PlayerControllerTest {
 	}
 
 	@Test
-	public void removePlayerByIDTest(){
-		Long playerId = (long)13;
+	public void removePlayerByIDTest() {
+		Long playerId = (long) 13;
 		when(playerService.removePlayerById((playerId))).thenReturn(Pair.of(HttpStatus.OK, new ResponseDTO(null,
 				String.format("Player with id:%s successfully removed", playerId), APIConstants.RESPONSE_SUCCESS)));
 		Assert.assertEquals("Player with id:13 successfully removed",
@@ -75,10 +80,11 @@ public class PlayerControllerTest {
 	}
 
 	@Test
-	public void updatePlayerByIdTest(){
-		Long playerId = (long)7;
+	public void updatePlayerByIdTest() {
+		Long playerId = (long) 7;
 		PlayerDTO playerDTO = new PlayerDTO();
-		playerDTO.setUsername("Ceng453"); playerDTO.setPassword("Ceng453'sPass");
+		playerDTO.setUsername("Ceng453");
+		playerDTO.setPassword("Ceng453'sPass");
 		when(playerService.updatePlayerById(playerId, playerDTO)).thenReturn(Pair.of(HttpStatus.OK, new ResponseDTO(null,
 				String.format("Player with id:%s successfully updated", playerId), APIConstants.RESPONSE_SUCCESS)));
 		Assert.assertEquals(APIConstants.RESPONSE_SUCCESS,

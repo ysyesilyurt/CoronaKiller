@@ -20,8 +20,8 @@ import java.util.Optional;
 @Service
 public class PlayerService {
 
-	private PlayerRepository playerRepository;
-	private PlayerMapper playerMapper;
+	private final PlayerRepository playerRepository;
+	private final PlayerMapper playerMapper;
 
 	public PlayerService(PlayerRepository playerRepository,
 						 PlayerMapper playerMapper) {
@@ -29,11 +29,21 @@ public class PlayerService {
 		this.playerMapper = playerMapper;
 	}
 
+	/**
+	 * Service that returns all players in the db
+	 *
+	 * @return Pair<HttpStatus, ResponseDTO>
+	 */
 	public Pair<HttpStatus, ResponseDTO> getAllPlayers() {
 		List<PlayerDTO> playerDTOList = playerMapper.toPlayerDTOList(playerRepository.findAll());
 		return Pair.of(HttpStatus.OK, new ResponseDTO(playerDTOList, null, APIConstants.RESPONSE_SUCCESS));
 	}
 
+	/**
+	 * Service that returns the player specified by id
+	 *
+	 * @return Pair<HttpStatus, ResponseDTO>
+	 */
 	public Pair<HttpStatus, ResponseDTO> getPlayerById(Long playerId) {
 		Optional<Player> queryResult = playerRepository.findById(playerId);
 		if (queryResult.isPresent()) {
@@ -46,6 +56,12 @@ public class PlayerService {
 		}
 	}
 
+	/**
+	 * Service that handles the login process initiated by the authRequest.
+	 * Returns the DTO of logged in player
+	 *
+	 * @return Pair<HttpStatus, ResponseDTO>
+	 */
 	public Pair<HttpStatus, ResponseDTO> handleLogin(Authentication authRequest) {
 		User principal = (User) authRequest.getPrincipal();
 		Optional<Player> player = playerRepository.findByUsername(principal.getUsername());
@@ -58,6 +74,12 @@ public class PlayerService {
 				String.format("User not found with username:%s", principal.getUsername()), APIConstants.RESPONSE_FAIL));
 	}
 
+	/**
+	 * Service that register the player by the given credentials.
+	 * First validates the given credentials then creates a player and saves it. Returns the DTO of created player
+	 *
+	 * @return Pair<HttpStatus, ResponseDTO>
+	 */
 	public Pair<HttpStatus, ResponseDTO> registerPlayer(PlayerDTO playerDTO) {
 		String validationResult = validateRegister(playerDTO);
 		if (validationResult.equals("")) {
@@ -67,21 +89,24 @@ public class PlayerService {
 				PlayerDTO playerDTOtoRespond = playerMapper.toPlayerDTO(player);
 				return Pair.of(HttpStatus.OK, new ResponseDTO(playerDTOtoRespond,
 						String.format("Player is successfully created with username:%s", player.getUsername()), APIConstants.RESPONSE_SUCCESS));
-			}
-			else {
+			} else {
 				log.warn("Username exists, could not complete user registration for username:{}", playerDTO.getUsername());
 				return Pair.of(HttpStatus.OK, new ResponseDTO(null,
 						String.format("Username already exists.\nPlease choose another and try again",
 								playerDTO.getUsername()), APIConstants.RESPONSE_FAIL));
 			}
-		}
-		else {
+		} else {
 			return Pair.of(HttpStatus.OK, new ResponseDTO(null,
 					String.format("Validation Error on registation.\nFollowing constraints must be met: %s", validationResult),
 					APIConstants.RESPONSE_FAIL));
 		}
 	}
 
+	/**
+	 * Helper private method for credential validation of register service
+	 *
+	 * @return Pair<HttpStatus, ResponseDTO>
+	 */
 	private String validateRegister(PlayerDTO playerDTO) {
 		StringBuilder result = new StringBuilder();
 		if (playerDTO != null) {
@@ -95,13 +120,17 @@ public class PlayerService {
 				result.append("& Can not set total score of a player");
 			if (playerDTO.getGameSessionId() != null)
 				result.append("& Can not set game session of a player");
-		}
-		else {
+		} else {
 			result.append("Missing player register credentials as a whole");
 		}
 		return result.toString();
 	}
 
+	/**
+	 * Service that removes the player specified by the id
+	 *
+	 * @return Pair<HttpStatus, ResponseDTO>
+	 */
 	public Pair<HttpStatus, ResponseDTO> removePlayerById(Long playerId) {
 		Optional<Player> queryResult = playerRepository.findById(playerId);
 		if (queryResult.isPresent()) {
@@ -114,6 +143,11 @@ public class PlayerService {
 				String.format("Player not found with id:%s", playerId), APIConstants.RESPONSE_FAIL));
 	}
 
+	/**
+	 * Service that updates the player specified by the id with the given credentials
+	 *
+	 * @return Pair<HttpStatus, ResponseDTO>
+	 */
 	public Pair<HttpStatus, ResponseDTO> updatePlayerById(Long playerId, PlayerDTO playerDTO) {
 		Optional<Player> queryResult = playerRepository.findById(playerId);
 		if (queryResult.isEmpty()) {

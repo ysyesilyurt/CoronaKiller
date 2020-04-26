@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 /* Note: Lombok's @Builder conflicts with Mapstruct's AfterMapping */
@@ -25,12 +26,14 @@ public class Player {
 	private Long id;
 
 	@CreatedDate
+	@Temporal(TemporalType.DATE)
 	@Column(name = "created_at", nullable = false, updatable = false)
-	private long createdAt;
+	private Date createdAt;
 
 	@LastModifiedDate
+	@Temporal(TemporalType.DATE)
 	@Column(name = "last_modified_at", nullable = false)
-	private long lastModifiedAt;
+	private Date lastModifiedAt;
 
 	@Column(name = "username", length = 255, nullable = false, unique = true)
 	private String username;

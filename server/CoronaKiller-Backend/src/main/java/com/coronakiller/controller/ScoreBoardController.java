@@ -21,7 +21,7 @@ import java.util.HashMap;
 @RequestMapping(value = "/api/scoreboard", headers = "Accept=application/json")
 public class ScoreBoardController {
 
-	private ScoreBoardService scoreBoardService;
+	private final ScoreBoardService scoreBoardService;
 
 	public ScoreBoardController(ScoreBoardService scoreBoardService) {
 		this.scoreBoardService = scoreBoardService;

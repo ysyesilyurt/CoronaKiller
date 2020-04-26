@@ -33,7 +33,7 @@ public class PlayerServiceTest {
 	PlayerRepository playerRepository;
 
 	@Test
-	public void getAllPlayersTest(){
+	public void getAllPlayersTest() {
 		Player player = new Player();
 		player.setUsername("CoronaFighters");
 		player.setPassword("CoronaPass");
@@ -53,7 +53,7 @@ public class PlayerServiceTest {
 	}
 
 	@Test
-	public void registerPlayerTest(){
+	public void registerPlayerTest() {
 		PlayerDTO playerDTO = new PlayerDTO();
 		playerDTO.setUsername("goronooranaburanakorumha");
 		playerDTO.setPassword("goronooranaburanakorumhaPass");

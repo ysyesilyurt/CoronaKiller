@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api/players", headers = "Accept=application/json")
 public class PlayerController {
 
-	private PlayerService playerService;
+	private final PlayerService playerService;
 
 	public PlayerController(PlayerService playerService) {
 		this.playerService = playerService;

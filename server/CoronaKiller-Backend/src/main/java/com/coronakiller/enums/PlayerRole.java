@@ -4,7 +4,7 @@ public enum PlayerRole {
 	USER("USER"),
 	ADMIN("ADMIN");
 
-	private String displayName;
+	private final String displayName;
 
 	PlayerRole(String displayName) {
 		this.displayName = displayName;

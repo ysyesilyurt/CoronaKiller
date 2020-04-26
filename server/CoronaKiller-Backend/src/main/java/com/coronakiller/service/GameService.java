@@ -24,10 +24,10 @@ import java.util.Optional;
 @Service
 public class GameService {
 
-	private GameSessionRepository gameSessionRepository;
-	private GameSessionMapper gameSessionMapper;
-	private PlayerService playerService;
-	private PlayerRepository playerRepository;
+	private final GameSessionRepository gameSessionRepository;
+	private final GameSessionMapper gameSessionMapper;
+	private final PlayerService playerService;
+	private final PlayerRepository playerRepository;
 
 	public GameService(GameSessionRepository gameSessionRepository,
 					   GameSessionMapper gameSessionMapper,
@@ -42,6 +42,7 @@ public class GameService {
 	/**
 	 * Fetches the current Player and his/her ongoing the GameSession (if exists)
 	 * information and wraps those DTOs in a GameDataDTO, then returns that
+	 *
 	 * @param gameSessionId
 	 * @return Pair<HttpStatus, ResponseDTO>
 	 */
@@ -68,6 +69,7 @@ public class GameService {
 	/**
 	 * Service for starting a new game session for player with id "playerId".
 	 * If player has a previous game session from earlier, it gets overwritten by this service and a new one gets generated (with default values).
+	 *
 	 * @param playerId
 	 * @return Pair<HttpStatus, ResponseDTO>
 	 */
@@ -84,14 +86,13 @@ public class GameService {
 				gameSession.getSpaceship().setHealth(APIConstants.INITIAL_SHIP_HEALTH);
 				gameSession.getSpaceship().setType(ShipType.ROOKIE);
 
-			}
-			else {
+			} else {
 				Spaceship spaceship = Spaceship.builder()
 						.health(APIConstants.INITIAL_SHIP_HEALTH)
 						.type(ShipType.ROOKIE)
 						.build();
 
-				 gameSession = GameSession.builder()
+				gameSession = GameSession.builder()
 						.currentLevel(1)
 						.sessionScore(0L)
 						.spaceship(spaceship)
@@ -115,6 +116,7 @@ public class GameService {
 	 * Updates specified session by the provided one.
 	 * Updates are designed to be only performed when player finishes a level.
 	 * Player's score is kept in game session score until the game session ends (i.e. game finishes)
+	 *
 	 * @param playerId
 	 * @param newGameSessionDTO
 	 * @return Pair<HttpStatus, ResponseDTO>
@@ -150,6 +152,7 @@ public class GameService {
 	 * Finishes the game session and insert the score of that session to te player's score list.
 	 * Player's global score gets updated only if his/her game session has ended.
 	 * Game finishes if player dies or player successfully finishes all levels of the game.
+	 *
 	 * @param playerId
 	 * @param finishedGameSessionDTO
 	 * @return Pair<HttpStatus, ResponseDTO>

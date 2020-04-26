@@ -18,20 +18,30 @@ import java.util.Map;
 @Service
 public class ScoreBoardService {
 
-	private ScoreRepository scoreRepository;
+	private final ScoreRepository scoreRepository;
 
 	public ScoreBoardService(ScoreRepository scoreRepository) {
 		this.scoreRepository = scoreRepository;
 	}
 
+	/**
+	 * Service that returns the leaderboard according to the specified type.
+	 * Type can be:
+	 * 			 - null => fetches all
+	 * 			 - all => fetches all
+	 * 			 - weekly => fetches weekly
+	 * 			 - monthly => fetches monthly
+	 * Leaderboard is returned as a List<Map<String, Long>> container.
+	 * @return Pair<HttpStatus, ResponseDTO>
+	 */
 	public Pair<HttpStatus, ResponseDTO> getScoreBoard(HashMap<String, String> boardType) {
 		List<Map<String, Long>> result = null;
 		if (boardType.containsValue("weekly")) {
 			Date date = Date.valueOf(LocalDate.now().minusDays(7));
-			result = scoreRepository.getScoreBoardWithDate(date.getTime());
+			result = scoreRepository.getScoreBoardWithDate(date);
 		} else if (boardType.containsValue("monthly")) {
 			Date date = Date.valueOf(LocalDate.now().minusDays(30));
-			result = scoreRepository.getScoreBoardWithDate(date.getTime());
+			result = scoreRepository.getScoreBoardWithDate(date);
 		} else {
 			/* boardType == "all" or null; both fetches all times scoreboard */
 			result = scoreRepository.getAllTimeScoreBoard();

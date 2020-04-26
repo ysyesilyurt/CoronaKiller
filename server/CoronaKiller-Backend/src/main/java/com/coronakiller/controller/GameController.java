@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api/game", headers = "Accept=application/json")
 public class GameController {
 
-	private GameService gameService;
+	private final GameService gameService;
 
 	public GameController(GameService gameService) {
 		this.gameService = gameService;

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Builder
 @AllArgsConstructor
@@ -23,12 +24,14 @@ public class Score {
 	private Long id;
 
 	@CreatedDate
+	@Temporal(TemporalType.DATE)
 	@Column(name = "created_at", nullable = false, updatable = false)
-	private long createdAt;
+	private Date createdAt;
 
 	@LastModifiedDate
+	@Temporal(TemporalType.DATE)
 	@Column(name = "last_modified_at", nullable = false)
-	private long lastModifiedAt;
+	private Date lastModifiedAt;
 
 	@Column(name = "score", nullable = false)
 	private Long score;

@@ -7,7 +7,7 @@ public enum ShipType {
 	POWERFUL_GUNS("POWERFUL_GUNS"),
 	BIG_GUNS("BIG_GUNS");
 
-	private String displayName;
+	private final String displayName;
 
 	ShipType(String displayName) {
 		this.displayName = displayName;
