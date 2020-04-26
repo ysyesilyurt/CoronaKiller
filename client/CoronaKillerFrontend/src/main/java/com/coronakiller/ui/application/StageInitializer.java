@@ -28,6 +28,8 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 	@Value("classpath:/fxml/login.fxml")
 	private Resource loginResource;
 	private final ApplicationContext applicationContext;
+	/* We keep current user information in this static variable
+	* to access it from everywhere through the application. (A Cookie-like mechanism) */
 	public static Player currentPlayer;
 
 	public StageInitializer(ApplicationContext applicationContext) {

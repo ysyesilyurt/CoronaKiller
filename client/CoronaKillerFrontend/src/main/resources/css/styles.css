@@ -14,13 +14,13 @@
 /* Raised button stylings */
 .jfx-button-raised {
     -jfx-button-type: RAISED;
-    -fx-background-color: rgb(142, 142, 144);
+    -fx-background-color: rgba(142, 142, 144, 0.75);
     -fx-text-fill: WHITE;
 }
 
 .jfx-button-raised:hover {
     -jfx-button-type: RAISED;
-    -fx-background-color: rgb(116, 215, 116);
+    -fx-background-color: rgba(116, 215, 116, 0.75);
     -fx-text-fill: WHITE;
 }
 
@@ -40,7 +40,7 @@
 
 .custom-text-field:hover {
     -fx-background-color: transparent;
-    -fx-border-color: green;
+    -fx-border-color: #07e0c3;
     -fx-text-fill: #ffffff;
 }
 
