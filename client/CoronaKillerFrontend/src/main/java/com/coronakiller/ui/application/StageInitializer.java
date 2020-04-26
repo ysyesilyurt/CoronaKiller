@@ -48,8 +48,13 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 			Parent parent = fxmlLoader.load();
 			/* Get the JavaFX stage from the event */
 			Stage stage = event.getStage();
-			stage.setScene(new Scene(parent, 600, 800));
+			Scene firstScene = new Scene(parent, 600, 800);
+			stage.setScene(firstScene);
 			stage.setTitle(UiConstants.WINDOW_TITLE);
+			stage.setMinWidth(600);
+			stage.setMaxWidth(600);
+			stage.setMinHeight(830); // TODO: CHECK HERE - IF SET HEIGHT TO 800 then a shift occurs on pages
+			stage.setMaxHeight(830);
 			stage.show();
 		} catch (IOException e) {
 			log.error("IOException while trying to set the stage from stage initializer.");
