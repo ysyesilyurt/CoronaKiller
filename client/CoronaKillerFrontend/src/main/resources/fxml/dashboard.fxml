@@ -44,4 +44,5 @@
 			<Font name="Dyuthi" size="18.0" />
 		</font>
 	</Text>
+	<JFXSpinner fx:id="loadingSpinner" layoutX="285.0" layoutY="350.0" visible="false" />
 </AnchorPane>

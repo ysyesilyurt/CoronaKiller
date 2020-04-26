@@ -4,6 +4,7 @@ import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXSpinner;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyLongWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -42,6 +43,9 @@ public class LeaderBoardController implements Initializable {
 	private JFXSnackbar snackbar;
 
 	@FXML
+	public JFXSpinner loadingSpinner;
+
+	@FXML
 	public AnchorPane innerPane;
 
 	@FXML
@@ -67,10 +71,6 @@ public class LeaderBoardController implements Initializable {
 	private List<Long> scores;
 	private List<String> userNames;
 
-	public LeaderBoardController() {
-
-	}
-
 	/**
 	 * When the class is loaded, the first method called is overwritten initialize method.
 	 * Thanks to this method, fields in this class does not remain NULL.
@@ -80,6 +80,9 @@ public class LeaderBoardController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
+		loadingSpinner.setVisible(true);
+		innerPane.setDisable(true);
+
 		leaderboardPane.getStylesheets().add("css/styles.css");
 		snackbar = new JFXSnackbar(leaderboardPane);
 		username.setText(String.format("Welcome %s!", StageInitializer.currentPlayer.getUsername()));
@@ -102,6 +105,8 @@ public class LeaderBoardController implements Initializable {
 
 			innerPane.getChildren().add(leaderboard);
 		}
+		loadingSpinner.setVisible(false);
+		innerPane.setDisable(false);
 	}
 
 	/**
@@ -159,6 +164,8 @@ public class LeaderBoardController implements Initializable {
 	 */
 	@FXML
 	public void getLeaderBoardContents() {
+		loadingSpinner.setVisible(true);
+		innerPane.setDisable(true);
 		String selectedItem = timeBox.getSelectionModel().getSelectedItem();
 		if (selectedItem.equals("All Time Leaderboard")) {
 			leaderBoardData.clear();
@@ -187,6 +194,8 @@ public class LeaderBoardController implements Initializable {
 		}
 
 		loadLeaderBoardContents();
+		loadingSpinner.setVisible(false);
+		innerPane.setDisable(false);
 	}
 
 	/**
@@ -207,6 +216,8 @@ public class LeaderBoardController implements Initializable {
 	 */
 	@FXML
 	protected void onClickBackToDashboard(ActionEvent event) throws IOException {
+		loadingSpinner.setVisible(true);
+		innerPane.setDisable(true);
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/fxml/dashboard.fxml"));
@@ -214,5 +225,7 @@ public class LeaderBoardController implements Initializable {
 		Scene scene = new Scene(dashboardPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
+		loadingSpinner.setVisible(false);
+		innerPane.setDisable(false);
 	}
 }
