@@ -40,7 +40,7 @@
 
 .custom-text-field:hover {
     -fx-background-color: transparent;
-    -fx-border-color: green;
+    -fx-border-color: #07e0c3;
     -fx-text-fill: #ffffff;
 }
 

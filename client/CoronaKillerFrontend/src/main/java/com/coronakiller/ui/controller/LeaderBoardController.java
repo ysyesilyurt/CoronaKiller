@@ -222,9 +222,7 @@ public class LeaderBoardController implements Initializable {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource(UiConstants.DASHBOARD_PAGE));
-		Parent dashboardPage = loader.load();
+		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.DASHBOARD_PAGE));
 		Scene scene = new Scene(dashboardPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
