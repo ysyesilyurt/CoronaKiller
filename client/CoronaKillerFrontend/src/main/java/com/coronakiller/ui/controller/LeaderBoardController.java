@@ -147,7 +147,7 @@ public class LeaderBoardController implements Initializable {
 		for (Map<String, Long> leaderBoardDatum : leaderBoardData) {
 			Object[] tempArray = leaderBoardDatum.values().toArray();
 			userNames.add((String) tempArray[0]);
-			Double d = (Double) tempArray[1];
+			Integer d = (Integer) tempArray[1];
 			scores.add(d.longValue());
 		}
 	}
