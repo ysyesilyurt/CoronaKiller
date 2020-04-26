@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXSpinner?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane fx:id="loginPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.LoginController">
 	<ImageView fitHeight="821.0" fitWidth="612.0">
 		<Image url="@../images/bGround1.jpg" />
@@ -24,7 +22,7 @@
 				<Font name="Dyuthi" size="27.0" />
 			</font>
 		</Text>
-		<TextField fx:id="nameField" styleClass="custom-text-field" layoutX="74.0" layoutY="242.0" prefHeight="38.0" prefWidth="230.0" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="73.0">
+		<TextField fx:id="nameField" layoutX="74.0" layoutY="242.0" prefHeight="38.0" prefWidth="230.0" styleClass="custom-text-field" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="73.0">
 			<font>
 				<Font name="Dyuthi" size="18.0" />
 			</font>
@@ -34,22 +32,23 @@
 				<Font name="Dyuthi" size="27.0" />
 			</font>
 		</Text>
-		<PasswordField fx:id="passwordField" styleClass="custom-text-field" layoutX="73.0" layoutY="323.0" prefHeight="38.0" prefWidth="230.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="74.0" />
-		<JFXButton fx:id="loginButton" styleClass="jfx-button-flat" layoutX="217.0" layoutY="450.0" onAction="#onClickLogin" prefHeight="63.0" prefWidth="125.0" ripplerFill="#cd2026" text="Sign In" textAlignment="CENTER" textFill="WHITE">
+		<PasswordField fx:id="passwordField" layoutX="73.0" layoutY="323.0" prefHeight="38.0" prefWidth="230.0" styleClass="custom-text-field" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="74.0" />
+		<JFXButton fx:id="loginButton" layoutX="216.0" layoutY="472.0" onAction="#onClickLogin" prefHeight="63.0" prefWidth="125.0" ripplerFill="#cd2026" styleClass="jfx-button-flat" text="Sign In" textAlignment="CENTER" textFill="WHITE">
 			<font>
 				<Font name="Dyuthi" size="27.0" />
 			</font></JFXButton>
-		<JFXButton fx:id="goToRegisterButton" styleClass="jfx-button-flat" layoutX="101.0" layoutY="513.0" onAction="#onClickGoToRegister" prefHeight="41.0" prefWidth="338.0" ripplerFill="#cd2026" text="Not have an existing account? Sign Up Now" textAlignment="CENTER" textFill="WHITE">
+		<JFXButton fx:id="goToRegisterButton" layoutX="22.0" layoutY="551.0" onAction="#onClickGoToRegister" prefHeight="41.0" prefWidth="513.0" ripplerFill="#cd2026" styleClass="jfx-button-flat" text="Not Have an Existing Account? No Problems, Sign Up Now for Free!" textAlignment="CENTER" textFill="WHITE">
 			<font>
-				<Font name="Dyuthi" size="17.0" />
-			</font></JFXButton>
-		<Text fill="WHITE" layoutX="115.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGN UP" textAlignment="CENTER" wrappingWidth="326.2060546875" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="97.7939453125" AnchorPane.topAnchor="13.87109375">
+				<Font name="Dyuthi" size="18.0" />
+			</font>
+		</JFXButton>
+		<Text fill="WHITE" layoutX="115.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGN IN" textAlignment="CENTER" wrappingWidth="326.2060546875" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="97.7939453125" AnchorPane.topAnchor="13.87109375">
 			<font>
 				<Font name="Dyuthi" size="40.0" />
 			</font>
 		</Text>
 	</AnchorPane>
-	<Text fx:id="snackbarContent" styleClass="custom-snackbar" layoutX="73.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+	<Text fx:id="snackbarContent" layoutX="73.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="custom-snackbar" textAlignment="CENTER">
 		<font>
 			<Font name="Dyuthi" size="27.0" />
 		</font>

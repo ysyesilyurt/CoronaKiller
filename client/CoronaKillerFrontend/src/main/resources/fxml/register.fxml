@@ -43,9 +43,9 @@
          <font>
             <Font name="Dyuthi" size="27.0" />
          </font></JFXButton>
-		<JFXButton fx:id="backToLoginButton" layoutX="120.0" layoutY="545.0" onAction="#onClickBackToLogin" prefHeight="26.0" prefWidth="317.0" ripplerFill="#cd2026" styleClass="jfx-button-flat" text="Already Have an Account? Sign In" textAlignment="CENTER" textFill="WHITE">
+		<JFXButton fx:id="backToLoginButton" layoutX="-4.0" layoutY="553.0" onAction="#onClickBackToLogin" prefHeight="41.0" prefWidth="547.0" ripplerFill="#cd2026" styleClass="jfx-button-flat" text="Already Have an Account? Sign In and Start Killing some Coronaviruses!" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="Dyuthi" size="17.0" />
+            <Font name="Dyuthi" size="18.0" />
          </font>
 		</JFXButton>
    	<Text fill="WHITE" layoutX="115.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGN UP" textAlignment="CENTER" wrappingWidth="326.2060546875" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="97.7939453125" AnchorPane.topAnchor="13.87109375">

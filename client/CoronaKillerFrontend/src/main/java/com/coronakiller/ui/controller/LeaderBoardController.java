@@ -102,7 +102,7 @@ public class LeaderBoardController implements Initializable {
 			parseLeaderBoardData();
 			formLeaderBoardTable();
 
-			leaderboard.setLayoutX(85);
+			leaderboard.setLayoutX(80);
 			leaderboard.setLayoutY(200);
 			leaderboard.setMinWidth(250);
 
@@ -155,7 +155,7 @@ public class LeaderBoardController implements Initializable {
 		for (Map<String, Long> leaderBoardDatum : leaderBoardData) {
 			Object[] tempArray = leaderBoardDatum.values().toArray();
 			userNames.add((String) tempArray[0]);
-			Double d = (Double) tempArray[1];
+			Integer d = (Integer) tempArray[1];
 			scores.add(d.longValue());
 		}
 	}
