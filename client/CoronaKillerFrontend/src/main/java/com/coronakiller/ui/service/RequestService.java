@@ -74,13 +74,16 @@ public class RequestService {
 					Player loggedInPlayer = objectMapper.convertValue(mappedResponse.getData(), Player.class);
 					return Pair.with(loggedInPlayer, mappedResponse.getMessage());
 				} else {
+					log.warn("Request result is 'fail' on login request");
 					return Pair.with(null, mappedResponse.getMessage());
 				}
 			} else {
+				log.warn("Got HTTP {} from startNewGame request", response.code());
 				String responseString = resolveHttpCodeResponse(response.code());
 				return Pair.with(null, responseString);
 			}
 		} catch (ConnectException e) {
+			log.warn("HTTP Connection Error on request");
 			return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -119,13 +122,16 @@ public class RequestService {
 					Player createdPlayer = objectMapper.convertValue(mappedResponse.getData(), Player.class);
 					return Pair.with(createdPlayer, mappedResponse.getMessage());
 				} else {
+					log.warn("Request result is 'fail' on register request");
 					return Pair.with(null, mappedResponse.getMessage());
 				}
 			} else {
+				log.warn("Got HTTP {} from startNewGame request", response.code());
 				String responseString = resolveHttpCodeResponse(response.code());
 				return Pair.with(null, responseString);
 			}
 		} catch (ConnectException e) {
+			log.warn("HTTP Connection Error on request");
 			return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -168,7 +174,7 @@ public class RequestService {
 	 * Static getLeaderBoard request method. Can be called from any controller code.
 	 * Creates a GET request with the specified type of leaderboard as the GET parameter,
 	 * fetches current Player credentials and makes the request to the backend.
-	 * Responses with created leaderboard and response message to the caller code.
+	 * Responses with leaderboard and response message to the caller code.
 	 *
 	 * @param leaderBoardType
 	 * @return Pair<List<Map<String, Long>>, String>
@@ -190,23 +196,34 @@ public class RequestService {
 						List<Map<String, Long>> leaderBoard = objectMapper.convertValue(mappedResponse.getData(), List.class);
 						return Pair.with(leaderBoard, mappedResponse.getMessage());
 					} else {
+						log.warn("Request result is 'fail' on getLeaderBoard request");
 						return Pair.with(null, mappedResponse.getMessage());
 					}
 				} else {
+					log.warn("Got HTTP {} from startNewGame request", response.code());
 					String responseString = resolveHttpCodeResponse(response.code());
 					return Pair.with(null, responseString);
 				}
 			} catch (ConnectException e) {
+				log.warn("HTTP Connection Error on request");
 				return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
 			} catch (IOException e) {
 				e.printStackTrace();
 				return Pair.with(null, UiConstants.CLIENT_ERROR);
 			}
 		} else {
+			log.warn("Player cookie not found");
 			return Pair.with(null, UiConstants.COOKIE_NOTFOUND);
 		}
 	}
 
+	/**
+	 * Static continueGameSession request method. Can be called from any controller code.
+	 * Creates a PUT request with player Id in the cookie and makes the request to the backend.
+	 * Responses with GameSession of the player and response message to the caller code.
+	 *
+	 * @return
+	 */
 	public static Pair<GameSession, String> continueGameSession() {
 		// TODO: CHANGE PUT TO GET
 		if (StageInitializer.currentPlayer != null) {
@@ -227,23 +244,33 @@ public class RequestService {
 						GameSession gameSession = objectMapper.convertValue(mappedResponse.getData(), GameSession.class);
 						return Pair.with(gameSession, mappedResponse.getMessage());
 					} else {
+						log.warn("Request result is 'fail' on continueGameSession request");
 						return Pair.with(null, mappedResponse.getMessage());
 					}
 				} else {
+					log.warn("Got HTTP {} from startNewGame request", response.code());
 					String responseString = resolveHttpCodeResponse(response.code());
 					return Pair.with(null, responseString);
 				}
 			} catch (ConnectException e) {
+				log.warn("HTTP Connection Error on request");
 				return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
 			} catch (IOException e) {
 				e.printStackTrace();
 				return Pair.with(null, UiConstants.CLIENT_ERROR);
 			}
 		} else {
+			log.warn("Player cookie not found");
 			return Pair.with(null, UiConstants.COOKIE_NOTFOUND);
 		}
 	}
 
+	/**
+	 * Static startNewGame request method. Can be called from any controller code.
+	 * Creates a POST request with player Id in the cookie and makes the request to the backend.
+	 * Responses with the newly created GameSession of the player and response message to the caller code.
+	 * @return
+	 */
 	public static Pair<GameSession, String> startNewGame() {
 		if (StageInitializer.currentPlayer != null) {
 			String authorizationHeader = Credentials.basic(StageInitializer.currentPlayer.getUsername(), StageInitializer.currentPlayer.getPassword());
@@ -263,20 +290,23 @@ public class RequestService {
 						GameSession gameSession = objectMapper.convertValue(mappedResponse.getData(), GameSession.class);
 						return Pair.with(gameSession, mappedResponse.getMessage());
 					} else {
+						log.warn("Request result is 'fail' on startNewGame request");
 						return Pair.with(null, mappedResponse.getMessage());
 					}
 				} else {
+					log.warn("Got HTTP {} from startNewGame request", response.code());
 					String responseString = resolveHttpCodeResponse(response.code());
 					return Pair.with(null, responseString);
 				}
 			} catch (ConnectException e) {
+				log.warn("HTTP Connection Error on request");
 				return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
 			} catch (IOException e) {
 				e.printStackTrace();
 				return Pair.with(null, UiConstants.CLIENT_ERROR);
 			}
 		} else {
-//			log.warn("Player cookie not found");
+			log.warn("Player cookie not found");
 			return Pair.with(null, UiConstants.COOKIE_NOTFOUND);
 		}
 	}
