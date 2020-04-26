@@ -212,28 +212,6 @@
 					"response": []
 				},
 				{
-					"name": "Continue to Game Session",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/api/game/continue/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"game",
-								"continue",
-								"1"
-							]
-						},
-						"description": "Requests to get an ongoing game session of player with specified id if exists (if not responses with error)"
-					},
-					"response": []
-				},
-				{
 					"name": "Update Game Session",
 					"request": {
 						"method": "PUT",
@@ -294,6 +272,27 @@
 						"description": "Requests to Finish the game session of player specified by id"
 					},
 					"response": []
+				},
+				{
+					"name": "Get Game Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/game/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"game",
+								"1"
+							]
+						},
+						"description": "Get game data - cookie of player by id"
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -303,13 +302,13 @@
 		"type": "basic",
 		"basic": [
 			{
-				"key": "password",
-				"value": "$2a$10$azQtlM8QR/.HtayQiDx1cO6JD4MFEwo3BkeO7MVpMP2jD31RiSkFe",
+				"key": "username",
+				"value": "test_user",
 				"type": "string"
 			},
 			{
-				"key": "username",
-				"value": "test_user",
+				"key": "password",
+				"value": "$2a$10$azQtlM8QR/.HtayQiDx1cO6JD4MFEwo3BkeO7MVpMP2jD31RiSkFe",
 				"type": "string"
 			}
 		]
