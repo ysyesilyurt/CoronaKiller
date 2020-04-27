@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.level.GameLevel1Controller">
+   <JFXButton fx:id="backToLoginButton" layoutX="454.0" layoutY="753.0" onAction="#onClickGoDash" prefHeight="24.0" prefWidth="132.0" ripplerFill="#cd2026" styleClass="jfx-button-flat" text="Back to Dashboard" textAlignment="CENTER">
+      <font>
+         <Font name="Dyuthi" size="14.0" />
+      </font>
+   </JFXButton>
    <children>
       <Text fx:id="scoreText" layoutX="36.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Session Score:">
          <font>

@@ -9,9 +9,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.util.Random;
 
 import static com.coronakiller.ui.constants.GameConstants.*;
+import static java.awt.Color.DARK_GRAY;
 
 public class MediumVirus extends Virus {
 
@@ -68,8 +70,8 @@ public class MediumVirus extends Virus {
 
 	@Override
 	public void changeIconOfVirus() {
-		Image mediumVirusIcon = new Image(MEDIUM_VIRUS_ICON_URL);
-		this.setFill(new ImagePattern(mediumVirusIcon));
+		//Image mediumVirusIcon = new Image(MEDIUM_VIRUS_ICON_URL);
+		this.setFill(javafx.scene.paint.Color.RED);
 	}
 
 	@Override

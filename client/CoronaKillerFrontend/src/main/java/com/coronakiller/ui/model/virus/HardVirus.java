@@ -7,6 +7,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 
@@ -72,8 +73,8 @@ public class HardVirus extends Virus {
 
 	@Override
 	public void changeIconOfVirus() {
-		Image hardVirusIcon = new Image(HARD_VIRUS_ICON_URL);
-		this.setFill(new ImagePattern(hardVirusIcon));
+		//Image hardVirusIcon = new Image(HARD_VIRUS_ICON_URL);
+		this.setFill(Color.BLUE);
 	}
 
 	@Override

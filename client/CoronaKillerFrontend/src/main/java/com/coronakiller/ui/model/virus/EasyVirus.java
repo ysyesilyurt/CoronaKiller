@@ -3,8 +3,11 @@ package com.coronakiller.ui.model.virus;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import lombok.Getter;
@@ -62,8 +65,8 @@ public class EasyVirus extends Virus {
 
 	@Override
 	public void changeIconOfVirus() {
-		Image easyVirusIcon = new Image(EASY_VIRUS_ICON_URL);
-		this.setFill(new ImagePattern(easyVirusIcon));
+		//Image mediumVirusIcon = new Image(MEDIUM_VIRUS_ICON_URL);
+		this.setFill(Color.GREEN);
 	}
 
 	@Override
