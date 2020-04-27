@@ -148,7 +148,7 @@ public class RequestService {
 	 * Responses with leaderboard and response message to the caller code.
 	 *
 	 * @param leaderBoardType
-	 * @return Pair<List < Map < String, Long>>, String>
+	 * @return Pair<List<Score>, String>
 	 */
 	public static Pair<List<Score>, String> getLeaderBoard(String leaderBoardType) {
 		if (gameDataCookie.getPlayerDTO() != null) {
@@ -195,7 +195,7 @@ public class RequestService {
 	 * Creates a POST request with player Id in the cookie and makes the request to the backend.
 	 * Responses with the newly created GameSession of the player and response message to the caller code.
 	 *
-	 * @return
+	 * @return Pair<GameData, String>
 	 */
 	public static Pair<GameData, String> getGameDataById() {
 		if (gameDataCookie.getPlayerDTO() != null) {
@@ -241,7 +241,7 @@ public class RequestService {
 	 * Creates a POST request with player Id in the cookie and makes the request to the backend.
 	 * Responses with the newly created GameSession of the player and response message to the caller code.
 	 *
-	 * @return
+	 * @return Pair<GameSession, String>
 	 */
 	public static Pair<GameSession, String> startNewGame() {
 		if (gameDataCookie.getPlayerDTO() != null) {
@@ -281,6 +281,102 @@ public class RequestService {
 		} else {
 			log.warn("Player cookie not found");
 			return Pair.with(null, UiConstants.COOKIE_NOTFOUND);
+		}
+	}
+
+	public static Pair<Boolean, String> updateGameSession(Integer currentLevel,
+															  Long sessionScore,
+															  Integer shipHealth,
+															  ShipType shipType) {
+		if (gameDataCookie.getPlayerDTO() != null) {
+			String authorizationHeader = Credentials.basic(gameDataCookie.getPlayerDTO().getUsername(),
+					gameDataCookie.getPlayerDTO().getPassword());
+			MediaType mediaType = MediaType.parse("application/json");
+			RequestBody body = RequestBody.create(mediaType,
+					"{\n\t\"currentLevel\":" + currentLevel + "," +
+							"\n\t\"sessionScore\":" + sessionScore + "," +
+							"\n\t\"shipHealth\":" + shipHealth + "," +
+							"\n\t\"shipType\":" + shipType.resolveEnumCode() + "\n}");
+			Request request = new Request.Builder()
+					.url(UiConstants.BACKEND_BASE_URL + "/game/update/" + gameDataCookie.getPlayerDTO().getId())
+					.method("PUT", body)
+					.addHeader("Authorization", authorizationHeader)
+					.addHeader("Content-Type", "application/json")
+					.build();
+			try {
+				Response response = client.newCall(request).execute();
+				if (response.code() == 200) {
+					String responseBody = response.body().string();
+					RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
+					if (mappedResponse.getResult().equals("success")) {
+						return Pair.with(true, mappedResponse.getMessage());
+					} else {
+						log.warn("Request result is 'fail' on startNewGame request");
+						return Pair.with(false, mappedResponse.getMessage());
+					}
+				} else {
+					log.warn("Got HTTP {} from startNewGame request", response.code());
+					String responseString = resolveHttpCodeResponse(response.code());
+					return Pair.with(false, responseString);
+				}
+			} catch (ConnectException e) {
+				log.warn("HTTP Connection Error on request");
+				return Pair.with(false, UiConstants.HTTP_CONN_ERROR);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return Pair.with(false, UiConstants.CLIENT_ERROR);
+			}
+		} else {
+			log.warn("Player cookie not found");
+			return Pair.with(false, UiConstants.COOKIE_NOTFOUND);
+		}
+	}
+
+	public static Pair<Boolean, String> finishGameSession(Integer currentLevel,
+														  Long sessionScore,
+														  Integer shipHealth,
+														  ShipType shipType) {
+		if (gameDataCookie.getPlayerDTO() != null) {
+			String authorizationHeader = Credentials.basic(gameDataCookie.getPlayerDTO().getUsername(),
+					gameDataCookie.getPlayerDTO().getPassword());
+			MediaType mediaType = MediaType.parse("application/json");
+			RequestBody body = RequestBody.create(mediaType,
+					"{\n\t\"currentLevel\":" + currentLevel + "," +
+							"\n\t\"sessionScore\":" + sessionScore + "," +
+							"\n\t\"shipHealth\":" + shipHealth + "," +
+							"\n\t\"shipType\":" + shipType.resolveEnumCode() + "\n}");
+			Request request = new Request.Builder()
+					.url(UiConstants.BACKEND_BASE_URL + "/game/finish/" + gameDataCookie.getPlayerDTO().getId())
+					.method("PUT", body)
+					.addHeader("Authorization", authorizationHeader)
+					.addHeader("Content-Type", "application/json")
+					.build();
+			try {
+				Response response = client.newCall(request).execute();
+				if (response.code() == 200) {
+					String responseBody = response.body().string();
+					RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
+					if (mappedResponse.getResult().equals("success")) {
+						return Pair.with(true, mappedResponse.getMessage());
+					} else {
+						log.warn("Request result is 'fail' on startNewGame request");
+						return Pair.with(false, mappedResponse.getMessage());
+					}
+				} else {
+					log.warn("Got HTTP {} from startNewGame request", response.code());
+					String responseString = resolveHttpCodeResponse(response.code());
+					return Pair.with(false, responseString);
+				}
+			} catch (ConnectException e) {
+				log.warn("HTTP Connection Error on request");
+				return Pair.with(false, UiConstants.HTTP_CONN_ERROR);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return Pair.with(false, UiConstants.CLIENT_ERROR);
+			}
+		} else {
+			log.warn("Player cookie not found");
+			return Pair.with(false, UiConstants.COOKIE_NOTFOUND);
 		}
 	}
 }
