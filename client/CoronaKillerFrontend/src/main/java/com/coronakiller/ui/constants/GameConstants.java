@@ -1,5 +1,8 @@
 package com.coronakiller.ui.constants;
 
+/**
+ * This class keeps the constant values that are related to gameplay.
+ */
 public class GameConstants {
 	/* SpaceShip Constants */
 	public static final int INITIAL_SPACESHIP_X_POSITION = 300;

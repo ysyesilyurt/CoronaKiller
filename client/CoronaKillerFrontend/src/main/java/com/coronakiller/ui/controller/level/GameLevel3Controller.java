@@ -17,6 +17,9 @@ import java.util.ResourceBundle;
 
 import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
 
+/**
+ * This class controls the third level of the game by creating,initializing and using third level's objects.
+ */
 public class GameLevel3Controller extends GameLevelController {
 
 	@FXML
@@ -28,6 +31,11 @@ public class GameLevel3Controller extends GameLevelController {
 	@FXML
 	public Text hpValue;
 
+	/**
+	 * Overwritten initialize method from Initializable interface. It is responsible for initializing ui related objects.
+	 * @param url original parameter of initialize
+	 * @param resourceBundle original parameter of initialize
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		isGameLevelFinished = false;
@@ -46,6 +54,9 @@ public class GameLevel3Controller extends GameLevelController {
 		GameLevelController.currentPane = this.anchorPane;
 	}
 
+	/**
+	 * Spaceship of the level and it's specifications are done in this method.
+	 */
 	public void handleSpaceInitialization() {
 		spaceShip = null;
 		spaceShip = new VeteranSpaceShip(gameDataCookie.getGameSessionDTO().getShipHealth());
@@ -54,6 +65,9 @@ public class GameLevel3Controller extends GameLevelController {
 		spaceShip.autofire(anchorPane);
 	}
 
+	/**
+	 * Viruses and their specifications are done in this method.
+	 */
 	public void handleVirusInitialization() {
 		levelViruses.clear();
 		levelViruses = new ArrayList<>();

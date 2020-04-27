@@ -1,6 +1,5 @@
 package com.coronakiller.ui.controller.level;
 
-import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.ShipType;
 import com.coronakiller.ui.model.spaceship.NormalSpaceShip;
@@ -16,9 +15,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static com.coronakiller.ui.application.StageInitializer.*;
 import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
 
+/**
+ * This class controls the second level of the game by creating,initializing and using second level's objects.
+ */
 public class GameLevel2Controller extends GameLevelController {
 
 	@FXML
@@ -30,6 +31,11 @@ public class GameLevel2Controller extends GameLevelController {
 	@FXML
 	public Text hpValue;
 
+	/**
+	 * Overwritten initialize method from Initializable interface. It is responsible for initializing ui related objects.
+	 * @param url original parameter of initialize
+	 * @param resourceBundle original parameter of initialize
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		isGameLevelFinished = false;
@@ -48,6 +54,9 @@ public class GameLevel2Controller extends GameLevelController {
 		GameLevelController.currentPane = this.anchorPane;
 	}
 
+	/**
+	 * Spaceship of the level and it's specifications are done in this method.
+	 */
 	public void handleSpaceInitialization() {
 		spaceShip = null;
 		spaceShip = new NormalSpaceShip(gameDataCookie.getGameSessionDTO().getShipHealth());
@@ -56,6 +65,9 @@ public class GameLevel2Controller extends GameLevelController {
 		spaceShip.autofire(anchorPane);
 	}
 
+	/**
+	 * Viruses and their specifications are done in this method.
+	 */
 	public void handleVirusInitialization() {
 		levelViruses.clear();
 		levelViruses = new ArrayList<>();

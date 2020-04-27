@@ -2,6 +2,9 @@ package com.coronakiller.ui.constants;
 
 import javafx.scene.control.TextFormatter;
 
+/**
+ * This class keeps the constant values that are related to user interface and some other program constants.
+ */
 public class UiConstants {
 	/* General Application Constants */
 	public static final String BACKEND_BASE_URL = "http://localhost:8080/api";

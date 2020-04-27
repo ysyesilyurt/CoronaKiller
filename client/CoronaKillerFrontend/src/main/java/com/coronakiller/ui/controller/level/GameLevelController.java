@@ -6,22 +6,10 @@ import com.coronakiller.ui.model.ShipType;
 import com.coronakiller.ui.model.spaceship.SpaceShip;
 import com.coronakiller.ui.model.virus.Virus;
 import com.coronakiller.ui.service.RequestService;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -35,6 +23,9 @@ import java.util.ResourceBundle;
 
 import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
 
+/**
+ * This class is the general type of level.It keeps common level elements and other level classes extends this class.
+ */
 public abstract class GameLevelController implements Initializable {
 
 	public static SpaceShip spaceShip;
@@ -62,6 +53,10 @@ public abstract class GameLevelController implements Initializable {
 
 	public static void updateScoreValue(){scoreValue.setText(String.valueOf(GameLevelController.currentSessionScore));}
 
+	/**
+	 * This is the method when user successfully finish game.
+	 * @throws IOException
+	 */
 	public static void finishLevelSuccessfully() throws IOException {
 		GameLevelController.spaceShip.stopFire();
 		GameLevelController.isGameLevelFinished = true;
