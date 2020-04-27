@@ -37,4 +37,9 @@ public class BigGunsSpaceShip extends SpaceShip{
 		autofireTimeline.setCycleCount(Timeline.INDEFINITE);
 		autofireTimeline.play();
 	}
+
+	@Override
+	public void stopFire(){
+		autofireTimeline.stop();
+	}
 }

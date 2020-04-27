@@ -18,7 +18,6 @@ import static com.coronakiller.ui.constants.GameConstants.*;
 public abstract class SpaceShip extends Rectangle {
 
 	private int currentHealth;
-	private Timeline autofireTimeline;
 
 	/**
 	 * Constructor method of the SpaceShip object.
@@ -45,4 +44,6 @@ public abstract class SpaceShip extends Rectangle {
 	public abstract void changeIconofSpaceShip();
 
 	public abstract void autofire(Pane currentPane);
+
+	public abstract void stopFire();
 }

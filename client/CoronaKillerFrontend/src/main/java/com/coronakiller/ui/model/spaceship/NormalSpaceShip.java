@@ -35,4 +35,9 @@ public class NormalSpaceShip extends SpaceShip{
 		autofireTimeline.setCycleCount(Timeline.INDEFINITE);
 		autofireTimeline.play();
 	}
+
+	@Override
+	public void stopFire(){
+		autofireTimeline.stop();
+	}
 }
