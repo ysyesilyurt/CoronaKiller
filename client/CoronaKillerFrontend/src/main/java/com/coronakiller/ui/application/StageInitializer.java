@@ -34,6 +34,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 	/* We keep current user information and game session information (if exists) in this
 	 * static variable to access them from everywhere through the application. (A Cookie-like mechanism) */
 	public static GameData gameDataCookie = new GameData();
+	public static Stage applicationStage;
 
 	public StageInitializer(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
@@ -48,12 +49,13 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 			Parent parent = fxmlLoader.load();
 			/* Get the JavaFX stage from the event */
 			Stage stage = event.getStage();
+			applicationStage = stage;
 			Scene firstScene = new Scene(parent, 600, 800);
 			stage.setScene(firstScene);
 			stage.setTitle(UiConstants.WINDOW_TITLE);
 			stage.setMinWidth(600);
 			stage.setMaxWidth(600);
-			stage.setMinHeight(830); // TODO: CHECK HERE - IF SET HEIGHT TO 800 then a shift occurs on pages
+			stage.setMinHeight(830);
 			stage.setMaxHeight(830);
 			stage.show();
 		} catch (IOException e) {
