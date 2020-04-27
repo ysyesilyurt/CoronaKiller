@@ -34,6 +34,9 @@ public abstract class SpaceShip extends Rectangle {
 		return this.currentHealth;
 	}
 
+	/**
+	 * This method handles the mouse usage.
+	 */
 	public void setMouseDraggableObject(){
 		this.setOnMouseDragged(me -> {
 			this.setX(me.getX() - this.getWidth()/2);
@@ -43,7 +46,14 @@ public abstract class SpaceShip extends Rectangle {
 
 	public abstract void changeIconofSpaceShip();
 
+	/**
+	 * Spaceships shoot by using this method.
+	 * @param currentPane current pane value of scene object
+	 */
 	public abstract void autofire(Pane currentPane);
 
+	/**
+	 * Animation of spaceship bullets should stop when level successfully completed, this method stops the animation.
+	 */
 	public abstract void stopFire();
 }
