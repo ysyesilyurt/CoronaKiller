@@ -1,24 +1,21 @@
 package com.coronakiller.ui.controller.level;
 
 import com.coronakiller.ui.constants.UiConstants;
-import com.coronakiller.ui.model.spaceship.RookieSpaceShip;
-import com.coronakiller.ui.model.virus.EasyVirus;
+import com.coronakiller.ui.model.spaceship.NormalSpaceShip;
+import com.coronakiller.ui.model.spaceship.PowerfulGunsSpaceShip;
+import com.coronakiller.ui.model.virus.HardVirus;
 import com.coronakiller.ui.model.virus.MediumVirus;
 import com.coronakiller.ui.model.virus.Virus;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.awt.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-@Setter
-@Getter
-public class GameLevel1Controller extends GameLevelController {
+public class GameLevel4Controller extends GameLevelController {
 
 	@FXML
 	public AnchorPane anchorPane;
@@ -35,7 +32,8 @@ public class GameLevel1Controller extends GameLevelController {
 		handleVirusInitialization();
 		handleSpaceInitialization();
 		anchorPane.getChildren().add(spaceShip);
-		nextLevel.append(UiConstants.GAME_LEVEL2_PAGE);
+		nextLevel = null;
+		nextLevel = new StringBuilder(UiConstants.DASHBOARD_PAGE);
 		GameLevelController.hpValue = this.hpValue;
 		GameLevelController.scoreValue = this.scoreValue;
 		GameLevelController.updateHpValue();
@@ -43,24 +41,27 @@ public class GameLevel1Controller extends GameLevelController {
 	}
 
 	public void handleSpaceInitialization(){
-		spaceShip = new RookieSpaceShip(100);
+		spaceShip = null;
+		spaceShip = new PowerfulGunsSpaceShip(100);
 		//spaceShip.changeIconofSpaceShip();
 		spaceShip.setMouseDraggableObject();
 		spaceShip.autofire(anchorPane);
 	}
 
-	public void handleVirusInitialization() {
-		Random rand = new Random();
-		for (int j = 1; j < 3; ++j) {
-			int mediumVirusPosition = rand.nextInt(6);
-			if(mediumVirusPosition == 0)
-				mediumVirusPosition = 1;
-			for (int i = 1; i < 6; ++i) {
+	public void handleVirusInitialization(){
+		levelViruses.clear();
+		levelViruses = new ArrayList<>();
+		Random random = new Random();
+		for(int i=1; i<6 ; ++i){
+			int mediumVirusNumber = random.nextInt(2);
+			if(mediumVirusNumber == 0)
+				mediumVirusNumber =1;
+			for(int j=1; j<3; ++j) {
 				Virus virus;
-				if(i == mediumVirusPosition){
-					virus = new MediumVirus(100 * i, j*100);
-				} else {
-					virus = new EasyVirus(100 * i, j * 100);
+				if(j == mediumVirusNumber){
+					virus = new MediumVirus(100*i, 100*j);
+				} else{
+					virus = new HardVirus(100*i, 100*j);
 				}
 				virus.virusAutoMove();
 				virus.virusAutoFire(anchorPane);

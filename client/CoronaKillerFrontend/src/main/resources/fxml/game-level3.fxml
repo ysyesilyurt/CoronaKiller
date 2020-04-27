@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.level.GameLevel3Controller">
+    <children>
+        <Text fx:id="scoreText" layoutX="36.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Session Score:">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <Text fx:id="hpText" layoutX="473.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HP:">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <Text fx:id="scoreValue" layoutX="153.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <Text fx:id="hpValue" layoutX="513.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+    </children>
+</AnchorPane>
