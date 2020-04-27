@@ -74,6 +74,7 @@ public class GameLevel1Controller extends GameLevelController {
 				}
 				virus.virusAutoMove();
 				virus.virusAutoFire(anchorPane);
+				virus.changeIconOfVirus();
 				levelViruses.add(virus);
 				anchorPane.getChildren().add(virus);
 			}

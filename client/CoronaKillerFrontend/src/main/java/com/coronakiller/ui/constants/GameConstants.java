@@ -68,7 +68,7 @@ public class GameConstants {
 	public static final int EASY_VIRUS_WIDTH = 30;
 	public static final int EASY_VIRUS_HEIGHT = 50;
 	//TODO:change icon url
-	public static final String EASY_VIRUS_ICON_URL = "";
+	public static final String EASY_VIRUS_ICON_URL = "images/virusIcon1.png";
 
 	/* Medium Virus Constants */
 	public static final int MEDIUM_VIRUS_VELOCITY = 15;
@@ -76,7 +76,7 @@ public class GameConstants {
 	public static final int MEDIUM_VIRUS_WIDTH = 40;
 	public static final int MEDIUM_VIRUS_HEIGHT = 70;
 	//TODO:change icon url
-	public static final String MEDIUM_VIRUS_ICON_URL = "";
+	public static final String MEDIUM_VIRUS_ICON_URL = "images/virusIcon2.png";
 
 	/* Hard Virus Constants */
 	public static final int HARD_VIRUS_VELOCITY = 20;
@@ -84,5 +84,5 @@ public class GameConstants {
 	public static final int HARD_VIRUS_WIDTH = 50;
 	public static final int HARD_VIRUS_HEIGHT = 80;
 	//TODO:change icon url
-	public static final String HARD_VIRUS_ICON_URL = "";
+	public static final String HARD_VIRUS_ICON_URL = "images/virusIcon2.png";
 }

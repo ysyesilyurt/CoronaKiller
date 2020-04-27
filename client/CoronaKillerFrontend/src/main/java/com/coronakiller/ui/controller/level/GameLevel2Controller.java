@@ -100,6 +100,7 @@ public class GameLevel2Controller extends GameLevelController {
 			virus.virusAutoFire(anchorPane);
 			levelViruses.add(virus);
 			anchorPane.getChildren().add(virus);
+			virus.changeIconOfVirus();
 		}
 	}
 }

@@ -94,6 +94,7 @@ public class GameLevel3Controller extends GameLevelController {
 					// shouldn't execute below line
 					virus = new EasyVirus(300, 20);
 			}
+			virus.changeIconOfVirus();
 			virus.virusAutoMove();
 			virus.virusAutoFire(anchorPane);
 			levelViruses.add(virus);
