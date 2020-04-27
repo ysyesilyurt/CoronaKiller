@@ -45,6 +45,7 @@ public class GameLevel4Controller extends GameLevelController {
 		GameLevelController.currentLevel = 4;
 		GameLevelController.shipType = ShipType.POWERFUL_GUNS;
 		GameLevelController.currentSessionScore = gameDataCookie.getGameSessionDTO().getSessionScore();
+		GameLevelController.currentPane = this.anchorPane;
 	}
 
 	public void handleSpaceInitialization(){
