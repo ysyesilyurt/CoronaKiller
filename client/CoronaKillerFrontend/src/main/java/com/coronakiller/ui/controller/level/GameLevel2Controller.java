@@ -1,6 +1,8 @@
 package com.coronakiller.ui.controller.level;
 
+import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.model.ShipType;
 import com.coronakiller.ui.model.spaceship.NormalSpaceShip;
 import com.coronakiller.ui.model.spaceship.PowerfulGunsSpaceShip;
 import com.coronakiller.ui.model.virus.EasyVirus;
@@ -38,11 +40,14 @@ public class GameLevel2Controller extends GameLevelController {
 		GameLevelController.scoreValue = this.scoreValue;
 		GameLevelController.updateHpValue();
 		GameLevelController.updateScoreValue();
+		GameLevelController.currentLevel = 2;
+		GameLevelController.shipType = ShipType.NORMAL;
+		GameLevelController.currentSessionScore = StageInitializer.gameDataCookie.getGameSessionDTO().getSessionScore();
 	}
 
 	public void handleSpaceInitialization(){
 		spaceShip = null;
-		spaceShip = new NormalSpaceShip(100);
+		spaceShip = new NormalSpaceShip(StageInitializer.gameDataCookie.getGameSessionDTO().getShipHealth());
 		//spaceShip.changeIconofSpaceShip();
 		spaceShip.setMouseDraggableObject();
 		spaceShip.autofire(anchorPane);

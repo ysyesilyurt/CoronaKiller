@@ -1,9 +1,12 @@
 package com.coronakiller.ui.model.bullet;
 
+import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.controller.level.GameLevel1Controller;
 import com.coronakiller.ui.controller.level.GameLevelController;
+import com.coronakiller.ui.model.GameSession;
 import com.coronakiller.ui.model.virus.Virus;
+import com.coronakiller.ui.service.RequestService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
+import org.javatuples.Pair;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -84,6 +88,28 @@ public abstract class SpaceShipBullet extends Rectangle {
 			this.bulletTimeline.stop();
 			if(!GameLevelController.isGameLevelFinished) {
 				GameLevelController.isGameLevelFinished = true;
+				GameSession gameSessionDTO = new GameSession(
+						GameLevelController.currentLevel,
+						(long) GameLevelController.currentSessionScore,
+						GameLevelController.spaceShip.getCurrentHealth(),
+						GameLevelController.shipType
+				);
+				if(GameLevelController.currentLevel != 4){
+					Pair<Boolean, String> result = RequestService.updateGameSession(
+							GameLevelController.currentLevel,
+							(long) GameLevelController.currentSessionScore,
+							GameLevelController.spaceShip.getCurrentHealth(),
+							GameLevelController.shipType
+					);
+				} else{
+					Pair<Boolean, String> result = RequestService.finishGameSession(
+							GameLevelController.currentLevel,
+							(long) GameLevelController.currentSessionScore,
+							GameLevelController.spaceShip.getCurrentHealth(),
+							GameLevelController.shipType
+					);
+				}
+				StageInitializer.gameDataCookie.setGameSessionDTO(gameSessionDTO);
 				Stage currentStage = (Stage) currentPane.getScene().getWindow();
 				Parent leaderBoardPage = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(String.valueOf(GameLevelController.nextLevel))));
 				Scene scene = new Scene(leaderBoardPage, 600, 800);
