@@ -1,5 +1,7 @@
 package com.coronakiller.ui.constants;
 
+import javafx.scene.control.TextFormatter;
+
 public class UiConstants {
 	/* General Application Constants */
 	public static final String BACKEND_BASE_URL = "http://localhost:8080/api";
@@ -27,4 +29,14 @@ public class UiConstants {
 	public static final String GAME_LEVEL2_PAGE = "fxml/game-level2.fxml";
 	public static final String GAME_LEVEL3_PAGE = "fxml/game-level3.fxml";
 	public static final String GAME_LEVEL4_PAGE = "fxml/game-level4.fxml";
+
+	public static TextFormatter<String> returnInputTextFormatter() {
+		return new TextFormatter<>(change -> {
+			/* Reject input if space is entered */
+			if (change.getText().equals(" ")) {
+				change.setText("");
+			}
+			return change;
+		});
+	}
 }

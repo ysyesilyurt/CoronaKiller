@@ -1,6 +1,5 @@
 package com.coronakiller.ui.controller;
 
-import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXSnackbar;
@@ -26,6 +25,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
+import static com.coronakiller.ui.constants.UiConstants.*;
 
 /**
  * Controller that manages Register Page
@@ -64,8 +64,11 @@ public class RegisterController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		registerPane.getStylesheets().add(UiConstants.GENERAL_STYLES);
+		registerPane.getStylesheets().add(GENERAL_STYLES);
 		snackbar = new JFXSnackbar(registerPane);
+		nameField.setTextFormatter(returnInputTextFormatter());
+		passwordField.setTextFormatter(returnInputTextFormatter());
+		secondPasswordField.setTextFormatter(returnInputTextFormatter());
 	}
 
 	/**
@@ -108,7 +111,7 @@ public class RegisterController implements Initializable {
 				gameDataCookie.setPlayerDTO(result.getValue0());
 				/* Then Route to Dashboard */
 				Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-				Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.DASHBOARD_PAGE));
+				Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(DASHBOARD_PAGE));
 				Scene scene = new Scene(dashboardPage, 600, 800);
 				currentStage.setScene(scene);
 				currentStage.show();
@@ -130,7 +133,7 @@ public class RegisterController implements Initializable {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent loginPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.LOGIN_PAGE));
+		Parent loginPage = FXMLLoader.load(getClass().getClassLoader().getResource(LOGIN_PAGE));
 		Scene scene = new Scene(loginPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();

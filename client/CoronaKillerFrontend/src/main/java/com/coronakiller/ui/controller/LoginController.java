@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
+import static com.coronakiller.ui.constants.UiConstants.returnInputTextFormatter;
 
 /**
  * Controller that manages Login Page (Default first scene of the application)
@@ -63,6 +64,9 @@ public class LoginController implements Initializable {
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		loginPane.getStylesheets().add(UiConstants.GENERAL_STYLES);
 		snackbar = new JFXSnackbar(loginPane);
+		/* Set textfield config for rejection when space is entered */
+		nameField.setTextFormatter(returnInputTextFormatter());
+		passwordField.setTextFormatter(returnInputTextFormatter());
 	}
 
 	/**
