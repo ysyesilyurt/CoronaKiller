@@ -9,6 +9,7 @@ import com.coronakiller.ui.model.virus.MediumVirus;
 import com.coronakiller.ui.model.virus.Virus;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,6 +46,8 @@ public class GameLevel1Controller extends GameLevelController {
 		GameLevelController.currentLevel = 1;
 		GameLevelController.shipType = ShipType.ROOKIE;
 		GameLevelController.currentSessionScore = StageInitializer.gameDataCookie.getGameSessionDTO().getSessionScore();
+		GameLevelController.currentPane = this.anchorPane;
+		//GameLevelController.cheatImplementation();
 	}
 
 	public void handleSpaceInitialization(){

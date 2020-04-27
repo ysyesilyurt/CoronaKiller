@@ -1,13 +1,36 @@
 package com.coronakiller.ui.controller.level;
 
+import com.coronakiller.ui.application.StageInitializer;
+import com.coronakiller.ui.model.GameSession;
 import com.coronakiller.ui.model.ShipType;
 import com.coronakiller.ui.model.spaceship.SpaceShip;
 import com.coronakiller.ui.model.virus.Virus;
+import com.coronakiller.ui.service.RequestService;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import org.javatuples.Pair;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public abstract class GameLevelController implements Initializable {
@@ -20,6 +43,7 @@ public abstract class GameLevelController implements Initializable {
 	public static int currentLevel;
 	public static ShipType shipType;
 
+	public static Pane currentPane;
 	public static Text hpValue;
 	public static Text scoreValue;
 
@@ -35,4 +59,43 @@ public abstract class GameLevelController implements Initializable {
 	}
 
 	public static void updateScoreValue(){scoreValue.setText(String.valueOf(GameLevelController.currentSessionScore));}
+
+	public static void finishLevelSuccessfully() throws IOException {
+		GameLevelController.spaceShip.stopFire();
+		GameLevelController.isGameLevelFinished = true;
+		GameSession gameSessionDTO = new GameSession(
+				GameLevelController.currentLevel,
+				(long) GameLevelController.currentSessionScore,
+				GameLevelController.spaceShip.getCurrentHealth(),
+				GameLevelController.shipType
+		);
+		if(GameLevelController.currentLevel != 4){
+			Pair<Boolean, String> result = RequestService.updateGameSession(
+					GameLevelController.currentLevel,
+					(long) GameLevelController.currentSessionScore,
+					GameLevelController.spaceShip.getCurrentHealth(),
+					GameLevelController.shipType
+			);
+		} else{
+			Pair<Boolean, String> result = RequestService.finishGameSession(
+					GameLevelController.currentLevel,
+					(long) GameLevelController.currentSessionScore,
+					GameLevelController.spaceShip.getCurrentHealth(),
+					GameLevelController.shipType
+			);
+		}
+		StageInitializer.gameDataCookie.setGameSessionDTO(gameSessionDTO);
+		Stage currentStage = (Stage) currentPane.getScene().getWindow();
+		Parent leaderBoardPage = FXMLLoader.load(Objects.requireNonNull(GameLevelController.class.getClassLoader().getResource(String.valueOf(GameLevelController.nextLevel))));
+		Scene scene = new Scene(leaderBoardPage, 600, 800);
+		currentStage.setScene(scene);
+		currentStage.show();
+	}
+
+	public static void cheatImplementation(){
+		//TODO : implement cheat
+	}
+
+
+
 }
