@@ -27,7 +27,7 @@ public class RookieSpaceShip extends SpaceShip {
 	@Override
 	public void autofire(Pane currentPane){
 		autofireTimeline = new Timeline(
-				new KeyFrame(Duration.millis(800), e -> {
+				new KeyFrame(Duration.millis(500), e -> {
 					SpaceShipBullet1 bullet = new SpaceShipBullet1(this.getX()+this.getWidth()/2, this.getY());
 					currentPane.getChildren().add(bullet);
 					bullet.moveBullet(currentPane);

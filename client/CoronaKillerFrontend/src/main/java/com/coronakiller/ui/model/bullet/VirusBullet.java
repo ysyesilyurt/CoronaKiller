@@ -3,6 +3,7 @@ package com.coronakiller.ui.model.bullet;
 import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.controller.level.GameLevel1Controller;
 import com.coronakiller.ui.controller.level.GameLevelController;
+import com.coronakiller.ui.model.GameSession;
 import com.coronakiller.ui.model.virus.Virus;
 import com.coronakiller.ui.service.RequestService;
 import javafx.animation.KeyFrame;
@@ -64,12 +65,13 @@ public abstract class VirusBullet extends Rectangle {
 			if(GameLevelController.spaceShip.getShot(this.bulletDamage) <= 0){
 				if(!GameLevelController.isGameLevelFinished) {
 					GameLevelController.isGameLevelFinished = true;
-					Pair<Boolean, String> result = RequestService.finishGameSession(
-							GameLevelController.currentLevel,
+					GameSession gameSessionDTO = new GameSession(
+							GameLevelController.currentLevel + 1,
 							(long) GameLevelController.currentSessionScore,
 							GameLevelController.spaceShip.getCurrentHealth(),
 							GameLevelController.shipType
 					);
+					Pair<Boolean, String> result = RequestService.finishGameSession(gameSessionDTO);
 					Stage currentStage = (Stage) currentPane.getScene().getWindow();
 					Parent leaderBoardPage = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(DASHBOARD_PAGE)));
 					Scene scene = new Scene(leaderBoardPage, 600, 800);

@@ -89,25 +89,15 @@ public abstract class SpaceShipBullet extends Rectangle {
 			if(!GameLevelController.isGameLevelFinished) {
 				GameLevelController.isGameLevelFinished = true;
 				GameSession gameSessionDTO = new GameSession(
-						GameLevelController.currentLevel,
+						GameLevelController.currentLevel + 1,
 						(long) GameLevelController.currentSessionScore,
 						GameLevelController.spaceShip.getCurrentHealth(),
 						GameLevelController.shipType
 				);
 				if(GameLevelController.currentLevel != 4){
-					Pair<Boolean, String> result = RequestService.updateGameSession(
-							GameLevelController.currentLevel,
-							(long) GameLevelController.currentSessionScore,
-							GameLevelController.spaceShip.getCurrentHealth(),
-							GameLevelController.shipType
-					);
+					Pair<Boolean, String> result = RequestService.updateGameSession(gameSessionDTO);
 				} else{
-					Pair<Boolean, String> result = RequestService.finishGameSession(
-							GameLevelController.currentLevel,
-							(long) GameLevelController.currentSessionScore,
-							GameLevelController.spaceShip.getCurrentHealth(),
-							GameLevelController.shipType
-					);
+					Pair<Boolean, String> result = RequestService.finishGameSession(gameSessionDTO);
 				}
 				StageInitializer.gameDataCookie.setGameSessionDTO(gameSessionDTO);
 				Stage currentStage = (Stage) currentPane.getScene().getWindow();

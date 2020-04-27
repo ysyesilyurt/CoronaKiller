@@ -18,6 +18,8 @@ import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import static com.coronakiller.ui.application.StageInitializer.*;
+
 @Setter
 @Getter
 public class GameLevel1Controller extends GameLevelController {
@@ -44,11 +46,11 @@ public class GameLevel1Controller extends GameLevelController {
 		GameLevelController.updateScoreValue();
 		GameLevelController.currentLevel = 1;
 		GameLevelController.shipType = ShipType.ROOKIE;
-		GameLevelController.currentSessionScore = StageInitializer.gameDataCookie.getGameSessionDTO().getSessionScore();
+		GameLevelController.currentSessionScore = gameDataCookie.getGameSessionDTO().getSessionScore();
 	}
 
 	public void handleSpaceInitialization(){
-		spaceShip = new RookieSpaceShip(StageInitializer.gameDataCookie.getGameSessionDTO().getShipHealth());
+		spaceShip = new RookieSpaceShip(gameDataCookie.getGameSessionDTO().getShipHealth());
 		//spaceShip.changeIconofSpaceShip();
 		spaceShip.setMouseDraggableObject();
 		spaceShip.autofire(anchorPane);

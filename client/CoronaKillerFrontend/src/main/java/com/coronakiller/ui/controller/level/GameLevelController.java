@@ -10,13 +10,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
+
 public abstract class GameLevelController implements Initializable {
 
 	public static SpaceShip spaceShip;
 	public static ArrayList<Virus> levelViruses = new ArrayList<>();
 	public static boolean isGameLevelFinished = false;
 	public static StringBuilder nextLevel = new StringBuilder();
-	public static long currentSessionScore = 0;
+	public static long currentSessionScore = gameDataCookie.getGameSessionDTO().getSessionScore();
 	public static int currentLevel;
 	public static ShipType shipType;
 

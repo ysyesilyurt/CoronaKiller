@@ -4,7 +4,6 @@ import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.ShipType;
 import com.coronakiller.ui.model.spaceship.NormalSpaceShip;
-import com.coronakiller.ui.model.spaceship.PowerfulGunsSpaceShip;
 import com.coronakiller.ui.model.virus.EasyVirus;
 import com.coronakiller.ui.model.virus.HardVirus;
 import com.coronakiller.ui.model.virus.MediumVirus;
@@ -16,6 +15,9 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import static com.coronakiller.ui.application.StageInitializer.*;
+import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
 
 public class GameLevel2Controller extends GameLevelController {
 
@@ -42,25 +44,25 @@ public class GameLevel2Controller extends GameLevelController {
 		GameLevelController.updateScoreValue();
 		GameLevelController.currentLevel = 2;
 		GameLevelController.shipType = ShipType.NORMAL;
-		GameLevelController.currentSessionScore = StageInitializer.gameDataCookie.getGameSessionDTO().getSessionScore();
+		GameLevelController.currentSessionScore = gameDataCookie.getGameSessionDTO().getSessionScore();
 	}
 
-	public void handleSpaceInitialization(){
+	public void handleSpaceInitialization() {
 		spaceShip = null;
-		spaceShip = new NormalSpaceShip(StageInitializer.gameDataCookie.getGameSessionDTO().getShipHealth());
+		spaceShip = new NormalSpaceShip(gameDataCookie.getGameSessionDTO().getShipHealth());
 		//spaceShip.changeIconofSpaceShip();
 		spaceShip.setMouseDraggableObject();
 		spaceShip.autofire(anchorPane);
 	}
 
-	public void handleVirusInitialization(){
+	public void handleVirusInitialization() {
 		levelViruses.clear();
 		levelViruses = new ArrayList<>();
 		for (int i = 1; i < 11; ++i) {
 			Virus virus;
-			switch (i){
+			switch (i) {
 				case 1:
-					virus = new MediumVirus(100 , 100);
+					virus = new MediumVirus(100, 100);
 					break;
 				case 2:
 					virus = new EasyVirus(200, 100);

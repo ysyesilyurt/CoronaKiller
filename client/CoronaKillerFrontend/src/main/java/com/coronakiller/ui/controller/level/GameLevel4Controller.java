@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import static com.coronakiller.ui.application.StageInitializer.*;
+
 public class GameLevel4Controller extends GameLevelController {
 
 	@FXML
@@ -42,12 +44,12 @@ public class GameLevel4Controller extends GameLevelController {
 		GameLevelController.updateScoreValue();
 		GameLevelController.currentLevel = 4;
 		GameLevelController.shipType = ShipType.POWERFUL_GUNS;
-		GameLevelController.currentSessionScore = StageInitializer.gameDataCookie.getGameSessionDTO().getSessionScore();
+		GameLevelController.currentSessionScore = gameDataCookie.getGameSessionDTO().getSessionScore();
 	}
 
 	public void handleSpaceInitialization(){
 		spaceShip = null;
-		spaceShip = new PowerfulGunsSpaceShip(StageInitializer.gameDataCookie.getGameSessionDTO().getShipHealth());
+		spaceShip = new PowerfulGunsSpaceShip(gameDataCookie.getGameSessionDTO().getShipHealth());
 		//spaceShip.changeIconofSpaceShip();
 		spaceShip.setMouseDraggableObject();
 		spaceShip.autofire(anchorPane);

@@ -10,6 +10,11 @@
             <Font size="15.0" />
          </font>
       </Text>
+      <Text layoutX="263.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1st Level">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
       <Text fx:id="hpText" layoutX="473.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HP:">
          <font>
             <Font size="15.0" />

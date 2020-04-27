@@ -27,7 +27,7 @@ public class BigGunsSpaceShip extends SpaceShip{
 	@Override
 	public void autofire(Pane currentPane){
 		autofireTimeline = new Timeline(
-				new KeyFrame(Duration.millis(500), e -> {
+				new KeyFrame(Duration.millis(200), e -> {
 					SpaceShipBullet2 bullet = new SpaceShipBullet2(this.getX(), this.getY());
 					SpaceShipBullet2 bullet2 = new SpaceShipBullet2(this.getX() + this.getWidth(), this.getY());
 					currentPane.getChildren().addAll(bullet, bullet2);

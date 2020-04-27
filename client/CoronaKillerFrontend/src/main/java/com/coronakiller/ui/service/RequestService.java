@@ -284,19 +284,16 @@ public class RequestService {
 		}
 	}
 
-	public static Pair<Boolean, String> updateGameSession(Integer currentLevel,
-															  Long sessionScore,
-															  Integer shipHealth,
-															  ShipType shipType) {
+	public static Pair<Boolean, String> updateGameSession(GameSession gameSession) {
 		if (gameDataCookie.getPlayerDTO() != null) {
 			String authorizationHeader = Credentials.basic(gameDataCookie.getPlayerDTO().getUsername(),
 					gameDataCookie.getPlayerDTO().getPassword());
 			MediaType mediaType = MediaType.parse("application/json");
 			RequestBody body = RequestBody.create(mediaType,
-					"{\n\t\"currentLevel\":" + currentLevel + "," +
-							"\n\t\"sessionScore\":" + sessionScore + "," +
-							"\n\t\"shipHealth\":" + shipHealth + "," +
-							"\n\t\"shipType\":" + shipType.resolveEnumCode() + "\n}");
+					"{\n\t\"currentLevel\":" + gameSession.getCurrentLevel() + "," +
+							"\n\t\"sessionScore\":" + gameSession.getSessionScore() + "," +
+							"\n\t\"shipHealth\":" + gameSession.getShipHealth() + "," +
+							"\n\t\"shipType\":" + gameSession.getShipType().resolveEnumCode() + "\n}");
 			Request request = new Request.Builder()
 					.url(UiConstants.BACKEND_BASE_URL + "/game/update/" + gameDataCookie.getPlayerDTO().getId())
 					.method("PUT", body)
@@ -332,19 +329,16 @@ public class RequestService {
 		}
 	}
 
-	public static Pair<Boolean, String> finishGameSession(Integer currentLevel,
-														  Long sessionScore,
-														  Integer shipHealth,
-														  ShipType shipType) {
+	public static Pair<Boolean, String> finishGameSession(GameSession gameSession) {
 		if (gameDataCookie.getPlayerDTO() != null) {
 			String authorizationHeader = Credentials.basic(gameDataCookie.getPlayerDTO().getUsername(),
 					gameDataCookie.getPlayerDTO().getPassword());
 			MediaType mediaType = MediaType.parse("application/json");
 			RequestBody body = RequestBody.create(mediaType,
-					"{\n\t\"currentLevel\":" + currentLevel + "," +
-							"\n\t\"sessionScore\":" + sessionScore + "," +
-							"\n\t\"shipHealth\":" + shipHealth + "," +
-							"\n\t\"shipType\":" + shipType.resolveEnumCode() + "\n}");
+					"{\n\t\"currentLevel\":" + gameSession.getCurrentLevel() + "," +
+							"\n\t\"sessionScore\":" + gameSession.getSessionScore() + "," +
+							"\n\t\"shipHealth\":" + gameSession.getShipHealth() + "," +
+							"\n\t\"shipType\":" + gameSession.getShipType().resolveEnumCode() + "\n}");
 			Request request = new Request.Builder()
 					.url(UiConstants.BACKEND_BASE_URL + "/game/finish/" + gameDataCookie.getPlayerDTO().getId())
 					.method("PUT", body)
