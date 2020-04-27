@@ -28,4 +28,6 @@ public abstract class Virus extends Rectangle {
 	public abstract void stopFireAndMove();
 
 	public abstract void changeIconOfVirus();
+
+	public abstract int getPointsFromVirus();
 }

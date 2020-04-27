@@ -75,4 +75,9 @@ public class HardVirus extends Virus {
 		Image hardVirusIcon = new Image(HARD_VIRUS_ICON_URL);
 		this.setFill(new ImagePattern(hardVirusIcon));
 	}
+
+	@Override
+	public int getPointsFromVirus(){
+		return 20;
+	}
 }

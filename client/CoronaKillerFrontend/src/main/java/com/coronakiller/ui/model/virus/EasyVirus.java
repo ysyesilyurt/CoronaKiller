@@ -65,4 +65,9 @@ public class EasyVirus extends Virus {
 		Image easyVirusIcon = new Image(EASY_VIRUS_ICON_URL);
 		this.setFill(new ImagePattern(easyVirusIcon));
 	}
+
+	@Override
+	public int getPointsFromVirus(){
+		return 10;
+	}
 }

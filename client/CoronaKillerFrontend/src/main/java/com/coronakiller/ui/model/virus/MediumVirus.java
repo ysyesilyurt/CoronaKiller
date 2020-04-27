@@ -71,4 +71,9 @@ public class MediumVirus extends Virus {
 		Image mediumVirusIcon = new Image(MEDIUM_VIRUS_ICON_URL);
 		this.setFill(new ImagePattern(mediumVirusIcon));
 	}
+
+	@Override
+	public int getPointsFromVirus(){
+		return 30;
+	}
 }
