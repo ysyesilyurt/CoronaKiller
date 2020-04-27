@@ -5,8 +5,16 @@ import javafx.scene.paint.ImagePattern;
 
 import static com.coronakiller.ui.constants.GameConstants.*;
 
+/**
+ * This class holds second type of bullet which can be shot from spaceship.
+ */
 public class SpaceShipBullet2 extends SpaceShipBullet {
 
+	/**
+	 * Constructor method of second type of bullet.
+	 * @param xPosition
+	 * @param yPosition
+	 */
 	public SpaceShipBullet2(double xPosition, double yPosition){
 		super(xPosition, yPosition, SPACESHIP_BULLET2_WIDTH, SPACESHIP_BULLET2_HEIGHT, SPACESHIP_BULLET2_DAMAGE, SPACESHIP_BULLET2_VELOCITY);
 	}

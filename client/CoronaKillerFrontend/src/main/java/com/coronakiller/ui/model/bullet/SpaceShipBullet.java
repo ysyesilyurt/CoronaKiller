@@ -32,11 +32,14 @@ public abstract class SpaceShipBullet extends Rectangle {
 	private Timeline bulletTimeline;
 
 	/**
-	 * Constructor method of the Bullet object.
-	 * @param xPosition position on the x axis
-	 * @param yPosition position of the y axis
-	 * @param width width of the Bullet
-	 * @param height height of the Bullet
+	 * Constructor method of SpaceShip bullets.
+	 *
+	 * @param xPosition bullet position in the x axis
+	 * @param yPosition bullet position in the y axis
+	 * @param width bullet width
+	 * @param height bullet height
+	 * @param damage bullet damage
+	 * @param bulletVelocity bullet velocity
 	 */
 	public SpaceShipBullet(double xPosition, double yPosition, int width, int height, int damage, int bulletVelocity){
 		super(xPosition, yPosition, width, height);
@@ -44,6 +47,10 @@ public abstract class SpaceShipBullet extends Rectangle {
 		this.bulletVelocity = bulletVelocity;
 	}
 
+	/**
+	 * Thanks to this method, our bullets can move.
+	 * @param currentPane current pane value of the scene
+	 */
 	public void moveBullet(Pane currentPane){
 		this.bulletTimeline = new Timeline(
 				new KeyFrame( Duration.millis(10), e ->{
@@ -59,6 +66,12 @@ public abstract class SpaceShipBullet extends Rectangle {
 		this.bulletTimeline.play();
 	}
 
+	/**
+	 * This method checks whether the spaceship bullet coincides with viruses or not.
+	 * If they are colliding, decrease bullet damage from virus health and check for virus and successfully completion of level.
+	 * @param currentPane current pane value of the scene
+	 * @throws IOException
+	 */
 	public void checkCollision(Pane currentPane) throws IOException {
 		Iterator<Virus> virusIterator = GameLevel1Controller.levelViruses.iterator();
 		while (virusIterator.hasNext()) {

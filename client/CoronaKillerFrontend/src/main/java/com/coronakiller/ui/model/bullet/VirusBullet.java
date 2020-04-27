@@ -42,6 +42,10 @@ public abstract class VirusBullet extends Rectangle {
 		this.bulletVelocity = bulletVelocity;
 	}
 
+	/**
+	 * Thanks to this method, our bullets can move.
+	 * @param currentPane current pane value of the scene
+	 */
 	public void moveBullet(Pane currentPane){
 		this.bulletTimeline = new Timeline(
 				new KeyFrame( Duration.millis(10), e ->{
@@ -57,6 +61,12 @@ public abstract class VirusBullet extends Rectangle {
 		this.bulletTimeline.play();
 	}
 
+	/**
+	 * This method checks whether the virus bullet coincides with spaceship or not.
+	 * If they are colliding, decrease bullet damage from spaceship and check for the end of the game.
+	 * @param currentPane current pane value of the scene
+	 * @throws IOException
+	 */
 	public void checkCollision(Pane currentPane) throws IOException {
 		if(GameLevelController.spaceShip.getBoundsInParent().intersects(this.getBoundsInParent())){
 			this.bulletTimeline.stop();
