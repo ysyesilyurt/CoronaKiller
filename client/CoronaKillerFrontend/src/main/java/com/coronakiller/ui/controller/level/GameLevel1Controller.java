@@ -19,7 +19,6 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
@@ -48,7 +47,8 @@ public class GameLevel1Controller extends GameLevelController {
 
 	/**
 	 * Overwritten initialize method from Initializable interface. It is responsible for initializing ui related objects.
-	 * @param url original parameter of initialize
+	 *
+	 * @param url            original parameter of initialize
 	 * @param resourceBundle original parameter of initialize
 	 */
 	@Override
@@ -72,7 +72,7 @@ public class GameLevel1Controller extends GameLevelController {
 	/**
 	 * Spaceship of the level and it's specifications are done in this method.
 	 */
-	public void handleSpaceInitialization(){
+	public void handleSpaceInitialization() {
 		spaceShip = new RookieSpaceShip(gameDataCookie.getGameSessionDTO().getShipHealth());
 		//spaceShip.changeIconofSpaceShip();
 		spaceShip.setMouseDraggableObject();
@@ -86,12 +86,12 @@ public class GameLevel1Controller extends GameLevelController {
 		Random rand = new Random();
 		for (int j = 1; j < 3; ++j) {
 			int mediumVirusPosition = rand.nextInt(6);
-			if(mediumVirusPosition == 0)
+			if (mediumVirusPosition == 0)
 				mediumVirusPosition = 1;
 			for (int i = 1; i < 6; ++i) {
 				Virus virus;
-				if(i == mediumVirusPosition){
-					virus = new MediumVirus(100 * i, j*100);
+				if (i == mediumVirusPosition) {
+					virus = new MediumVirus(100 * i, j * 100);
 				} else {
 					virus = new EasyVirus(100 * i, j * 100);
 				}
