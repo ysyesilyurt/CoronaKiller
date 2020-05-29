@@ -88,6 +88,4 @@ public abstract class GameLevelController implements Initializable {
 		//TODO : implement cheat
 	}
 
-
-
 }

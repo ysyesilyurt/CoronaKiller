@@ -4,6 +4,7 @@ import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.ShipType;
 import com.coronakiller.ui.model.spaceship.BigGunsSpaceShip;
 import com.coronakiller.ui.model.spaceship.PowerfulGunsSpaceShip;
+import com.coronakiller.ui.model.virus.BigBoss;
 import com.coronakiller.ui.model.virus.HardVirus;
 import com.coronakiller.ui.model.virus.MediumVirus;
 import com.coronakiller.ui.model.virus.Virus;
@@ -88,25 +89,12 @@ public class GameLevel5Controller extends GameLevelController{
 	public void handleVirusInitialization(){
 		levelViruses.clear();
 		levelViruses = new ArrayList<>();
-		Random random = new Random();
-		for(int i=1; i<6 ; ++i){
-			int mediumVirusNumber = random.nextInt(2);
-			if(mediumVirusNumber == 0)
-				mediumVirusNumber =1;
-			for(int j=1; j<3; ++j) {
-				Virus virus;
-				if(j == mediumVirusNumber){
-					virus = new MediumVirus(100*i, 100*j);
-				} else{
-					virus = new HardVirus(100*i, 100*j);
-				}
-				virus.changeIconOfVirus();
-				virus.virusAutoMove();
-				virus.virusAutoFire(anchorPane);
-				levelViruses.add(virus);
-				anchorPane.getChildren().add(virus);
-			}
-		}
+		Virus virus = new BigBoss(300, 100);
+		virus.changeIconOfVirus();
+		virus.virusAutoMove();
+		virus.virusAutoFire(anchorPane);
+		levelViruses.add(virus);
+		anchorPane.getChildren().add(virus);
 	}
 
 	public void updateTeammateHpValue(){
@@ -117,6 +105,8 @@ public class GameLevel5Controller extends GameLevelController{
 		alienHpValue.setText(String.valueOf(100));
 	}
 
+	//TODO : player with higher score also need to get K points bonus.
+
 	public void onClickGoDash(ActionEvent event) throws IOException {
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.DASHBOARD_PAGE));
@@ -124,4 +114,5 @@ public class GameLevel5Controller extends GameLevelController{
 		currentStage.setScene(scene);
 		currentStage.show();
 	}
+
 }
