@@ -74,7 +74,7 @@ public class GameLevel1Controller extends GameLevelController {
 	 */
 	public void handleSpaceInitialization() {
 		spaceShip = new RookieSpaceShip(gameDataCookie.getGameSessionDTO().getShipHealth());
-		//spaceShip.changeIconofSpaceShip();
+		spaceShip.changeIconofSpaceShip();
 		spaceShip.setMouseDraggableObject();
 		spaceShip.autofire(anchorPane);
 	}

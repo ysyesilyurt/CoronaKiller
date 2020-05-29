@@ -13,6 +13,7 @@ import static com.coronakiller.ui.constants.GameConstants.*;
 public class NormalSpaceShip extends SpaceShip{
 
 	private Timeline autofireTimeline;
+	Image spaceshipIcon = new Image(NORMAL_SPACESHIP_ICON_URL);
 
 	public NormalSpaceShip(int currentHealth) {
 		super(NORMAL_SPACESHIP_WIDTH, NORMAL_SPACESHIP_HEIGHT, currentHealth);
@@ -20,7 +21,7 @@ public class NormalSpaceShip extends SpaceShip{
 
 	@Override
 	public void changeIconofSpaceShip(){
-		Image spaceshipIcon = new Image(NORMAL_SPACESHIP_ICON_URL);
+
 		this.setFill(new ImagePattern(spaceshipIcon));
 	}
 
@@ -29,6 +30,7 @@ public class NormalSpaceShip extends SpaceShip{
 		autofireTimeline = new Timeline(
 				new KeyFrame(Duration.millis(300), e -> {
 					SpaceShipBullet1 bullet = new SpaceShipBullet1(this.getX()+this.getWidth()/2, this.getY());
+					bullet.changeIconOfBullet();
 					currentPane.getChildren().add(bullet);
 					bullet.moveBullet(currentPane);
 				}));

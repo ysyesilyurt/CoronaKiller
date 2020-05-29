@@ -21,6 +21,7 @@ public class HardVirus extends Virus {
 	private Timeline hardVirusMoveTimeline;
 	private Timeline hardVirusFireTimeline;
 	private int moveCounter = 2;
+	Image hardVirusIcon = new Image(HARD_VIRUS_ICON_URL);
 
 	public HardVirus(double xPosition, double yPosition) {
 		super(xPosition, yPosition, HARD_VIRUS_WIDTH, HARD_VIRUS_HEIGHT, HARD_VIRUS_HEALTH);
@@ -32,6 +33,7 @@ public class HardVirus extends Virus {
 		hardVirusFireTimeline = new Timeline(
 				new KeyFrame(Duration.millis(ms), e -> {
 					VirusBullet2 bullet = new VirusBullet2(this.getX()+this.getWidth()/2, this.getY());
+					bullet.changeIconOfBullet();
 					currentPane.getChildren().add(bullet);
 					bullet.moveBullet(currentPane);
 				}));
@@ -73,8 +75,7 @@ public class HardVirus extends Virus {
 
 	@Override
 	public void changeIconOfVirus() {
-		//Image hardVirusIcon = new Image(HARD_VIRUS_ICON_URL);
-		this.setFill(Color.BLUE);
+		this.setFill(new ImagePattern(hardVirusIcon));
 	}
 
 	@Override

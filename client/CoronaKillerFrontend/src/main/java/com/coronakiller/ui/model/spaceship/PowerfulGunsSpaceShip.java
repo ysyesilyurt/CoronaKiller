@@ -14,6 +14,8 @@ import static com.coronakiller.ui.constants.GameConstants.*;
 public class PowerfulGunsSpaceShip extends SpaceShip{
 
 	private Timeline autofireTimeline;
+	Image spaceshipIcon = new Image(POWERFUL_GUNS_SPACESHIP_ICON_URL);
+
 	/**
 	 * Constructor method of the SpaceShip object.
 	 * @param currentHealth
@@ -24,7 +26,6 @@ public class PowerfulGunsSpaceShip extends SpaceShip{
 
 	@Override
 	public void changeIconofSpaceShip(){
-		Image spaceshipIcon = new Image(POWERFUL_GUNS_SPACESHIP_ICON_URL);
 		this.setFill(new ImagePattern(spaceshipIcon));
 	}
 
@@ -34,6 +35,8 @@ public class PowerfulGunsSpaceShip extends SpaceShip{
 				new KeyFrame(Duration.millis(450), e -> {
 					SpaceShipBullet2 bullet = new SpaceShipBullet2(this.getX(), this.getY());
 					SpaceShipBullet2 bullet2 = new SpaceShipBullet2(this.getX() + this.getWidth(), this.getY());
+					bullet.changeIconOfBullet();
+					bullet2.changeIconOfBullet();
 					currentPane.getChildren().addAll(bullet, bullet2);
 					bullet.moveBullet(currentPane);
 					bullet2.moveBullet(currentPane);

@@ -13,6 +13,7 @@ import static com.coronakiller.ui.constants.GameConstants.*;
 public class BigGunsSpaceShip extends SpaceShip{
 
 	private Timeline autofireTimeline;
+	Image spaceshipIcon = new Image(BIG_GUNS_SPACESHIP_ICON_URL);
 
 	public BigGunsSpaceShip(int currentHealth) {
 		super(BIG_GUNS_SPACESHIP_WIDTH, BIG_GUNS_SPACESHIP_HEIGHT, currentHealth);
@@ -20,7 +21,6 @@ public class BigGunsSpaceShip extends SpaceShip{
 
 	@Override
 	public void changeIconofSpaceShip(){
-		Image spaceshipIcon = new Image(BIG_GUNS_SPACESHIP_ICON_URL);
 		this.setFill(new ImagePattern(spaceshipIcon));
 	}
 
@@ -30,6 +30,8 @@ public class BigGunsSpaceShip extends SpaceShip{
 				new KeyFrame(Duration.millis(200), e -> {
 					SpaceShipBullet2 bullet = new SpaceShipBullet2(this.getX(), this.getY());
 					SpaceShipBullet2 bullet2 = new SpaceShipBullet2(this.getX() + this.getWidth(), this.getY());
+					bullet.changeIconOfBullet();
+					bullet2.changeIconOfBullet();
 					currentPane.getChildren().addAll(bullet, bullet2);
 					bullet.moveBullet(currentPane);
 					bullet2.moveBullet(currentPane);

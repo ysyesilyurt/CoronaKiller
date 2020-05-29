@@ -26,6 +26,7 @@ public class EasyVirus extends Virus {
 	private Timeline easyVirusTimeline;
 	private int moveCounter = 4;
 	private boolean moveDirectionFlag = true;
+	Image easyVirusIcon = new Image(EASY_VIRUS_ICON_URL);
 
 	public EasyVirus(double xPosition, double yPosition) {
 		super(xPosition, yPosition, EASY_VIRUS_WIDTH, EASY_VIRUS_HEIGHT, EASY_VIRUS_HEALTH);
@@ -65,8 +66,7 @@ public class EasyVirus extends Virus {
 
 	@Override
 	public void changeIconOfVirus() {
-		//Image mediumVirusIcon = new Image(MEDIUM_VIRUS_ICON_URL);
-		this.setFill(Color.GREEN);
+		this.setFill(new ImagePattern(easyVirusIcon));
 	}
 
 	@Override

@@ -11,27 +11,27 @@ public class GameConstants {
 	/* Rookie SpaceShip Constants */
 	public static final int ROOKIE_SPACESHIP_WIDTH = 60;
 	public static final int ROOKIE_SPACESHIP_HEIGHT = 100;
-	public static final String ROOKIE_SPACESHIP_ICON_URL = "/images/spaceship3.png"; // maybe different spaceships have  different icons
+	public static final String ROOKIE_SPACESHIP_ICON_URL = "/images/spaceship1.png";
 
 	/* Normal SpaceShip Constants */
 	public static final int NORMAL_SPACESHIP_WIDTH = 60;
 	public static final int NORMAL_SPACESHIP_HEIGHT = 100;
-	public static final String NORMAL_SPACESHIP_ICON_URL = "/images/spaceship3.png"; // maybe different spaceships have  different icons
+	public static final String NORMAL_SPACESHIP_ICON_URL = "/images/spaceship2.png";
 
 	/* Veteran SpaceShip Constants */
 	public static final int VETERAN_SPACESHIP_WIDTH = 60;
 	public static final int VETERAN_SPACESHIP_HEIGHT = 100;
-	public static final String VETERAN_SPACESHIP_ICON_URL = "/images/spaceship3.png"; // maybe different spaceships have  different icons
+	public static final String VETERAN_SPACESHIP_ICON_URL = "/images/spaceship3.png";
 
 	/* Powerful Guns SpaceShip Constants */
 	public static final int POWERFUL_GUNS_SPACESHIP_WIDTH = 60;
 	public static final int POWERFUL_GUNS_SPACESHIP_HEIGHT = 100;
-	public static final String POWERFUL_GUNS_SPACESHIP_ICON_URL = "/images/spaceship3.png"; // maybe different spaceships have  different icons
+	public static final String POWERFUL_GUNS_SPACESHIP_ICON_URL = "/images/spaceship3.png";
 
 	/* Big Guns SpaceShip Constants */
 	public static final int BIG_GUNS_SPACESHIP_WIDTH = 60;
 	public static final int BIG_GUNS_SPACESHIP_HEIGHT = 100;
-	public static final String BIG_GUNS_SPACESHIP_ICON_URL = "/images/spaceship3.png"; // maybe different spaceships have  different icons
+	public static final String BIG_GUNS_SPACESHIP_ICON_URL = "/images/spaceship5.png";
 
 	/* SpaceShip Bullet 1 Constants */
 	public static final int SPACESHIP_BULLET1_VELOCITY = 5;
@@ -39,7 +39,7 @@ public class GameConstants {
 	public static final int SPACESHIP_BULLET1_WIDTH = 5;
 	public static final int SPACESHIP_BULLET1_HEIGHT = 10;
 	//TODO:change icon url
-	public static final String SPACESHIP_BULLET1_ICON_URL = "";
+	public static final String SPACESHIP_BULLET1_ICON_URL = "images/spaceBullet1.png";
 
 	/* SpaceShip Bullet 2 Constants */
 	public static final int SPACESHIP_BULLET2_VELOCITY = 8;
@@ -47,7 +47,7 @@ public class GameConstants {
 	public static final int SPACESHIP_BULLET2_WIDTH = 8;
 	public static final int SPACESHIP_BULLET2_HEIGHT = 16;
 	//TODO:change icon url
-	public static final String SPACESHIP_BULLET2_ICON_URL = "";
+	public static final String SPACESHIP_BULLET2_ICON_URL = "images/spaceBullet1.png";
 
 	/* Virus Bullet 1 Constants */
 	public static final int VIRUS_BULLET1_VELOCITY = 5;
@@ -55,7 +55,7 @@ public class GameConstants {
 	public static final int VIRUS_BULLET1_WIDTH = 5;
 	public static final int VIRUS_BULLET1_HEIGHT = 10;
 	//TODO:change icon url
-	public static final String VIRUS_BULLET1_ICON_URL = "";
+	public static final String VIRUS_BULLET1_ICON_URL = "images/virusBullet1.png";
 
 	/* Virus Bullet 2 Constants */
 	public static final int VIRUS_BULLET2_VELOCITY = 10;
@@ -63,7 +63,7 @@ public class GameConstants {
 	public static final int VIRUS_BULLET2_WIDTH = 6;
 	public static final int VIRUS_BULLET2_HEIGHT = 12;
 	//TODO:change icon url
-	public static final String VIRUS_BULLET2_ICON_URL = "";
+	public static final String VIRUS_BULLET2_ICON_URL = "images/virusBullet1.png";
 
 	/* Easy Virus Constants */
 	public static final int EASY_VIRUS_VELOCITY = 10;
@@ -71,7 +71,7 @@ public class GameConstants {
 	public static final int EASY_VIRUS_WIDTH = 30;
 	public static final int EASY_VIRUS_HEIGHT = 50;
 	//TODO:change icon url
-	public static final String EASY_VIRUS_ICON_URL = "images/virusIcon1.png";
+	public static final String EASY_VIRUS_ICON_URL = "images/virusIcon3.png";
 
 	/* Medium Virus Constants */
 	public static final int MEDIUM_VIRUS_VELOCITY = 15;
@@ -79,7 +79,7 @@ public class GameConstants {
 	public static final int MEDIUM_VIRUS_WIDTH = 40;
 	public static final int MEDIUM_VIRUS_HEIGHT = 70;
 	//TODO:change icon url
-	public static final String MEDIUM_VIRUS_ICON_URL = "images/virusIcon2.png";
+	public static final String MEDIUM_VIRUS_ICON_URL = "images/virIcon1.jpg";
 
 	/* Hard Virus Constants */
 	public static final int HARD_VIRUS_VELOCITY = 20;
@@ -87,5 +87,5 @@ public class GameConstants {
 	public static final int HARD_VIRUS_WIDTH = 50;
 	public static final int HARD_VIRUS_HEIGHT = 80;
 	//TODO:change icon url
-	public static final String HARD_VIRUS_ICON_URL = "images/virusIcon2.png";
+	public static final String HARD_VIRUS_ICON_URL = "images/virIcon9.png";
 }

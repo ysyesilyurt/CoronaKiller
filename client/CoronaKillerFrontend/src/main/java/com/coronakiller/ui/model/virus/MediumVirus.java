@@ -22,6 +22,7 @@ public class MediumVirus extends Virus {
 	private Timeline mediumVirusFireTimeline;
 	private int moveCounter = 4;
 	private boolean moveDirectionFlag = true;
+	Image mediumVirusIcon = new Image(MEDIUM_VIRUS_ICON_URL);
 
 	public MediumVirus(double xPosition, double yPosition) {
 		super(xPosition, yPosition, MEDIUM_VIRUS_WIDTH, MEDIUM_VIRUS_HEIGHT, MEDIUM_VIRUS_HEALTH);
@@ -33,6 +34,7 @@ public class MediumVirus extends Virus {
 		mediumVirusFireTimeline = new Timeline(
 				new KeyFrame(Duration.millis(ms), e -> {
 					VirusBullet1 bullet = new VirusBullet1(this.getX()+this.getWidth()/2, this.getY());
+					bullet.changeIconOfBullet();
 					currentPane.getChildren().add(bullet);
 					bullet.moveBullet(currentPane);
 				}));
@@ -70,8 +72,7 @@ public class MediumVirus extends Virus {
 
 	@Override
 	public void changeIconOfVirus() {
-		//Image mediumVirusIcon = new Image(MEDIUM_VIRUS_ICON_URL);
-		this.setFill(javafx.scene.paint.Color.RED);
+		this.setFill(new ImagePattern(mediumVirusIcon));
 	}
 
 	@Override
