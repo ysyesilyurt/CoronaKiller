@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coronakiller.ui.controller.level.GameLevel5Controller">
+    <JFXButton fx:id="backToLoginButton" layoutX="454.0" layoutY="753.0" onAction="#onClickGoDash" prefHeight="24.0" prefWidth="132.0" ripplerFill="#cd2026" styleClass="jfx-button-flat" text="Back to Dashboard" textAlignment="CENTER">
+        <font>
+            <Font name="Dyuthi" size="14.0" />
+        </font>
+    </JFXButton>
+    <children>
+        <Text fx:id="scoreText" layoutX="36.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Session Score:">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <Text layoutX="263.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5th Level">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <Text fx:id="userHpText" layoutX="420.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your HP:">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <Text fx:id="teammateHpText" layoutX="420.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teammate HP:">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <Text fx:id="alienHpText" layoutX="36.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alien HP:">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <Text fx:id="scoreValue" layoutX="153.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <Text fx:id="hpValue" layoutX="550.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <Text fx:id="teammateHpValue" layoutX="550.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <Text fx:id="alienHpValue" layoutX="153.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+    </children>
+</AnchorPane>
