@@ -56,7 +56,7 @@ public class GameLevel4Controller extends GameLevelController {
 		handleSpaceInitialization();
 		anchorPane.getChildren().add(spaceShip);
 		nextLevel = null;
-		nextLevel = new StringBuilder(UiConstants.DASHBOARD_PAGE);
+		nextLevel = new StringBuilder(UiConstants.GAME_LEVEL5_PAGE);
 		GameLevelController.hpValue = this.hpValue;
 		GameLevelController.scoreValue = this.scoreValue;
 		GameLevelController.updateHpValue();

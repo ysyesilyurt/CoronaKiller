@@ -66,10 +66,15 @@ public abstract class GameLevelController implements Initializable {
 				GameLevelController.spaceShip.getCurrentHealth(),
 				GameLevelController.shipType
 		);
-		if(GameLevelController.currentLevel != 4){
-			Pair<Boolean, String> result = RequestService.updateGameSession(gameSessionDTO);
-		} else{
+		if(GameLevelController.currentLevel == 5){
 			Pair<Boolean, String> result = RequestService.finishGameSession(gameSessionDTO);
+		}
+		else if(GameLevelController.currentLevel == 4){
+			Pair<Boolean, String> result = RequestService.updateGameSession(gameSessionDTO);
+			//TODO : wait for matchmaking here!!!
+		}
+		else{
+			Pair<Boolean, String> result = RequestService.updateGameSession(gameSessionDTO);
 		}
 		StageInitializer.gameDataCookie.setGameSessionDTO(gameSessionDTO);
 		Stage currentStage = (Stage) currentPane.getScene().getWindow();
