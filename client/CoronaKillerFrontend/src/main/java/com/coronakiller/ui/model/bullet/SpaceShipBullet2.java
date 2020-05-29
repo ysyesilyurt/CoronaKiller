@@ -10,6 +10,8 @@ import static com.coronakiller.ui.constants.GameConstants.*;
  */
 public class SpaceShipBullet2 extends SpaceShipBullet {
 
+	Image spaceshipBullet2Icon = new Image(SPACESHIP_BULLET2_ICON_URL);
+
 	/**
 	 * Constructor method of second type of bullet.
 	 * @param xPosition
@@ -21,7 +23,6 @@ public class SpaceShipBullet2 extends SpaceShipBullet {
 
 	@Override
 	public void changeIconOfBullet() {
-		Image spaceshipBullet2Icon = new Image(SPACESHIP_BULLET2_ICON_URL);
 		this.setFill(new ImagePattern(spaceshipBullet2Icon));
 	}
 }

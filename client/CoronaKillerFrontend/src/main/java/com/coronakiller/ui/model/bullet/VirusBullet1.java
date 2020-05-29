@@ -7,6 +7,7 @@ import static com.coronakiller.ui.constants.GameConstants.*;
 
 public class VirusBullet1 extends VirusBullet{
 
+	Image virusBullet1Icon = new Image(VIRUS_BULLET1_ICON_URL);
 	/**
 	 * Constructor method of the SpaceShipBullet1 object.
 	 * @param xPosition position on the x axis
@@ -18,7 +19,6 @@ public class VirusBullet1 extends VirusBullet{
 
 	@Override
 	public void changeIconOfBullet() {
-		Image virusBullet1Icon = new Image(VIRUS_BULLET1_ICON_URL);
 		this.setFill(new ImagePattern(virusBullet1Icon));
 	}
 }
