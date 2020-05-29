@@ -48,7 +48,7 @@ public abstract class VirusBullet extends Rectangle {
 	 */
 	public void moveBullet(Pane currentPane){
 		this.bulletTimeline = new Timeline(
-				new KeyFrame( Duration.millis(10), e ->{
+				new KeyFrame( Duration.millis(20), e ->{
 					this.setY(this.getY() + bulletVelocity);
 					try {
 						this.checkCollision(currentPane);

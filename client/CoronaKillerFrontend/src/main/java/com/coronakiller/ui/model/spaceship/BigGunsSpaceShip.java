@@ -1,6 +1,6 @@
 package com.coronakiller.ui.model.spaceship;
 
-import com.coronakiller.ui.model.bullet.SpaceShipBullet2;
+import com.coronakiller.ui.model.bullet.SpaceShipBullet3;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
@@ -27,9 +27,9 @@ public class BigGunsSpaceShip extends SpaceShip{
 	@Override
 	public void autofire(Pane currentPane){
 		autofireTimeline = new Timeline(
-				new KeyFrame(Duration.millis(200), e -> {
-					SpaceShipBullet2 bullet = new SpaceShipBullet2(this.getX(), this.getY());
-					SpaceShipBullet2 bullet2 = new SpaceShipBullet2(this.getX() + this.getWidth(), this.getY());
+				new KeyFrame(Duration.millis(400), e -> {
+					SpaceShipBullet3 bullet = new SpaceShipBullet3(this.getX(), this.getY());
+					SpaceShipBullet3 bullet2 = new SpaceShipBullet3(this.getX() + this.getWidth(), this.getY());
 					bullet.changeIconOfBullet();
 					bullet2.changeIconOfBullet();
 					currentPane.getChildren().addAll(bullet, bullet2);

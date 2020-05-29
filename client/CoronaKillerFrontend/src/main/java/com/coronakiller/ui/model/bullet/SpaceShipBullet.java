@@ -53,7 +53,7 @@ public abstract class SpaceShipBullet extends Rectangle {
 	 */
 	public void moveBullet(Pane currentPane){
 		this.bulletTimeline = new Timeline(
-				new KeyFrame( Duration.millis(10), e ->{
+				new KeyFrame( Duration.millis(20), e ->{
 					this.setY(this.getY()- bulletVelocity);
 					try {
 						this.checkCollision(currentPane);
@@ -73,7 +73,7 @@ public abstract class SpaceShipBullet extends Rectangle {
 	 * @throws IOException
 	 */
 	public void checkCollision(Pane currentPane) throws IOException {
-		Iterator<Virus> virusIterator = GameLevel1Controller.levelViruses.iterator();
+		Iterator<Virus> virusIterator = GameLevelController.levelViruses.iterator();
 		while (virusIterator.hasNext()) {
 			Virus virus = virusIterator.next();
 			if(virus.getBoundsInParent().intersects(this.getBoundsInParent())){

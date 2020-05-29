@@ -36,7 +36,7 @@ public class GameConstants {
 	public static final String BIG_GUNS_SPACESHIP_ICON_URL = "/images/spaceship5.png";
 
 	/* SpaceShip Bullet 1 Constants */
-	public static final int SPACESHIP_BULLET1_VELOCITY = 5;
+	public static final int SPACESHIP_BULLET1_VELOCITY = 8;
 	public static final int SPACESHIP_BULLET1_DAMAGE = 1;
 	public static final int SPACESHIP_BULLET1_WIDTH = 5;
 	public static final int SPACESHIP_BULLET1_HEIGHT = 10;
@@ -44,14 +44,14 @@ public class GameConstants {
 	public static final String SPACESHIP_BULLET1_ICON_URL = "images/spaceBullet1.png";
 
 	/* SpaceShip Bullet 2 Constants */
-	public static final int SPACESHIP_BULLET2_VELOCITY = 8;
+	public static final int SPACESHIP_BULLET2_VELOCITY = 10;
 	public static final int SPACESHIP_BULLET2_DAMAGE = 2;
 	public static final int SPACESHIP_BULLET2_WIDTH = 8;
 	public static final int SPACESHIP_BULLET2_HEIGHT = 16;
 	public static final String SPACESHIP_BULLET2_ICON_URL = "images/spaceBullet1.png";
 
 	/* SpaceShip Bullet 3 Constants */
-	public static final int SPACESHIP_BULLET3_VELOCITY = 10;
+	public static final int SPACESHIP_BULLET3_VELOCITY = 12;
 	public static final int SPACESHIP_BULLET3_DAMAGE = 2;
 	public static final int SPACESHIP_BULLET3_WIDTH = 15;
 	public static final int SPACESHIP_BULLET3_HEIGHT = 30;
@@ -59,14 +59,14 @@ public class GameConstants {
 
 	//TODO : Change virus bullets' damage section at the end, they were changed to 1 to ease checking
 	/* Virus Bullet 1 Constants */
-	public static final int VIRUS_BULLET1_VELOCITY = 5;
+	public static final int VIRUS_BULLET1_VELOCITY = 6;
 	public static final int VIRUS_BULLET1_DAMAGE = 1;
 	public static final int VIRUS_BULLET1_WIDTH = 5;
 	public static final int VIRUS_BULLET1_HEIGHT = 10;
 	public static final String VIRUS_BULLET1_ICON_URL = "images/virusBullet1.png";
 
 	/* Virus Bullet 2 Constants */
-	public static final int VIRUS_BULLET2_VELOCITY = 10;
+	public static final int VIRUS_BULLET2_VELOCITY = 8;
 	public static final int VIRUS_BULLET2_DAMAGE = 1;
 	public static final int VIRUS_BULLET2_WIDTH = 6;
 	public static final int VIRUS_BULLET2_HEIGHT = 12;
@@ -98,5 +98,5 @@ public class GameConstants {
 	public static final int BIG_BOSS_HEALTH = 100;
 	public static final int BIG_BOSS_WIDTH = 100;
 	public static final int BIG_BOSS_HEIGHT = 160;
-	public static final String BIG_BOSS_ICON_URL = "images/virIcon9.png";
+	public static final String BIG_BOSS_ICON_URL = "images/bigBoss2.png";
 }

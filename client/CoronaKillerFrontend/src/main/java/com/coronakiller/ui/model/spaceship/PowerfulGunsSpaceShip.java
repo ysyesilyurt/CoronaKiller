@@ -32,7 +32,7 @@ public class PowerfulGunsSpaceShip extends SpaceShip{
 	@Override
 	public void autofire(Pane currentPane){
 		autofireTimeline = new Timeline(
-				new KeyFrame(Duration.millis(450), e -> {
+				new KeyFrame(Duration.millis(500), e -> {
 					SpaceShipBullet2 bullet = new SpaceShipBullet2(this.getX(), this.getY());
 					SpaceShipBullet2 bullet2 = new SpaceShipBullet2(this.getX() + this.getWidth(), this.getY());
 					bullet.changeIconOfBullet();
