@@ -1,5 +1,6 @@
 package com.coronakiller.ui.model.spaceship;
 
+import com.coronakiller.ui.controller.level.GameLevelController;
 import com.coronakiller.ui.model.bullet.SpaceShipBullet3;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -35,6 +36,8 @@ public class BigGunsSpaceShip extends SpaceShip{
 					currentPane.getChildren().addAll(bullet, bullet2);
 					bullet.moveBullet(currentPane);
 					bullet2.moveBullet(currentPane);
+					GameLevelController.updateAlienHpValue();
+					GameLevelController.updateTeammateHpValue();
 				}));
 		autofireTimeline.setCycleCount(Timeline.INDEFINITE);
 		autofireTimeline.play();

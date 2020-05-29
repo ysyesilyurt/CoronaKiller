@@ -39,6 +39,9 @@ public abstract class GameLevelController implements Initializable {
 	public static Pane currentPane;
 	public static Text hpValue;
 	public static Text scoreValue;
+	/* For level 5*/
+	public static Text teammateHpValue;
+	public static Text alienHpValue;
 
 	@Override
 	public abstract void initialize(URL url, ResourceBundle resourceBundle);
@@ -52,6 +55,14 @@ public abstract class GameLevelController implements Initializable {
 	}
 
 	public static void updateScoreValue(){scoreValue.setText(String.valueOf(GameLevelController.currentSessionScore));}
+
+	public static void updateTeammateHpValue(){
+		teammateHpValue.setText(String.valueOf(100));
+	}
+
+	public static void updateAlienHpValue(){
+		alienHpValue.setText(String.valueOf(levelViruses.get(0).getVirusHealth()));
+	}
 
 	/**
 	 * This is the method when user successfully finish game.

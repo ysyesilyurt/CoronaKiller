@@ -62,6 +62,8 @@ public class GameLevel5Controller extends GameLevelController{
 		nextLevel = new StringBuilder(UiConstants.DASHBOARD_PAGE);
 		GameLevelController.hpValue = this.hpValue;
 		GameLevelController.scoreValue = this.scoreValue;
+		GameLevelController.alienHpValue = this.alienHpValue;
+		GameLevelController.teammateHpValue = this.teammateHpValue;
 		GameLevelController.updateHpValue();
 		GameLevelController.updateScoreValue();
 		this.updateTeammateHpValue();
@@ -95,14 +97,6 @@ public class GameLevel5Controller extends GameLevelController{
 		virus.virusAutoFire(anchorPane);
 		levelViruses.add(virus);
 		anchorPane.getChildren().add(virus);
-	}
-
-	public void updateTeammateHpValue(){
-		teammateHpValue.setText(String.valueOf(100));
-	}
-
-	public void updateAlienHpValue(){
-		alienHpValue.setText(String.valueOf(100));
 	}
 
 	//TODO : player with higher score also need to get K points bonus.
