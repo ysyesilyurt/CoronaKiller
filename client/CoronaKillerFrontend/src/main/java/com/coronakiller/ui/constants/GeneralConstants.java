@@ -13,6 +13,8 @@ public class GeneralConstants {
 	public static final int WINDOW_WIDTH = 600;
 	public static final int WINDOW_HEIGHT = 800;
 	public static final String HASH_SALT = "$2a$10$3j3gfVtuynuvE6FIVvygdu"; /* A Random Salt value generated with BCrypt.gensalt(10) */
+	public static final Integer MULTIPLAYER_SEND_INFO_PERIOD = 1000; // TODO: CHANGE
+	public static final String MULTIPLAYER_SEND_INFO_FORMAT = "%s:%s:%s:%s:%s"; /* username:score:spaceshipHealth:spaceshipX:spaceshipY */
 
 	/* Request Message Constants */
 	public static final String CLIENT_ERROR = "Oops! Something went wrong on client";
@@ -34,14 +36,4 @@ public class GeneralConstants {
 	public static final String GAME_LEVEL3_PAGE = "fxml/game-level3.fxml";
 	public static final String GAME_LEVEL4_PAGE = "fxml/game-level4.fxml";
 	public static final String GAME_LEVEL5_PAGE = "fxml/game-level5.fxml";
-
-	public static TextFormatter<String> returnInputTextFormatter() {
-		return new TextFormatter<>(change -> {
-			/* Reject input if space is entered */
-			if (change.getText().equals(" ")) {
-				change.setText("");
-			}
-			return change;
-		});
-	}
 }
