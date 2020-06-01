@@ -46,6 +46,7 @@ public class GameLevel5Controller extends GameLevelController {
 	@FXML
 	public JFXButton backToLoginButton;
 
+	/* Socket streams for listening and sending threads */
 	private DataInputStream socketDataInputStream;
 	private DataOutputStream socketDataOutputStream;
 
@@ -62,7 +63,7 @@ public class GameLevel5Controller extends GameLevelController {
 		if (otherPlayerIpAddress == null) {
 			/* Queue is empty, added this player to the queue, waiting for matchmaking... */
 
-//			// TODO: CHECK WHAT TO CHANGE IN BELOW INITIALIZATIONS
+			// TODO: CHECK WHAT TO CHANGE IN BELOW INITIALIZATIONS (LOADING ETC?)
 			isGameLevelFinished = false;
 			handleVirusInitialization();
 			handleSpaceInitialization();
@@ -86,7 +87,7 @@ public class GameLevel5Controller extends GameLevelController {
 		} else {
 			/* Matched with a player that was already in the queue */
 
-//			// TODO: CHECK WHAT TO CHANGE IN BELOW INITIALIZATIONS
+			// TODO: CHECK WHAT TO CHANGE IN BELOW INITIALIZATIONS
 			isGameLevelFinished = false;
 			handleVirusInitialization();
 			handleSpaceInitialization();
@@ -149,10 +150,6 @@ public class GameLevel5Controller extends GameLevelController {
 				while (true) {
 					/* Listen from the socket's input stream indefinitely, learn about updates on the other
 					player's side and update variables as needed. */
-//					double x = socketDataInputStream.readDouble();
-//					double y = socketDataInputStream.readDouble();
-//					spaceShip2.setX(x);
-//					spaceShip2.setY(y);
 					System.out.println(socketDataInputStream.readUTF());
 				}
 			} catch (IOException e) {
