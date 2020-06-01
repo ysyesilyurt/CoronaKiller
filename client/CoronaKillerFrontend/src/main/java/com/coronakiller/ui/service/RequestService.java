@@ -1,6 +1,6 @@
 package com.coronakiller.ui.service;
 
-import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.constants.GeneralConstants;
 import com.coronakiller.ui.model.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
+import static com.coronakiller.ui.constants.Utils.resolveHttpCodeResponse;
 
 @Slf4j
 @Service
@@ -23,30 +24,6 @@ public class RequestService {
 
 	private static final ObjectMapper objectMapper = new ObjectMapper();
 	private static final OkHttpClient client = new OkHttpClient();
-
-	/**
-	 * A static helper method for generic determination of String to respond
-	 * to caller method that is calling the request method
-	 *
-	 * @param httpCode
-	 * @return String
-	 */
-	public static String resolveHttpCodeResponse(Integer httpCode) {
-		switch (httpCode) {
-			case 400:
-				return UiConstants.HTTP_400;
-			case 401:
-				return UiConstants.HTTP_401;
-			case 404:
-				return UiConstants.HTTP_404;
-			case 500:
-				return UiConstants.HTTP_500;
-			default: {
-				log.warn("Got {} HTTP code after a request", httpCode);
-				return "Oops! Something went wrong - " + httpCode;
-			}
-		}
-	}
 
 	/**
 	 * Static login request method. Can be called from any controller code.
@@ -58,12 +35,12 @@ public class RequestService {
 	 */
 	public static Pair<Player, String> login(Player player) {
 		/* Construct the password first */
-		String encodedPassword = BCrypt.hashpw(player.getPassword(), UiConstants.HASH_SALT);
+		String encodedPassword = BCrypt.hashpw(player.getPassword(), GeneralConstants.HASH_SALT);
 		MediaType mediaType = MediaType.parse("text/plain");
 		RequestBody body = RequestBody.create(mediaType, "");
 		String authorizationHeader = Credentials.basic(player.getUsername(), encodedPassword);
 		Request request = new Request.Builder()
-				.url(UiConstants.BACKEND_BASE_URL + "/players/login")
+				.url(GeneralConstants.BACKEND_BASE_URL + "/players/login")
 				.method("POST", body)
 				.addHeader("Authorization", authorizationHeader)
 				.build();
@@ -86,10 +63,10 @@ public class RequestService {
 			}
 		} catch (ConnectException e) {
 			log.warn("HTTP Connection Error on request");
-			return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
+			return Pair.with(null, GeneralConstants.HTTP_CONN_ERROR);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return Pair.with(null, UiConstants.CLIENT_ERROR);
+			return Pair.with(null, GeneralConstants.CLIENT_ERROR);
 		}
 	}
 
@@ -104,13 +81,13 @@ public class RequestService {
 	 */
 	public static Pair<Player, String> register(Player player) {
 		/* Construct the password first */
-		String encodedPassword = BCrypt.hashpw(player.getPassword(), UiConstants.HASH_SALT);
+		String encodedPassword = BCrypt.hashpw(player.getPassword(), GeneralConstants.HASH_SALT);
 		MediaType mediaType = MediaType.parse("application/json");
 		RequestBody body = RequestBody.create(mediaType,
 				"{\n\t\"username\": \"" + player.getUsername() + "\"," +
 						"\n\t\"password\": \"" + encodedPassword + "\"\n}");
 		Request request = new Request.Builder()
-				.url(UiConstants.BACKEND_BASE_URL + "/players/register")
+				.url(GeneralConstants.BACKEND_BASE_URL + "/players/register")
 				.method("POST", body)
 				.addHeader("Content-Type", "application/json")
 				.build();
@@ -134,10 +111,10 @@ public class RequestService {
 			}
 		} catch (ConnectException e) {
 			log.warn("HTTP Connection Error on request");
-			return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
+			return Pair.with(null, GeneralConstants.HTTP_CONN_ERROR);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return Pair.with(null, UiConstants.CLIENT_ERROR);
+			return Pair.with(null, GeneralConstants.CLIENT_ERROR);
 		}
 	}
 
@@ -155,7 +132,7 @@ public class RequestService {
 			String authorizationHeader = Credentials.basic(gameDataCookie.getPlayerDTO().getUsername(),
 					gameDataCookie.getPlayerDTO().getPassword());
 			Request request = new Request.Builder()
-					.url(UiConstants.BACKEND_BASE_URL + "/scoreboard?type=" + leaderBoardType)
+					.url(GeneralConstants.BACKEND_BASE_URL + "/scoreboard?type=" + leaderBoardType)
 					.method("GET", null)
 					.addHeader("Authorization", authorizationHeader)
 					.build();
@@ -179,14 +156,14 @@ public class RequestService {
 				}
 			} catch (ConnectException e) {
 				log.warn("HTTP Connection Error on request");
-				return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
+				return Pair.with(null, GeneralConstants.HTTP_CONN_ERROR);
 			} catch (IOException e) {
 				e.printStackTrace();
-				return Pair.with(null, UiConstants.CLIENT_ERROR);
+				return Pair.with(null, GeneralConstants.CLIENT_ERROR);
 			}
 		} else {
 			log.warn("Player cookie not found");
-			return Pair.with(null, UiConstants.COOKIE_NOTFOUND);
+			return Pair.with(null, GeneralConstants.COOKIE_NOTFOUND);
 		}
 	}
 
@@ -202,7 +179,7 @@ public class RequestService {
 			String authorizationHeader = Credentials.basic(gameDataCookie.getPlayerDTO().getUsername(),
 					gameDataCookie.getPlayerDTO().getPassword());
 			Request request = new Request.Builder()
-					.url(UiConstants.BACKEND_BASE_URL + "/game/" + gameDataCookie.getPlayerDTO().getId())
+					.url(GeneralConstants.BACKEND_BASE_URL + "/game/" + gameDataCookie.getPlayerDTO().getId())
 					.method("GET", null)
 					.addHeader("Authorization", authorizationHeader)
 					.build();
@@ -225,14 +202,14 @@ public class RequestService {
 				}
 			} catch (ConnectException e) {
 				log.warn("HTTP Connection Error on request");
-				return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
+				return Pair.with(null, GeneralConstants.HTTP_CONN_ERROR);
 			} catch (IOException e) {
 				e.printStackTrace();
-				return Pair.with(null, UiConstants.CLIENT_ERROR);
+				return Pair.with(null, GeneralConstants.CLIENT_ERROR);
 			}
 		} else {
 			log.warn("Player cookie not found");
-			return Pair.with(null, UiConstants.COOKIE_NOTFOUND);
+			return Pair.with(null, GeneralConstants.COOKIE_NOTFOUND);
 		}
 	}
 
@@ -250,7 +227,7 @@ public class RequestService {
 			MediaType mediaType = MediaType.parse("text/plain");
 			RequestBody body = RequestBody.create(mediaType, "");
 			Request request = new Request.Builder()
-					.url(UiConstants.BACKEND_BASE_URL + "/game/start/" + gameDataCookie.getPlayerDTO().getId())
+					.url(GeneralConstants.BACKEND_BASE_URL + "/game/start/" + gameDataCookie.getPlayerDTO().getId())
 					.method("POST", body)
 					.addHeader("Authorization", authorizationHeader)
 					.build();
@@ -273,14 +250,14 @@ public class RequestService {
 				}
 			} catch (ConnectException e) {
 				log.warn("HTTP Connection Error on request");
-				return Pair.with(null, UiConstants.HTTP_CONN_ERROR);
+				return Pair.with(null, GeneralConstants.HTTP_CONN_ERROR);
 			} catch (IOException e) {
 				e.printStackTrace();
-				return Pair.with(null, UiConstants.CLIENT_ERROR);
+				return Pair.with(null, GeneralConstants.CLIENT_ERROR);
 			}
 		} else {
 			log.warn("Player cookie not found");
-			return Pair.with(null, UiConstants.COOKIE_NOTFOUND);
+			return Pair.with(null, GeneralConstants.COOKIE_NOTFOUND);
 		}
 	}
 
@@ -295,7 +272,7 @@ public class RequestService {
 							"\n\t\"shipHealth\":" + gameSession.getShipHealth() + "," +
 							"\n\t\"shipType\":" + gameSession.getShipType().resolveEnumCode() + "\n}");
 			Request request = new Request.Builder()
-					.url(UiConstants.BACKEND_BASE_URL + "/game/update/" + gameDataCookie.getPlayerDTO().getId())
+					.url(GeneralConstants.BACKEND_BASE_URL + "/game/update/" + gameDataCookie.getPlayerDTO().getId())
 					.method("PUT", body)
 					.addHeader("Authorization", authorizationHeader)
 					.addHeader("Content-Type", "application/json")
@@ -308,24 +285,66 @@ public class RequestService {
 					if (mappedResponse.getResult().equals("success")) {
 						return Pair.with(true, mappedResponse.getMessage());
 					} else {
-						log.warn("Request result is 'fail' on startNewGame request");
+						log.warn("Request result is 'fail' on updateGameSession request");
 						return Pair.with(false, mappedResponse.getMessage());
 					}
 				} else {
-					log.warn("Got HTTP {} from startNewGame request", response.code());
+					log.warn("Got HTTP {} from updateGameSession request", response.code());
 					String responseString = resolveHttpCodeResponse(response.code());
 					return Pair.with(false, responseString);
 				}
 			} catch (ConnectException e) {
 				log.warn("HTTP Connection Error on request");
-				return Pair.with(false, UiConstants.HTTP_CONN_ERROR);
+				return Pair.with(false, GeneralConstants.HTTP_CONN_ERROR);
 			} catch (IOException e) {
 				e.printStackTrace();
-				return Pair.with(false, UiConstants.CLIENT_ERROR);
+				return Pair.with(false, GeneralConstants.CLIENT_ERROR);
 			}
 		} else {
 			log.warn("Player cookie not found");
-			return Pair.with(false, UiConstants.COOKIE_NOTFOUND);
+			return Pair.with(false, GeneralConstants.COOKIE_NOTFOUND);
+		}
+	}
+
+	public static Pair<String, String> startMatchmaking() {
+		if (gameDataCookie.getPlayerDTO() != null) {
+			String authorizationHeader = Credentials.basic(gameDataCookie.getPlayerDTO().getUsername(),
+					gameDataCookie.getPlayerDTO().getPassword());
+			MediaType mediaType = MediaType.parse("application/json");
+			RequestBody body = RequestBody.create(mediaType, "");
+			Request request = new Request.Builder()
+					.url(GeneralConstants.BACKEND_BASE_URL + "/game/matchmake/" + gameDataCookie.getPlayerDTO().getId())
+					.method("PUT", body)
+					.addHeader("Authorization", authorizationHeader)
+					.addHeader("Content-Type", "application/json")
+					.build();
+			try {
+				Response response = client.newCall(request).execute();
+				if (response.code() == 200) {
+					String responseBody = response.body().string();
+					RestApiResponse mappedResponse = objectMapper.readValue(responseBody, RestApiResponse.class);
+					if (mappedResponse.getResult().equals("success")) {
+						String otherPlayerIpAddress = objectMapper.convertValue(mappedResponse.getData(), String.class);
+						return Pair.with(otherPlayerIpAddress, mappedResponse.getMessage());
+					} else {
+						log.warn("Request result is 'fail' on startMatchmaking request");
+						return Pair.with(null, mappedResponse.getMessage());
+					}
+				} else {
+					log.warn("Got HTTP {} from startMatchmaking request", response.code());
+					String responseString = resolveHttpCodeResponse(response.code());
+					return Pair.with(null, responseString);
+				}
+			} catch (ConnectException e) {
+				log.warn("HTTP Connection Error on request");
+				return Pair.with(null, GeneralConstants.HTTP_CONN_ERROR);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return Pair.with(null, GeneralConstants.CLIENT_ERROR);
+			}
+		} else {
+			log.warn("Player cookie not found");
+			return Pair.with(null, GeneralConstants.COOKIE_NOTFOUND);
 		}
 	}
 
@@ -340,7 +359,7 @@ public class RequestService {
 							"\n\t\"shipHealth\":" + gameSession.getShipHealth() + "," +
 							"\n\t\"shipType\":" + gameSession.getShipType().resolveEnumCode() + "\n}");
 			Request request = new Request.Builder()
-					.url(UiConstants.BACKEND_BASE_URL + "/game/finish/" + gameDataCookie.getPlayerDTO().getId())
+					.url(GeneralConstants.BACKEND_BASE_URL + "/game/finish/" + gameDataCookie.getPlayerDTO().getId())
 					.method("PUT", body)
 					.addHeader("Authorization", authorizationHeader)
 					.addHeader("Content-Type", "application/json")
@@ -353,24 +372,24 @@ public class RequestService {
 					if (mappedResponse.getResult().equals("success")) {
 						return Pair.with(true, mappedResponse.getMessage());
 					} else {
-						log.warn("Request result is 'fail' on startNewGame request");
+						log.warn("Request result is 'fail' on finishGameSession request");
 						return Pair.with(false, mappedResponse.getMessage());
 					}
 				} else {
-					log.warn("Got HTTP {} from startNewGame request", response.code());
+					log.warn("Got HTTP {} from finishGameSession request", response.code());
 					String responseString = resolveHttpCodeResponse(response.code());
 					return Pair.with(false, responseString);
 				}
 			} catch (ConnectException e) {
 				log.warn("HTTP Connection Error on request");
-				return Pair.with(false, UiConstants.HTTP_CONN_ERROR);
+				return Pair.with(false, GeneralConstants.HTTP_CONN_ERROR);
 			} catch (IOException e) {
 				e.printStackTrace();
-				return Pair.with(false, UiConstants.CLIENT_ERROR);
+				return Pair.with(false, GeneralConstants.CLIENT_ERROR);
 			}
 		} else {
 			log.warn("Player cookie not found");
-			return Pair.with(false, UiConstants.COOKIE_NOTFOUND);
+			return Pair.with(false, GeneralConstants.COOKIE_NOTFOUND);
 		}
 	}
 }
