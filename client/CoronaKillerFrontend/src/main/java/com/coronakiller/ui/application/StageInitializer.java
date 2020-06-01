@@ -1,10 +1,8 @@
 package com.coronakiller.ui.application;
 
 import com.coronakiller.ui.application.FxApplication.StageReadyEvent;
-import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.constants.GeneralConstants;
 import com.coronakiller.ui.model.GameData;
-import com.coronakiller.ui.model.GameSession;
-import com.coronakiller.ui.model.Player;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -52,7 +50,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 			applicationStage = stage;
 			Scene firstScene = new Scene(parent, 600, 800);
 			stage.setScene(firstScene);
-			stage.setTitle(UiConstants.WINDOW_TITLE);
+			stage.setTitle(GeneralConstants.WINDOW_TITLE);
 			stage.setMinWidth(600);
 			stage.setMaxWidth(600);
 			stage.setMinHeight(830);

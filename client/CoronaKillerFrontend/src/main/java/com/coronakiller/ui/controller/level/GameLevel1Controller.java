@@ -1,6 +1,6 @@
 package com.coronakiller.ui.controller.level;
 
-import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.constants.GeneralConstants;
 import com.coronakiller.ui.model.ShipType;
 import com.coronakiller.ui.model.spaceship.RookieSpaceShip;
 import com.coronakiller.ui.model.virus.EasyVirus;
@@ -57,7 +57,7 @@ public class GameLevel1Controller extends GameLevelController {
 		handleVirusInitialization();
 		handleSpaceInitialization();
 		anchorPane.getChildren().add(spaceShip);
-		nextLevel.append(UiConstants.GAME_LEVEL2_PAGE);
+		nextLevel.append(GeneralConstants.GAME_LEVEL2_PAGE);
 		GameLevelController.hpValue = this.hpValue;
 		GameLevelController.scoreValue = this.scoreValue;
 		GameLevelController.updateHpValue();
@@ -106,7 +106,7 @@ public class GameLevel1Controller extends GameLevelController {
 
 	public void onClickGoDash(ActionEvent event) throws IOException {
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.DASHBOARD_PAGE));
+		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(GeneralConstants.DASHBOARD_PAGE));
 		Scene scene = new Scene(dashboardPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();

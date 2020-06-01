@@ -1,6 +1,5 @@
 package com.coronakiller.ui.controller;
 
-import com.coronakiller.ui.constants.UiConstants;
 import com.coronakiller.ui.model.Player;
 import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXSnackbar;
@@ -26,7 +25,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
-import static com.coronakiller.ui.constants.UiConstants.returnInputTextFormatter;
+import static com.coronakiller.ui.constants.GeneralConstants.*;
+import static com.coronakiller.ui.constants.Utils.returnInputTextFormatter;
 
 /**
  * Controller that manages Login Page (Default first scene of the application)
@@ -62,7 +62,7 @@ public class LoginController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		loginPane.getStylesheets().add(UiConstants.GENERAL_STYLES);
+		loginPane.getStylesheets().add(GENERAL_STYLES);
 		snackbar = new JFXSnackbar(loginPane);
 		/* Set textfield config for rejection when space is entered */
 		nameField.setTextFormatter(returnInputTextFormatter());
@@ -103,7 +103,7 @@ public class LoginController implements Initializable {
 				gameDataCookie.setPlayerDTO(result.getValue0());
 				/* Then Route to Dashboard */
 				Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-				Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.DASHBOARD_PAGE));
+				Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(DASHBOARD_PAGE));
 				Scene scene = new Scene(dashboardPage, 600, 800);
 				currentStage.setScene(scene);
 				currentStage.show();
@@ -125,7 +125,7 @@ public class LoginController implements Initializable {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent registerPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.REGISTER_PAGE));
+		Parent registerPage = FXMLLoader.load(getClass().getClassLoader().getResource(REGISTER_PAGE));
 		Scene scene = new Scene(registerPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();

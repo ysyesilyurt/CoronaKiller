@@ -1,6 +1,7 @@
 package com.coronakiller.ui.controller;
 
-import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.constants.GeneralConstants;
+import com.coronakiller.ui.constants.Utils;
 import com.coronakiller.ui.model.GameData;
 import com.coronakiller.ui.model.GameSession;
 import com.coronakiller.ui.service.RequestService;
@@ -26,6 +27,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
+import static com.coronakiller.ui.constants.GeneralConstants.*;
+import static com.coronakiller.ui.constants.Utils.*;
 
 /**
  * Controller that manages Dashboard Page
@@ -76,7 +79,7 @@ public class DashboardController implements Initializable {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
 		snackbar = new JFXSnackbar(dashboardPane);
-		dashboardPane.getStylesheets().add(UiConstants.GENERAL_STYLES);
+		dashboardPane.getStylesheets().add(GENERAL_STYLES);
 
 		/* On each render, this page requests the current "GameData" from the Backend API */
 		Pair<GameData, String> result = RequestService.getGameDataById();
@@ -144,7 +147,7 @@ public class DashboardController implements Initializable {
 			gameDataCookie.setGameSessionDTO(result.getValue0());
 			/* Redirect to The Last Checkpoint (Saved Level) */
 			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			Parent level1Page = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.GAME_LEVEL1_PAGE));
+			Parent level1Page = FXMLLoader.load(getClass().getClassLoader().getResource(GAME_LEVEL1_PAGE));
 			Scene scene = new Scene(level1Page, 600, 800);
 			currentStage.setScene(scene);
 			currentStage.show();
@@ -165,7 +168,7 @@ public class DashboardController implements Initializable {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent leaderBoardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.LEADERBOARD_PAGE));
+		Parent leaderBoardPage = FXMLLoader.load(getClass().getClassLoader().getResource(LEADERBOARD_PAGE));
 		Scene scene = new Scene(leaderBoardPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
@@ -186,27 +189,9 @@ public class DashboardController implements Initializable {
 		gameDataCookie.setPlayerDTO(null);
 		/* Then Route to Login */
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.LOGIN_PAGE));
+		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(LOGIN_PAGE));
 		Scene scene = new Scene(dashboardPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
-	}
-
-	private String resolveGameSessionLevel(Integer level) {
-		switch (level) {
-			case 1:
-				return UiConstants.GAME_LEVEL1_PAGE;
-			case 2:
-				return UiConstants.GAME_LEVEL2_PAGE;
-			case 3:
-				return UiConstants.GAME_LEVEL3_PAGE;
-			case 4:
-				return UiConstants.GAME_LEVEL4_PAGE;
-			default: {
-				/* Error case, log and redirect to Dashboard */
-				log.error("Invalid level:{} when trying to resolve game session level", level);
-				return UiConstants.DASHBOARD_PAGE;
-			}
-		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.coronakiller.ui.controller;
 
-import com.coronakiller.ui.constants.UiConstants;
+import com.coronakiller.ui.constants.GeneralConstants;
 import com.coronakiller.ui.model.Score;
 import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXButton;
@@ -224,7 +224,7 @@ public class LeaderBoardController implements Initializable {
 		loadingSpinner.setVisible(true);
 		innerPane.setDisable(true);
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.DASHBOARD_PAGE));
+		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(GeneralConstants.DASHBOARD_PAGE));
 		Scene scene = new Scene(dashboardPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();
@@ -245,7 +245,7 @@ public class LeaderBoardController implements Initializable {
 		gameDataCookie.setPlayerDTO(null);
 		/* Then Route to Login */
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(UiConstants.LOGIN_PAGE));
+		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(GeneralConstants.LOGIN_PAGE));
 		Scene scene = new Scene(dashboardPage, 600, 800);
 		currentStage.setScene(scene);
 		currentStage.show();

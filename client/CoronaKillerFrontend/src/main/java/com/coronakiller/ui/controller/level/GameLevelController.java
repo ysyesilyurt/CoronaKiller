@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import org.javatuples.Pair;
 
 import java.io.IOException;
@@ -26,6 +27,7 @@ import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
 /**
  * This class is the general type of level.It keeps common level elements and other level classes extends this class.
  */
+@Slf4j
 public abstract class GameLevelController implements Initializable {
 
 	public static SpaceShip spaceShip;
@@ -50,22 +52,25 @@ public abstract class GameLevelController implements Initializable {
 
 	public abstract void handleVirusInitialization();
 
-	public static void updateHpValue(){
+	public static void updateHpValue() {
 		hpValue.setText(String.valueOf(spaceShip.getCurrentHealth()));
 	}
 
-	public static void updateScoreValue(){scoreValue.setText(String.valueOf(GameLevelController.currentSessionScore));}
+	public static void updateScoreValue() {
+		scoreValue.setText(String.valueOf(GameLevelController.currentSessionScore));
+	}
 
-	public static void updateTeammateHpValue(){
+	public static void updateTeammateHpValue() {
 		teammateHpValue.setText(String.valueOf(100));
 	}
 
-	public static void updateAlienHpValue(){
+	public static void updateAlienHpValue() {
 		alienHpValue.setText(String.valueOf(levelViruses.get(0).getVirusHealth()));
 	}
 
 	/**
 	 * This is the method when user successfully finish game.
+	 *
 	 * @throws IOException
 	 */
 	public static void finishLevelSuccessfully() throws IOException {
@@ -77,15 +82,16 @@ public abstract class GameLevelController implements Initializable {
 				GameLevelController.spaceShip.getCurrentHealth(),
 				GameLevelController.shipType
 		);
-		if(GameLevelController.currentLevel == 5){
+		if (GameLevelController.currentLevel == 5) {
 			Pair<Boolean, String> result = RequestService.finishGameSession(gameSessionDTO);
-		}
-		else if(GameLevelController.currentLevel == 4){
+			if (!result.getValue0()) {
+				log.error("Finish Game Session request in Game Level Controller returned false!");
+			}
+		} else {
 			Pair<Boolean, String> result = RequestService.updateGameSession(gameSessionDTO);
-			//TODO : wait for matchmaking here!!!
-		}
-		else{
-			Pair<Boolean, String> result = RequestService.updateGameSession(gameSessionDTO);
+			if (!result.getValue0()) {
+				log.error("Update Game Session request in Game Level Controller returned false!");
+			}
 		}
 		StageInitializer.gameDataCookie.setGameSessionDTO(gameSessionDTO);
 		Stage currentStage = (Stage) currentPane.getScene().getWindow();
@@ -95,7 +101,7 @@ public abstract class GameLevelController implements Initializable {
 		currentStage.show();
 	}
 
-	public static void cheatImplementation(){
+	public static void cheatImplementation() {
 		//TODO : implement cheat
 	}
 

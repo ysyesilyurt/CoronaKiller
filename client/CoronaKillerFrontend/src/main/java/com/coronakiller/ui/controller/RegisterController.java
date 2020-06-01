@@ -25,7 +25,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
-import static com.coronakiller.ui.constants.UiConstants.*;
+import static com.coronakiller.ui.constants.GeneralConstants.*;
+import static com.coronakiller.ui.constants.Utils.returnInputTextFormatter;
 
 /**
  * Controller that manages Register Page

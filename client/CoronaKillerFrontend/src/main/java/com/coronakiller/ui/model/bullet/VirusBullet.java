@@ -1,10 +1,7 @@
 package com.coronakiller.ui.model.bullet;
 
-import com.coronakiller.ui.constants.UiConstants;
-import com.coronakiller.ui.controller.level.GameLevel1Controller;
 import com.coronakiller.ui.controller.level.GameLevelController;
 import com.coronakiller.ui.model.GameSession;
-import com.coronakiller.ui.model.virus.Virus;
 import com.coronakiller.ui.service.RequestService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,10 +15,9 @@ import javafx.util.Duration;
 import org.javatuples.Pair;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Objects;
 
-import static com.coronakiller.ui.constants.UiConstants.DASHBOARD_PAGE;
+import static com.coronakiller.ui.constants.GeneralConstants.DASHBOARD_PAGE;
 
 public abstract class VirusBullet extends Rectangle {
 
@@ -31,12 +27,13 @@ public abstract class VirusBullet extends Rectangle {
 
 	/**
 	 * Constructor method of the VirusBullet object.
+	 *
 	 * @param xPosition position on the x axis
 	 * @param yPosition position of the y axis
-	 * @param width width of the Bullet
-	 * @param height height of the Bullet
+	 * @param width     width of the Bullet
+	 * @param height    height of the Bullet
 	 */
-	public VirusBullet(double xPosition, double yPosition, int width, int height, int damage, int bulletVelocity){
+	public VirusBullet(double xPosition, double yPosition, int width, int height, int damage, int bulletVelocity) {
 		super(xPosition, yPosition, width, height);
 		this.bulletDamage = damage;
 		this.bulletVelocity = bulletVelocity;
@@ -44,11 +41,12 @@ public abstract class VirusBullet extends Rectangle {
 
 	/**
 	 * Thanks to this method, our bullets can move.
+	 *
 	 * @param currentPane current pane value of the scene
 	 */
-	public void moveBullet(Pane currentPane){
+	public void moveBullet(Pane currentPane) {
 		this.bulletTimeline = new Timeline(
-				new KeyFrame( Duration.millis(20), e ->{
+				new KeyFrame(Duration.millis(20), e -> {
 					this.setY(this.getY() + bulletVelocity);
 					try {
 						this.checkCollision(currentPane);
@@ -64,16 +62,17 @@ public abstract class VirusBullet extends Rectangle {
 	/**
 	 * This method checks whether the virus bullet coincides with spaceship or not.
 	 * If they are colliding, decrease bullet damage from spaceship and check for the end of the game.
+	 *
 	 * @param currentPane current pane value of the scene
 	 * @throws IOException
 	 */
 	public void checkCollision(Pane currentPane) throws IOException {
-		if(GameLevelController.spaceShip.getBoundsInParent().intersects(this.getBoundsInParent())){
+		if (GameLevelController.spaceShip.getBoundsInParent().intersects(this.getBoundsInParent())) {
 			this.bulletTimeline.stop();
 			currentPane.getChildren().remove(this);
 			GameLevelController.updateHpValue();
-			if(GameLevelController.spaceShip.getShot(this.bulletDamage) <= 0){
-				if(!GameLevelController.isGameLevelFinished) {
+			if (GameLevelController.spaceShip.getShot(this.bulletDamage) <= 0) {
+				if (!GameLevelController.isGameLevelFinished) {
 					GameLevelController.isGameLevelFinished = true;
 					GameSession gameSessionDTO = new GameSession(
 							GameLevelController.currentLevel + 1,
