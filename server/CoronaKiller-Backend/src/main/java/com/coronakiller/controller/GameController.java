@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Slf4j
 @Api(value = "Game Resource REST Endpoints", description = "Contains endpoints to interact with the gaming backend of CoronaKiller Game API")
 @RestController
@@ -44,6 +46,14 @@ public class GameController {
 	public ResponseEntity<ResponseDTO> updateGameSession(@PathVariable Long playerId,
 														 @RequestBody GameSessionDTO newGameSessionDTO) {
 		Pair<HttpStatus, ResponseDTO> response = gameService.updateGameSession(playerId, newGameSessionDTO);
+		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
+	}
+
+	@PutMapping("/matchmake/{playerId}")
+	@ApiOperation(value = "Matchmake player with specified id", response = ResponseDTO.class)
+	public ResponseEntity<ResponseDTO> matchmakePlayer(@PathVariable Long playerId,
+													   HttpServletRequest request) {
+		Pair<HttpStatus, ResponseDTO> response = gameService.matchmakePlayer(playerId, request.getRemoteAddr());
 		return ResponseEntity.status(response.getFirst()).body(response.getSecond());
 	}
 

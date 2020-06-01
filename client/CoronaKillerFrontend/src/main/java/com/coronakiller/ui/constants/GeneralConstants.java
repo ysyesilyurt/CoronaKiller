@@ -5,9 +5,10 @@ import javafx.scene.control.TextFormatter;
 /**
  * This class keeps the constant values that are related to user interface and some other program constants.
  */
-public class UiConstants {
+public class GeneralConstants {
 	/* General Application Constants */
-	public static final String BACKEND_BASE_URL = "http://localhost:8080/api";
+	public static final String BACKEND_BASE_URL = "http://localhost:8080/api"; // TODO: CHANGE
+	public static final Integer SOCKET_PORT = 10000; // TODO: CHANGE
 	public static final String WINDOW_TITLE = "Corona Killer";
 	public static final int WINDOW_WIDTH = 600;
 	public static final int WINDOW_HEIGHT = 800;

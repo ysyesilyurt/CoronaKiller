@@ -18,7 +18,9 @@ import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.Optional;
+import java.util.Queue;
 
 @Slf4j
 @Service
@@ -28,6 +30,7 @@ public class GameService {
 	private final GameSessionMapper gameSessionMapper;
 	private final PlayerService playerService;
 	private final PlayerRepository playerRepository;
+	private Queue<String> matchmakingQueue;
 
 	public GameService(GameSessionRepository gameSessionRepository,
 					   GameSessionMapper gameSessionMapper,
@@ -37,6 +40,7 @@ public class GameService {
 		this.gameSessionMapper = gameSessionMapper;
 		this.playerService = playerService;
 		this.playerRepository = playerRepository;
+		this.matchmakingQueue = new LinkedList<>();
 	}
 
 	/**
@@ -136,6 +140,49 @@ public class GameService {
 				gameSessionRepository.save(gameSession);
 				return Pair.of(HttpStatus.OK, new ResponseDTO(null,
 						String.format("Game Session of player with id:%s is successfully updated", playerId), APIConstants.RESPONSE_SUCCESS));
+			} else {
+				log.warn("Player with id:{}, does not have an ongoing game session!", playerId);
+				return Pair.of(HttpStatus.NOT_FOUND, new ResponseDTO(null,
+						String.format("Player with id:%s, does not have an ongoing game session!", playerId), APIConstants.RESPONSE_FAIL));
+			}
+		} else {
+			log.warn("Player not exists with id:{}", playerId);
+			return Pair.of(HttpStatus.NOT_FOUND, new ResponseDTO(null,
+					String.format("Player not exists with id:%s", playerId), APIConstants.RESPONSE_FAIL));
+		}
+	}
+
+	/**
+	 * Initiates matchmaking process for the player speficied by id.
+	 * Player needs to be in final level of the game (a.k.a. multiplayer level) to be matchmaked.
+	 * If matchmaking queue is empty player's IP address added to the queue.
+	 * Otherwise a player that was already in the queue gets popped and his/her IP address shared with this player.
+	 * @param playerId
+	 * @return waitingPlayerIP
+	 */
+	public Pair<HttpStatus, ResponseDTO> matchmakePlayer(Long playerId, String remoteIPAddr) {
+		Optional<Player> player = playerRepository.findById(playerId);
+		if (player.isPresent()) {
+			if (player.get().getHasOngoingSession() && player.get().getGameSession() != null) {
+				if (player.get().getGameSession().getCurrentLevel() == 5) {
+					/* Player has reached final level, initiate matchmaking... */
+					if (matchmakingQueue.isEmpty()) {
+						matchmakingQueue.add(remoteIPAddr);
+						return Pair.of(HttpStatus.OK, new ResponseDTO(null,
+								String.format("Game Session of player with id:%s is successfully updated\n" +
+										"Matchmaking queue is empty, adding player to the matchmaking queue...", playerId), APIConstants.RESPONSE_SUCCESS));
+					} else {
+						String waitingPlayerIP = matchmakingQueue.remove();
+						return Pair.of(HttpStatus.OK, new ResponseDTO(waitingPlayerIP,
+								String.format("Game Session of player with id:%s is successfully updated\n" +
+										"Matchmaking player with player on address:%s", playerId, waitingPlayerIP), APIConstants.RESPONSE_SUCCESS));
+					}
+				} else {
+					log.warn("Player with id:{} is not on level 5, multiplayer level requires player to be at least in 5th level.", playerId);
+					return Pair.of(HttpStatus.NOT_FOUND, new ResponseDTO(null,
+							String.format("Player with id:%s is not on level 5, multiplayer level" +
+									" requires player to be at least in 5th level.", playerId), APIConstants.RESPONSE_FAIL));
+				}
 			} else {
 				log.warn("Player with id:{}, does not have an ongoing game session!", playerId);
 				return Pair.of(HttpStatus.NOT_FOUND, new ResponseDTO(null,
