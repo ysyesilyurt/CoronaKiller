@@ -13,8 +13,6 @@ public class GeneralConstants {
 	public static final int WINDOW_WIDTH = 600;
 	public static final int WINDOW_HEIGHT = 800;
 	public static final String HASH_SALT = "$2a$10$3j3gfVtuynuvE6FIVvygdu"; /* A Random Salt value generated with BCrypt.gensalt(10) */
-	public static final Integer MULTIPLAYER_SEND_INFO_PERIOD = 1000; // TODO: CHANGE
-	public static final String MULTIPLAYER_SEND_INFO_FORMAT = "%s:%s:%s:%s:%s"; /* username:score:spaceshipHealth:spaceshipX:spaceshipY */
 
 	/* Request Message Constants */
 	public static final String CLIENT_ERROR = "Oops! Something went wrong on client";
@@ -54,5 +52,8 @@ public class GeneralConstants {
 			"Your companion has gathered %s points up to this level and\n" +
 			"has %s HP left for his ship.\n\n" +
 			"Your match will start automatically in 5 seconds, Get Ready!";
-	public static final int MATCHMAKING_COUNTDOWN = 5;
+	public static final String MULTIPLAYER_SEND_INFO_FORMAT = "%s:%s:%s:%s:%s"; /* username:score:spaceshipHealth:spaceshipX:spaceshipY */
+	public static final Integer MULTIPLAYER_SEND_INFO_PERIOD_MSEC = 10;
+	public static final int MATCHMAKING_INITIAL_OFFSET_MSEC = 15; /* Users wait a 15 ms to get their username dialogs ready */
+	public static final int MATCHMAKING_COUNTDOWN_SEC = 5;
 }

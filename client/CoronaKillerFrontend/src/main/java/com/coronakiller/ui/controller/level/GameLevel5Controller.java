@@ -104,20 +104,26 @@ public class GameLevel5Controller extends GameLevelController {
 
 				/* Player waits for matchmaking */
 				Socket otherPlayerSocket = serverSocket.accept();
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						loadingSpinner.setVisible(false);
-						anchorPane.setDisable(false);
-						matchmakingInProgressDialog.close();
-						startGame();
-					}
-				});
 				/* Other player has connected so prepare for the start of the final level! */
 				socketDataInputStream = new DataInputStream(otherPlayerSocket.getInputStream());
 				socketDataOutputStream = new DataOutputStream(otherPlayerSocket.getOutputStream());
-				startListening();
 				startSendingInfoPeriodically();
+				startListening();
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							loadingSpinner.setVisible(false);
+							anchorPane.setDisable(false);
+							matchmakingInProgressDialog.close();
+							/* Initially send crucial information immediately as socket connections are established */
+							TimeUnit.MILLISECONDS.sleep(MATCHMAKING_INITIAL_OFFSET_MSEC);
+							startGame();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			} catch (IOException e) {
 				e.printStackTrace(); // TODO FAIL LOG
 			}
@@ -130,12 +136,14 @@ public class GameLevel5Controller extends GameLevelController {
 		Socket clientSocket = new Socket();
 		try {
 			clientSocket.connect(new InetSocketAddress(otherPlayerIP, FIRST_PLAYER_SOCKET_PORT));
-			startGame();
+			/* Initially send crucial information immediately as socket connections are established */
 			socketDataInputStream = new DataInputStream(clientSocket.getInputStream());
 			socketDataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-			startListening();
 			startSendingInfoPeriodically();
-		} catch (IOException e) {
+			startListening();
+			TimeUnit.MILLISECONDS.sleep(MATCHMAKING_INITIAL_OFFSET_MSEC);
+			startGame();
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace(); // TODO FAIL LOG
 		}
 	}
@@ -154,7 +162,7 @@ public class GameLevel5Controller extends GameLevelController {
 	private void startGame() {
 		Thread countdownThread = new Thread(() -> {
 			try {
-				TimeUnit.SECONDS.sleep(MATCHMAKING_COUNTDOWN);
+				TimeUnit.SECONDS.sleep(MATCHMAKING_COUNTDOWN_SEC);
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
@@ -232,7 +240,7 @@ public class GameLevel5Controller extends GameLevelController {
 							gameDataCookie.getPlayerDTO().getUsername(), gameDataCookie.getGameSessionDTO().getSessionScore(),
 							gameDataCookie.getGameSessionDTO().getShipHealth(), 15., 15.); // TODO: CHANGE SKOR VE SHIP COOKIE'DEN ALDIM?
 					socketDataOutputStream.writeUTF(dataToSend);
-					Thread.sleep(MULTIPLAYER_SEND_INFO_PERIOD);
+					TimeUnit.SECONDS.sleep(MULTIPLAYER_SEND_INFO_PERIOD_MSEC);
 				} catch (IOException | InterruptedException e) {
 					e.printStackTrace(); // TODO FAIL LOG
 					return;
