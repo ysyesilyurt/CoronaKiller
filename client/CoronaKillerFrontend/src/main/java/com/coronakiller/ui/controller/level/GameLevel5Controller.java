@@ -7,6 +7,10 @@ import com.coronakiller.ui.model.virus.BigBoss;
 import com.coronakiller.ui.model.virus.Virus;
 import com.coronakiller.ui.service.RequestService;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXSpinner;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,19 +18,29 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.javatuples.Pair;
 
-import java.io.*;
-import java.net.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
 import static com.coronakiller.ui.constants.GeneralConstants.*;
 
 public class GameLevel5Controller extends GameLevelController {
+
+	@FXML
+	public StackPane stackPane;
 
 	@FXML
 	public AnchorPane anchorPane;
@@ -46,9 +60,23 @@ public class GameLevel5Controller extends GameLevelController {
 	@FXML
 	public JFXButton backToLoginButton;
 
+	@FXML
+	public JFXSpinner loadingSpinner;
+
 	/* Socket streams for listening and sending threads */
 	private DataInputStream socketDataInputStream;
 	private DataOutputStream socketDataOutputStream;
+
+	/* Matchmaking Progress Variables */
+	private JFXDialog matchmakingInProgressDialog = new JFXDialog();
+	private JFXDialogLayout matchmakingInProgressLayout = new JFXDialogLayout();
+
+	/* Multiplayer transfer variables */
+	public String otherPlayerUsername;
+	public Integer otherPlayerSessionScore;
+	public Integer otherPlayerSpaceshipHealth;
+	public Double otherPlayerSpaceshipX;
+	public Double otherPlayerSpaceshipY;
 
 	/**
 	 * Overwritten initialize method from Initializable interface. It is responsible for initializing ui related objects.
@@ -62,86 +90,115 @@ public class GameLevel5Controller extends GameLevelController {
 		String otherPlayerIpAddress = result.getValue0();
 		if (otherPlayerIpAddress == null) {
 			/* Queue is empty, added this player to the queue, waiting for matchmaking... */
-
-			// TODO: CHECK WHAT TO CHANGE IN BELOW INITIALIZATIONS (LOADING ETC?)
-			isGameLevelFinished = false;
-			handleVirusInitialization();
-			handleSpaceInitialization();
-			anchorPane.getChildren().add(spaceShip);
-			nextLevel = null;
-			nextLevel = new StringBuilder(GeneralConstants.DASHBOARD_PAGE);
-			GameLevelController.hpValue = this.hpValue;
-			GameLevelController.scoreValue = this.scoreValue;
-			GameLevelController.alienHpValue = this.alienHpValue;
-			GameLevelController.teammateHpValue = this.teammateHpValue;
-			GameLevelController.updateHpValue();
-			GameLevelController.updateScoreValue();
-			this.updateTeammateHpValue();
-			this.updateAlienHpValue();
-			GameLevelController.currentLevel = 5;
-			GameLevelController.shipType = ShipType.BIG_GUNS;
-			GameLevelController.currentSessionScore = gameDataCookie.getGameSessionDTO().getSessionScore();
-			GameLevelController.currentPane = this.anchorPane;
-
 			waitForMatchmaking();
 		} else {
 			/* Matched with a player that was already in the queue */
-
-			// TODO: CHECK WHAT TO CHANGE IN BELOW INITIALIZATIONS
-			isGameLevelFinished = false;
-			handleVirusInitialization();
-			handleSpaceInitialization();
-			anchorPane.getChildren().add(spaceShip);
-			nextLevel = null;
-			nextLevel = new StringBuilder(GeneralConstants.DASHBOARD_PAGE);
-			GameLevelController.hpValue = this.hpValue;
-			GameLevelController.scoreValue = this.scoreValue;
-			GameLevelController.alienHpValue = this.alienHpValue;
-			GameLevelController.teammateHpValue = this.teammateHpValue;
-			GameLevelController.updateHpValue();
-			GameLevelController.updateScoreValue();
-			this.updateTeammateHpValue();
-			this.updateAlienHpValue();
-			GameLevelController.currentLevel = 5;
-			GameLevelController.shipType = ShipType.BIG_GUNS;
-			GameLevelController.currentSessionScore = gameDataCookie.getGameSessionDTO().getSessionScore();
-			GameLevelController.currentPane = this.anchorPane;
-
 			connectToMatchmakedPlayer(otherPlayerIpAddress);
 		}
 	}
 
 	private void waitForMatchmaking() {
-		try {
-			ServerSocket serverSocket = new ServerSocket(SOCKET_PORT); // TODO: 0.0.0.0
-			/* Player waits for matchmaking */
-			Socket otherPlayerSocket = serverSocket.accept();
+		Thread socketAcceptThread = new Thread(() -> {
+			try {
+				ServerSocket serverSocket = new ServerSocket(FIRST_PLAYER_SOCKET_PORT); // TODO: 0.0.0.0
 
-			/* Other player has connected so prepare for the start of the final level! */
-			socketDataInputStream = new DataInputStream(otherPlayerSocket.getInputStream());
-			socketDataOutputStream = new DataOutputStream(otherPlayerSocket.getOutputStream());
-			startListening();
-			startSendingInfoPeriodically();
-
-			// TODO: maybe show you're connecting.. falan filan
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+				/* Player waits for matchmaking */
+				Socket otherPlayerSocket = serverSocket.accept();
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						loadingSpinner.setVisible(false);
+						anchorPane.setDisable(false);
+						matchmakingInProgressDialog.close();
+						startGame();
+					}
+				});
+				/* Other player has connected so prepare for the start of the final level! */
+				socketDataInputStream = new DataInputStream(otherPlayerSocket.getInputStream());
+				socketDataOutputStream = new DataOutputStream(otherPlayerSocket.getOutputStream());
+				startListening();
+				startSendingInfoPeriodically();
+			} catch (IOException e) {
+				e.printStackTrace(); // TODO FAIL LOG
+			}
+		});
+		socketAcceptThread.start();
+		displayMatchmakingLoading();
 	}
 
 	private void connectToMatchmakedPlayer(String otherPlayerIP) {
 		Socket clientSocket = new Socket();
 		try {
-			clientSocket.connect(new InetSocketAddress(otherPlayerIP, SOCKET_PORT));
+			clientSocket.connect(new InetSocketAddress(otherPlayerIP, FIRST_PLAYER_SOCKET_PORT));
+			startGame();
 			socketDataInputStream = new DataInputStream(clientSocket.getInputStream());
 			socketDataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
 			startListening();
 			startSendingInfoPeriodically();
-
-			// TODO: maybe show you're connecting.. falan filan
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace(); // TODO FAIL LOG
 		}
+	}
+
+	private void displayMatchmakingLoading() {
+		loadingSpinner.setVisible(true);
+		anchorPane.setDisable(true);
+		matchmakingInProgressLayout.setHeading(new Text(MATCHMAKING_HEADING));
+		matchmakingInProgressLayout.setBody(new Text(MATCHMAKING_BODY));
+		matchmakingInProgressDialog.setContent(matchmakingInProgressLayout);
+		matchmakingInProgressDialog.setDialogContainer(stackPane);
+		matchmakingInProgressDialog.setOverlayClose(false);
+		matchmakingInProgressDialog.show();
+	}
+
+	private void startGame() {
+		Thread countdownThread = new Thread(() -> {
+			try {
+				TimeUnit.SECONDS.sleep(MATCHMAKING_COUNTDOWN);
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						matchmakingInProgressDialog.close();
+						initializeGame();
+					}
+				});
+			} catch (InterruptedException e) {
+				e.printStackTrace(); // TODO FAIL LOG
+			}
+		});
+		countdownThread.start();
+		String readyBody = String.format(MATCH_READY_BODY, otherPlayerUsername, otherPlayerSessionScore, otherPlayerSpaceshipHealth);
+		Text body = new Text(readyBody);
+		body.setStyle("-fx-font-weight: regular");
+		matchmakingInProgressLayout = new JFXDialogLayout();
+		matchmakingInProgressLayout.setHeading(new Text(MATCH_READY_HEADING));
+		matchmakingInProgressLayout.setBody(body);
+		matchmakingInProgressDialog = new JFXDialog();
+		matchmakingInProgressDialog.setContent(matchmakingInProgressLayout);
+		matchmakingInProgressDialog.setDialogContainer(stackPane);
+		matchmakingInProgressDialog.setOverlayClose(false);
+		matchmakingInProgressDialog.show();
+	}
+
+	private void initializeGame() {
+		isGameLevelFinished = false;
+		handleVirusInitialization();
+		handleSpaceInitialization();
+		anchorPane.getChildren().add(spaceShip);
+		nextLevel = null;
+		nextLevel = new StringBuilder(GeneralConstants.DASHBOARD_PAGE);
+		GameLevelController.hpValue = this.hpValue;
+		GameLevelController.scoreValue = this.scoreValue;
+		GameLevelController.alienHpValue = this.alienHpValue;
+		GameLevelController.teammateHpValue = this.teammateHpValue;
+		GameLevelController.updateHpValue();
+		GameLevelController.updateScoreValue();
+		this.updateTeammateHpValue();
+		this.updateAlienHpValue();
+		GameLevelController.currentLevel = 5;
+		GameLevelController.shipType = ShipType.BIG_GUNS;
+		GameLevelController.currentSessionScore = gameDataCookie.getGameSessionDTO().getSessionScore();
+		GameLevelController.currentPane = this.anchorPane;
 	}
 
 	private void startListening() {
@@ -150,12 +207,16 @@ public class GameLevel5Controller extends GameLevelController {
 				while (true) {
 					/* Listen from the socket's input stream indefinitely, learn about updates on the other
 					player's side and update variables as needed. */
-					System.out.println(socketDataInputStream.readUTF());
+					String[] otherPlayerInfo = socketDataInputStream.readUTF().split(":");
+					otherPlayerUsername = otherPlayerInfo[0];
+					otherPlayerSessionScore = Integer.parseInt(otherPlayerInfo[1]);
+					otherPlayerSpaceshipHealth = Integer.parseInt(otherPlayerInfo[2]);
+					otherPlayerSpaceshipX = Double.parseDouble(otherPlayerInfo[3]);
+					otherPlayerSpaceshipY = Double.parseDouble(otherPlayerInfo[4]);
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				e.printStackTrace(); // TODO FAIL LOG
 			}
-
 		});
 		listenThread.start();
 	}
@@ -167,16 +228,13 @@ public class GameLevel5Controller extends GameLevelController {
 				try {
 					/* Write to socket's output stream periodically to let other
 					player know about the updates on this side */
-//					String a = flag ? "HEY THIS IS SECOND APP SENDING INFO" : "HEY THIS IS FIRST APP SENDING INFO";
-//					socketDataOutputStream.writeUTF(a);
-//					Thread.sleep(1000);
 					String dataToSend = String.format(MULTIPLAYER_SEND_INFO_FORMAT,
 							gameDataCookie.getPlayerDTO().getUsername(), gameDataCookie.getGameSessionDTO().getSessionScore(),
-							gameDataCookie.getGameSessionDTO().getShipHealth(), "SPACESHIP-X", "SPACESHIP-Y"); // TODO: CHANGE SKOR VE SHIP COOKIE'DEN ALDIM?
+							gameDataCookie.getGameSessionDTO().getShipHealth(), 15., 15.); // TODO: CHANGE SKOR VE SHIP COOKIE'DEN ALDIM?
 					socketDataOutputStream.writeUTF(dataToSend);
 					Thread.sleep(MULTIPLAYER_SEND_INFO_PERIOD);
 				} catch (IOException | InterruptedException e) {
-					e.printStackTrace();
+					e.printStackTrace(); // TODO FAIL LOG
 					return;
 				}
 			}
