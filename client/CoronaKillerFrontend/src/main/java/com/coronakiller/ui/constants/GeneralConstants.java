@@ -8,7 +8,7 @@ import javafx.scene.control.TextFormatter;
 public class GeneralConstants {
 	/* General Application Constants */
 	public static final String BACKEND_BASE_URL = "http://localhost:8080/api"; // TODO: CHANGE
-	public static final Integer SOCKET_PORT = 10000; // TODO: CHANGE
+	public static final Integer FIRST_PLAYER_SOCKET_PORT = 10000; // TODO: CHANGE
 	public static final String WINDOW_TITLE = "Corona Killer";
 	public static final int WINDOW_WIDTH = 600;
 	public static final int WINDOW_HEIGHT = 800;
@@ -36,4 +36,23 @@ public class GeneralConstants {
 	public static final String GAME_LEVEL3_PAGE = "fxml/game-level3.fxml";
 	public static final String GAME_LEVEL4_PAGE = "fxml/game-level4.fxml";
 	public static final String GAME_LEVEL5_PAGE = "fxml/game-level5.fxml";
+
+	public static final String MATCHMAKING_HEADING = "Matchmaking In Progress...";
+	public static final String MATCHMAKING_BODY = "Congratulations! You've reached the final level.\n\n" +
+			"Your final task is to defeat the Notorious EVIL BIG KING coronavirus, with that you\n" +
+			"will be able to put an epic end to this deadly pandemic.\n\n" +
+			"But, since your chances of defeating this notorious kind coronavirus on your own\n" +
+			"is very low(even though you fought very well up to this point), we (as the creators\n" +
+			"of the game) decided to give you a companion to defeat this beast.\n" +
+			"So this level is a multiplayer level.\n\n" +
+			"Currently you're the only one in the queue, we'll match you with a worthy\n" +
+			"companion as soon as queue gets populated.\n\n" +
+			"Get ready for your final clash with the notorious king!";
+	public static final String MATCH_READY_HEADING = "Match is Found!";
+	public static final String MATCH_READY_BODY =
+			"We matched you with %s.\n\n" +
+			"Your companion has gathered %s points up to this level and\n" +
+			"has %s HP left for his ship.\n\n" +
+			"Your match will start automatically in 5 seconds, Get Ready!";
+	public static final int MATCHMAKING_COUNTDOWN = 5;
 }
