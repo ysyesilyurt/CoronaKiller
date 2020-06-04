@@ -57,7 +57,7 @@ public class BigGunsSpaceShip extends SpaceShip{
 
 	public void moveSecondSpaceship(){
 		moveTimeline = new Timeline(
-				new KeyFrame(Duration.millis(10), e ->{
+				new KeyFrame(Duration.millis(20), e ->{
 					this.setX(otherPlayerSpaceshipX);
 					this.setY(otherPlayerSpaceshipY);
 				})
@@ -69,7 +69,8 @@ public class BigGunsSpaceShip extends SpaceShip{
 	@Override
 	public void stopFire(){
 		autofireTimeline.stop();
-		//TODO : resolve bug
-		//moveTimeline.stop();
+		if(moveTimeline != null){
+			moveTimeline.stop();
+		}
 	}
 }
