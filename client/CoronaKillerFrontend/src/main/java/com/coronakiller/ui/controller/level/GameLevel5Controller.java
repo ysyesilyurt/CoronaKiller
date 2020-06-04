@@ -184,7 +184,7 @@ public class GameLevel5Controller extends GameLevelController {
 				/* Write to socket's output stream periodically to let other
 					player know about the updates on this side */
 				while (!finishInitialCommThreads) {
-					String dataToSend = String.format(MULTIPLAYER_SEND_INFO_FORMAT,
+					String dataToSend = String.format(INITIAL_SEND_INFO_FORMAT,
 							gameDataCookie.getPlayerDTO().getUsername(),
 							gameDataCookie.getGameSessionDTO().getSessionScore(),
 							gameDataCookie.getGameSessionDTO().getShipHealth());

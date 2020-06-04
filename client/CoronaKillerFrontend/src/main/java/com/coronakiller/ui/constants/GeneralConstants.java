@@ -50,8 +50,9 @@ public class GeneralConstants {
 	public static final String MATCH_READY_BODY =
 			"We matched you with %s.\n\n" +
 			"Your companion has gathered %s points up to this level and\n" +
-			"has %s HP left for his ship.\n\n" +
+			"has %s HP left for his/her ship.\n\n" +
 			"Your match will start automatically in 5 seconds, Get Ready!";
+	public static final String INITIAL_SEND_INFO_FORMAT = "%s:%s:%s"; /* username:score:spaceshipHealth */
 	public static final String MULTIPLAYER_SEND_INFO_FORMAT = "%s:%s:%s:%s:%s"; /* username:score:spaceshipHealth:spaceshipX:spaceshipY */
 	public static final Integer MULTIPLAYER_SEND_INFO_PERIOD_MSEC = 20;
 	public static final int MATCHMAKING_INITIAL_OFFSET_MSEC = 50; /* Users wait a 50 ms to get their username dialogs ready */
