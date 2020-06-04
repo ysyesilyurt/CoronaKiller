@@ -1,5 +1,7 @@
 package com.coronakiller.ui.constants;
 
+import java.util.ArrayList;
+
 /**
  * This class keeps the constant values that are related to gameplay.
  */
@@ -99,4 +101,8 @@ public class GameConstants {
 	public static final int BIG_BOSS_WIDTH = 100;
 	public static final int BIG_BOSS_HEIGHT = 160;
 	public static final String BIG_BOSS_ICON_URL = "images/bigBoss2.png";
+
+	public static final boolean[] patternOfBigBoss =
+			{true,true,false,true,false,true,false,false,false,false,false,false,true,false,true,false,true,true,true,true};
+
 }
