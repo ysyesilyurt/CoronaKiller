@@ -36,6 +36,7 @@ public class GameConstants {
 	public static final int BIG_GUNS_SPACESHIP_WIDTH = 60;
 	public static final int BIG_GUNS_SPACESHIP_HEIGHT = 100;
 	public static final String BIG_GUNS_SPACESHIP_ICON_URL = "/images/spaceship5.png";
+	public static final String BIG_GUNS_SPACESHIP_ICON_URL2 = "/images/spaceship4.png"; // TODO : change
 
 	/* SpaceShip Bullet 1 Constants */
 	public static final int SPACESHIP_BULLET1_VELOCITY = 8;
@@ -97,7 +98,7 @@ public class GameConstants {
 
 	/* Big Boss Constants */
 	public static final int BIG_BOSS_VELOCITY = 50;
-	public static final int BIG_BOSS_HEALTH = 100;
+	public static final int BIG_BOSS_HEALTH = 1000; // TODO : Changed for testing purposes, will be made again 100.
 	public static final int BIG_BOSS_WIDTH = 100;
 	public static final int BIG_BOSS_HEIGHT = 160;
 	public static final String BIG_BOSS_ICON_URL = "images/bigBoss2.png";

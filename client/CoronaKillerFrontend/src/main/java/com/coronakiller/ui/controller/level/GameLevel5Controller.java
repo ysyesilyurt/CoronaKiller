@@ -1,5 +1,6 @@
 package com.coronakiller.ui.controller.level;
 
+import com.coronakiller.ui.constants.GameConstants;
 import com.coronakiller.ui.constants.GeneralConstants;
 import com.coronakiller.ui.model.ShipType;
 import com.coronakiller.ui.model.spaceship.BigGunsSpaceShip;
@@ -192,7 +193,7 @@ public class GameLevel5Controller extends GameLevelController {
 		isGameLevelFinished = false;
 		handleVirusInitialization();
 		handleSpaceInitialization();
-		anchorPane.getChildren().add(spaceShip);
+		anchorPane.getChildren().addAll(spaceShip2,spaceShip);
 		nextLevel = null;
 		nextLevel = new StringBuilder(GeneralConstants.DASHBOARD_PAGE);
 		GameLevelController.hpValue = this.hpValue;
@@ -219,6 +220,10 @@ public class GameLevel5Controller extends GameLevelController {
 					otherPlayerUsername = otherPlayerInfo[0];
 					otherPlayerSessionScore = Integer.parseInt(otherPlayerInfo[1]);
 					otherPlayerSpaceshipHealth = Integer.parseInt(otherPlayerInfo[2]);
+					//if(spaceShip2 != null) {
+					//	spaceShip2.setX(Double.parseDouble(otherPlayerInfo[3]));
+					//	spaceShip2.setY(Double.parseDouble(otherPlayerInfo[4]));
+					//}
 					otherPlayerSpaceshipX = Double.parseDouble(otherPlayerInfo[3]);
 					otherPlayerSpaceshipY = Double.parseDouble(otherPlayerInfo[4]);
 				}
@@ -238,7 +243,7 @@ public class GameLevel5Controller extends GameLevelController {
 					player know about the updates on this side */
 					String dataToSend = String.format(MULTIPLAYER_SEND_INFO_FORMAT,
 							gameDataCookie.getPlayerDTO().getUsername(), gameDataCookie.getGameSessionDTO().getSessionScore(),
-							gameDataCookie.getGameSessionDTO().getShipHealth(), 15., 15.); // TODO: CHANGE SKOR VE SHIP COOKIE'DEN ALDIM?
+							gameDataCookie.getGameSessionDTO().getShipHealth(), spaceShip.getX(), spaceShip.getY()); // TODO: CHANGE SKOR VE SHIP COOKIE'DEN ALDIM?
 					socketDataOutputStream.writeUTF(dataToSend);
 					TimeUnit.SECONDS.sleep(MULTIPLAYER_SEND_INFO_PERIOD_MSEC);
 				} catch (IOException | InterruptedException e) {
@@ -255,10 +260,19 @@ public class GameLevel5Controller extends GameLevelController {
 	 */
 	public void handleSpaceInitialization() {
 		spaceShip = null;
-		spaceShip = new BigGunsSpaceShip(gameDataCookie.getGameSessionDTO().getShipHealth());
+		spaceShip = new BigGunsSpaceShip(GameConstants.INITIAL_SPACESHIP_X_POSITION-50,
+				GameConstants.INITIAL_SPACESHIP_Y_POSITION,
+				gameDataCookie.getGameSessionDTO().getShipHealth());
 		spaceShip.changeIconofSpaceShip();
 		spaceShip.setMouseDraggableObject();
 		spaceShip.autofire(anchorPane);
+
+		spaceShip2 = new BigGunsSpaceShip(GameConstants.INITIAL_SPACESHIP_X_POSITION+50,
+				GameConstants.INITIAL_SPACESHIP_Y_POSITION,
+				otherPlayerSpaceshipHealth);
+		spaceShip2.changeIconofSpaceShip2();
+		spaceShip2.moveSecondSpaceship();
+		spaceShip2.autofire(anchorPane);
 	}
 
 	/**

@@ -3,6 +3,7 @@ package com.coronakiller.ui.controller.level;
 import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.model.GameSession;
 import com.coronakiller.ui.model.ShipType;
+import com.coronakiller.ui.model.spaceship.BigGunsSpaceShip;
 import com.coronakiller.ui.model.spaceship.SpaceShip;
 import com.coronakiller.ui.model.virus.Virus;
 import com.coronakiller.ui.service.RequestService;
@@ -37,6 +38,7 @@ public abstract class GameLevelController implements Initializable {
 	public static long currentSessionScore = gameDataCookie.getGameSessionDTO().getSessionScore();
 	public static int currentLevel;
 	public static ShipType shipType;
+	public static BigGunsSpaceShip spaceShip2;
 
 	public static Pane currentPane;
 	public static Text hpValue;

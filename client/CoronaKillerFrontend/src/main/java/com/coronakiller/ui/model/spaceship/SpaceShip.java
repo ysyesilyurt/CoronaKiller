@@ -29,6 +29,11 @@ public abstract class SpaceShip extends Rectangle {
 		this.currentHealth = currentHealth;
 	}
 
+	public SpaceShip(int positionX, int positionY, int width, int height, int currentHealth){
+		super(positionX, positionY, width, height);
+		this.currentHealth = currentHealth;
+	}
+
 	public int getShot(int damage){
 		this.currentHealth -= damage;
 		return this.currentHealth;

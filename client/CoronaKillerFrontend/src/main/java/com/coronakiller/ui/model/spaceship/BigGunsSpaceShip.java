@@ -10,19 +10,31 @@ import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 
 import static com.coronakiller.ui.constants.GameConstants.*;
+import static com.coronakiller.ui.controller.level.GameLevel5Controller.otherPlayerSpaceshipX;
+import static com.coronakiller.ui.controller.level.GameLevel5Controller.otherPlayerSpaceshipY;
 
 public class BigGunsSpaceShip extends SpaceShip{
 
 	private Timeline autofireTimeline;
+	private Timeline moveTimeline;
 	Image spaceshipIcon = new Image(BIG_GUNS_SPACESHIP_ICON_URL);
+	Image spaceshipIcon2 = new Image(BIG_GUNS_SPACESHIP_ICON_URL2);
 
 	public BigGunsSpaceShip(int currentHealth) {
 		super(BIG_GUNS_SPACESHIP_WIDTH, BIG_GUNS_SPACESHIP_HEIGHT, currentHealth);
 	}
 
+	public BigGunsSpaceShip(int positionX, int positionY, int currentHealth){
+		super(positionX,positionY,BIG_GUNS_SPACESHIP_WIDTH, BIG_GUNS_SPACESHIP_HEIGHT, currentHealth);
+	}
+
 	@Override
 	public void changeIconofSpaceShip(){
 		this.setFill(new ImagePattern(spaceshipIcon));
+	}
+
+	public void changeIconofSpaceShip2(){
+		this.setFill(new ImagePattern(spaceshipIcon2));
 	}
 
 	@Override
@@ -43,8 +55,21 @@ public class BigGunsSpaceShip extends SpaceShip{
 		autofireTimeline.play();
 	}
 
+	public void moveSecondSpaceship(){
+		moveTimeline = new Timeline(
+				new KeyFrame(Duration.millis(10), e ->{
+					this.setX(otherPlayerSpaceshipX);
+					this.setY(otherPlayerSpaceshipY);
+				})
+		);
+		moveTimeline.setCycleCount(Timeline.INDEFINITE);
+		moveTimeline.play();
+	}
+
 	@Override
 	public void stopFire(){
 		autofireTimeline.stop();
+		//TODO : resolve bug
+		//moveTimeline.stop();
 	}
 }
