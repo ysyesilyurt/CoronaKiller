@@ -72,11 +72,11 @@ public class GameLevel5Controller extends GameLevelController {
 	private JFXDialogLayout matchmakingInProgressLayout = new JFXDialogLayout();
 
 	/* Multiplayer transfer variables */
-	public String otherPlayerUsername;
-	public Integer otherPlayerSessionScore;
-	public Integer otherPlayerSpaceshipHealth;
-	public Double otherPlayerSpaceshipX;
-	public Double otherPlayerSpaceshipY;
+	public static volatile String otherPlayerUsername;
+	public static volatile Integer otherPlayerSessionScore;
+	public static volatile Integer otherPlayerSpaceshipHealth;
+	public static volatile Double otherPlayerSpaceshipX;
+	public static volatile Double otherPlayerSpaceshipY;
 
 	/**
 	 * Overwritten initialize method from Initializable interface. It is responsible for initializing ui related objects.
