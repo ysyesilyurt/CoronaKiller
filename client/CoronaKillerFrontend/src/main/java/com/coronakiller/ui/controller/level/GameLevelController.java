@@ -112,10 +112,6 @@ public abstract class GameLevelController implements Initializable {
 		currentStage.show();
 	}
 
-	public static void cheatImplementation() {
-		//TODO : implement cheat
-	}
-
 	private static void displayFinish() {
 
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);

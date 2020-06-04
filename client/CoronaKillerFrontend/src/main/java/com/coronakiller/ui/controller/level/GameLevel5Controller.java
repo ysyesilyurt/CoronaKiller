@@ -356,8 +356,6 @@ public class GameLevel5Controller extends GameLevelController {
 		anchorPane.getChildren().add(virus);
 	}
 
-	//TODO : player with higher score also need to get K points bonus.
-
 	public void onClickGoDash(ActionEvent event) throws IOException {
 		Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		Parent dashboardPage = FXMLLoader.load(getClass().getClassLoader().getResource(GeneralConstants.DASHBOARD_PAGE));

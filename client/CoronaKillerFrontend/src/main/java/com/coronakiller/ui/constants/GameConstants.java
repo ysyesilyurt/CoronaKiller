@@ -59,7 +59,6 @@ public class GameConstants {
 	public static final int SPACESHIP_BULLET3_HEIGHT = 30;
 	public static final String SPACESHIP_BULLET3_ICON_URL = "images/spaceBullet1.png";
 
-	//TODO : Change virus bullets' damage section at the end, they were changed to 1 to ease checking
 	/* Virus Bullet 1 Constants */
 	public static final int VIRUS_BULLET1_VELOCITY = 6;
 	public static final int VIRUS_BULLET1_DAMAGE = 1;
