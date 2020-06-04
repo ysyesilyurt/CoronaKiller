@@ -10,10 +10,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.coronakiller</groupId>
-	<artifactId>CoronaKiller-Backend</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<artifactId>CoronaKillerBackend</artifactId>
+	<version>Group18</version>
 	<name>CoronaKiller</name>
-	<description>Corona killer game project</description>
+	<description>Corona Killer Game Backend with Spring Boot</description>
+	<packaging>war</packaging>
 
 	<properties>
 		<java.version>13</java.version>
@@ -23,8 +24,15 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

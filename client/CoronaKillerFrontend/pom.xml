@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.coronakiller</groupId>
-	<artifactId>ui</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>ui</name>
-	<description>JavaFX + SpringBoot application for CoronaKiller front-end</description>
+	<artifactId>CoronaKillerFrontend</artifactId>
+	<version>Group18</version>
+	<name>CoronaKiller</name>
+	<description>Corona Killer Game Frontend with JavaFX + SpringBoot</description>
 
 	<properties>
 		<java.version>11</java.version>
