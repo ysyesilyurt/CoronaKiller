@@ -32,7 +32,7 @@
                 <Font size="15.0" />
             </font>
         </Text>
-        <Text fx:id="alienHpText" layoutX="36.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alien HP:">
+        <Text fx:id="alienHpText" layoutX="36.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoronaKing HP:">
             <font>
                 <Font size="15.0" />
             </font>

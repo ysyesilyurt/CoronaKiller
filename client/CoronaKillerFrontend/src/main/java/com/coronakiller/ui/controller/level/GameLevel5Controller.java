@@ -168,6 +168,8 @@ public class GameLevel5Controller extends GameLevelController {
 						otherPlayerUsername = otherPlayerInfo[0];
 						otherPlayerSessionScore = Integer.parseInt(otherPlayerInfo[1]);
 						otherPlayerSpaceshipHealth = Integer.parseInt(otherPlayerInfo[2]);
+						otherPlayerSpaceshipX = Double.parseDouble(otherPlayerInfo[3]);
+						otherPlayerSpaceshipY = Double.parseDouble(otherPlayerInfo[4]);
 					} else {
 						break;
 					}
@@ -175,6 +177,7 @@ public class GameLevel5Controller extends GameLevelController {
 				startListening();
 			} catch (IOException e) {
 				e.printStackTrace(); // TODO FAIL LOG
+				return;
 			}
 		});
 		initialListenThread.start();
@@ -184,10 +187,9 @@ public class GameLevel5Controller extends GameLevelController {
 				/* Write to socket's output stream periodically to let other
 					player know about the updates on this side */
 				while (!finishInitialCommThreads) {
-					String dataToSend = String.format(INITIAL_SEND_INFO_FORMAT,
-							gameDataCookie.getPlayerDTO().getUsername(),
-							gameDataCookie.getGameSessionDTO().getSessionScore(),
-							gameDataCookie.getGameSessionDTO().getShipHealth());
+					String dataToSend = String.format(MULTIPLAYER_SEND_INFO_FORMAT,
+							gameDataCookie.getPlayerDTO().getUsername(), gameDataCookie.getGameSessionDTO().getSessionScore(),
+							gameDataCookie.getGameSessionDTO().getShipHealth(), spaceShip.getX(), spaceShip.getY());
 					socketDataOutputStream.writeUTF(dataToSend);
 					TimeUnit.MILLISECONDS.sleep(MULTIPLAYER_SEND_INFO_PERIOD_MSEC);
 				}
@@ -215,9 +217,9 @@ public class GameLevel5Controller extends GameLevelController {
 	private void startGame() {
 		Thread countdownThread = new Thread(() -> {
 			try {
-				TimeUnit.SECONDS.sleep(MATCHMAKING_COUNTDOWN_SEC);
+				TimeUnit.SECONDS.sleep(MATCHMAKING_COUNTDOWN_SEC1);
 				finishInitialCommThreads = true;
-				TimeUnit.MILLISECONDS.sleep(MATCHMAKING_INITIAL_OFFSET_MSEC);
+				TimeUnit.SECONDS.sleep(MATCHMAKING_COUNTDOWN_SEC2);
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
@@ -281,10 +283,6 @@ public class GameLevel5Controller extends GameLevelController {
 								otherPlayerUsername = otherPlayerInfo[0];
 								otherPlayerSessionScore = Integer.parseInt(otherPlayerInfo[1]);
 								otherPlayerSpaceshipHealth = Integer.parseInt(otherPlayerInfo[2]);
-								//if(spaceShip2 != null) {
-								//	spaceShip2.setX(Double.parseDouble(otherPlayerInfo[3]));
-								//	spaceShip2.setY(Double.parseDouble(otherPlayerInfo[4]));
-								//}
 								otherPlayerSpaceshipX = Double.parseDouble(otherPlayerInfo[3]);
 								otherPlayerSpaceshipY = Double.parseDouble(otherPlayerInfo[4]);
 							}
