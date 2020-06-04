@@ -245,7 +245,7 @@ public class GameLevel5Controller extends GameLevelController {
 							gameDataCookie.getPlayerDTO().getUsername(), gameDataCookie.getGameSessionDTO().getSessionScore(),
 							gameDataCookie.getGameSessionDTO().getShipHealth(), spaceShip.getX(), spaceShip.getY()); // TODO: CHANGE SKOR VE SHIP COOKIE'DEN ALDIM?
 					socketDataOutputStream.writeUTF(dataToSend);
-					TimeUnit.SECONDS.sleep(MULTIPLAYER_SEND_INFO_PERIOD_MSEC);
+					TimeUnit.MILLISECONDS.sleep(MULTIPLAYER_SEND_INFO_PERIOD_MSEC);
 				} catch (IOException | InterruptedException e) {
 					e.printStackTrace(); // TODO FAIL LOG
 					return;
