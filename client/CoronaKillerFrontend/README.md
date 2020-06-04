@@ -21,6 +21,8 @@ java -jar -Dspring.profiles.active=prod target/ui-0.0.1-SNAPSHOT.jar
 * Open the project with your favourite IDE (We prefer Intellij IDEA).
 * First let `maven` import all the dependencies, then run `Main.java` in the `com.coronakiller` package 
 
+#### Deploy
+Run `build.sh` and get executables in root folder. Then after deploying do not forget specify `prod` spring profile to your application!
 
 ## More About the Application
 Frontend UI Application that is developed with a Spring Boot JavaFX application. Serves as a client for the backend server.
