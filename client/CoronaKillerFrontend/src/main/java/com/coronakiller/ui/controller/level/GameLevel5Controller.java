@@ -11,6 +11,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXSpinner;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.javatuples.Pair;
 
 import java.io.DataInputStream;
@@ -78,6 +81,9 @@ public class GameLevel5Controller extends GameLevelController {
 	public static volatile Integer otherPlayerSpaceshipHealth;
 	public static volatile Double otherPlayerSpaceshipX;
 	public static volatile Double otherPlayerSpaceshipY;
+
+	private Timeline listenTimeline;
+	private Timeline sendTimeline;
 
 	/**
 	 * Overwritten initialize method from Initializable interface. It is responsible for initializing ui related objects.
@@ -211,11 +217,35 @@ public class GameLevel5Controller extends GameLevelController {
 	}
 
 	private void startListening() {
+		listenTimeline = new Timeline(
+				new KeyFrame(Duration.millis(20), e ->{
+					/* Listen from the socket's input stream indefinitely, learn about updates on the other
+					player's side and update variables as needed. */
+					String[] otherPlayerInfo = new String[0];
+					try {
+						otherPlayerInfo = socketDataInputStream.readUTF().split(":");
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+					otherPlayerUsername = otherPlayerInfo[0];
+					otherPlayerSessionScore = Integer.parseInt(otherPlayerInfo[1]);
+					otherPlayerSpaceshipHealth = Integer.parseInt(otherPlayerInfo[2]);
+					//if(spaceShip2 != null) {
+					//	spaceShip2.setX(Double.parseDouble(otherPlayerInfo[3]));
+					//	spaceShip2.setY(Double.parseDouble(otherPlayerInfo[4]));
+					//}
+					otherPlayerSpaceshipX = Double.parseDouble(otherPlayerInfo[3]);
+					otherPlayerSpaceshipY = Double.parseDouble(otherPlayerInfo[4]);
+				})
+		);
+		listenTimeline.setCycleCount(Timeline.INDEFINITE);
+		listenTimeline.play();
+		/*
 		Thread listenThread = new Thread(() -> {
 			try {
 				while (true) {
 					/* Listen from the socket's input stream indefinitely, learn about updates on the other
-					player's side and update variables as needed. */
+					player's side and update variables as needed. */ /*
 					String[] otherPlayerInfo = socketDataInputStream.readUTF().split(":");
 					otherPlayerUsername = otherPlayerInfo[0];
 					otherPlayerSessionScore = Integer.parseInt(otherPlayerInfo[1]);
@@ -232,15 +262,31 @@ public class GameLevel5Controller extends GameLevelController {
 			}
 		});
 		listenThread.start();
+		*/
 	}
 
 
 	private void startSendingInfoPeriodically() {
+		sendTimeline = new Timeline(
+				new KeyFrame(Duration.millis(20), e ->{
+					String dataToSend = String.format(MULTIPLAYER_SEND_INFO_FORMAT,
+							gameDataCookie.getPlayerDTO().getUsername(), gameDataCookie.getGameSessionDTO().getSessionScore(),
+							gameDataCookie.getGameSessionDTO().getShipHealth(), spaceShip.getX(), spaceShip.getY()); // TODO: CHANGE SKOR VE SHIP COOKIE'DEN ALDIM?
+					try {
+						socketDataOutputStream.writeUTF(dataToSend);
+					} catch (IOException ioException) {
+						ioException.printStackTrace();
+					}
+				})
+		);
+		sendTimeline.setCycleCount(Timeline.INDEFINITE);
+		sendTimeline.play();
+		/*
 		Thread sendThread = new Thread(() -> {
 			while (true) {
 				try {
 					/* Write to socket's output stream periodically to let other
-					player know about the updates on this side */
+					player know about the updates on this side */ /*
 					String dataToSend = String.format(MULTIPLAYER_SEND_INFO_FORMAT,
 							gameDataCookie.getPlayerDTO().getUsername(), gameDataCookie.getGameSessionDTO().getSessionScore(),
 							gameDataCookie.getGameSessionDTO().getShipHealth(), spaceShip.getX(), spaceShip.getY()); // TODO: CHANGE SKOR VE SHIP COOKIE'DEN ALDIM?
@@ -253,6 +299,7 @@ public class GameLevel5Controller extends GameLevelController {
 			}
 		});
 		sendThread.start();
+		*/
 	}
 
 	/**
