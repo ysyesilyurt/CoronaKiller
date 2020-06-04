@@ -6,3 +6,6 @@ target
 # Frontend
 *mvnw*
 .mvn
+
+# General
+executables
