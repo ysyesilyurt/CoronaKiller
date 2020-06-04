@@ -1,5 +1,6 @@
 package com.coronakiller.ui.model.virus;
 
+import com.coronakiller.ui.constants.GameConstants;
 import com.coronakiller.ui.model.bullet.VirusBullet2;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,7 +17,7 @@ public class BigBoss extends Virus{
 
 	private Timeline bigBossMoveTimeline;
 	private Timeline bigBossFireTimeline;
-	private int moveCounter = 5;
+	private int moveCounter = 0;
 	Image bigBossIcon = new Image(BIG_BOSS_ICON_URL);
 
 	public BigBoss(double xPosition, double yPosition) {
@@ -44,22 +45,16 @@ public class BigBoss extends Virus{
 	public void virusAutoMove() {
 		this.bigBossMoveTimeline = new Timeline(
 				new KeyFrame( Duration.millis(400), e ->{
-					if(moveCounter == 0){
-						this.setX(this.getX() + BIG_BOSS_VELOCITY);
-						moveCounter++;
+					if(moveCounter == 20) {
+						moveCounter = 0;
 					}
-					else if(moveCounter == 10){
-						this.setX(this.getX() - BIG_BOSS_VELOCITY);
-						moveCounter--;
-					}
-					else if(Math.random()>0.5){
+					if(patternOfBigBoss[moveCounter]){
 						this.setX(this.getX() + BIG_BOSS_VELOCITY);
-						moveCounter++;
 					}
 					else{
 						this.setX(this.getX() - BIG_BOSS_VELOCITY);
-						moveCounter--;
 					}
+					moveCounter++;
 				})
 		);
 		this.bigBossMoveTimeline.setCycleCount(Timeline.INDEFINITE);
