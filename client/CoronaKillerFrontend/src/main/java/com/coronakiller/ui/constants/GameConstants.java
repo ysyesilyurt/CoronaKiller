@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 public class GameConstants {
 
-	//TODO:change icon url if you want
 	/* SpaceShip Constants */
 	public static final int INITIAL_SPACESHIP_X_POSITION = 300;
 	public static final int INITIAL_SPACESHIP_Y_POSITION = 700;
@@ -36,7 +35,7 @@ public class GameConstants {
 	public static final int BIG_GUNS_SPACESHIP_WIDTH = 60;
 	public static final int BIG_GUNS_SPACESHIP_HEIGHT = 100;
 	public static final String BIG_GUNS_SPACESHIP_ICON_URL = "/images/spaceship5.png";
-	public static final String BIG_GUNS_SPACESHIP_ICON_URL2 = "/images/spaceship4.png"; // TODO : change
+	public static final String BIG_GUNS_SPACESHIP_ICON_URL2 = "/images/spaceship4.png";
 
 	/* SpaceShip Bullet 1 Constants */
 	public static final int SPACESHIP_BULLET1_VELOCITY = 8;

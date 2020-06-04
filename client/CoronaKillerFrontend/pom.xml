@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.coronakiller</groupId>
-	<artifactId>CoronaKillerFrontend</artifactId>
-	<version>Group18</version>
+	<artifactId>coronakillerfrontend</artifactId>
+	<version>group18</version>
 	<name>CoronaKiller</name>
 	<description>Corona Killer Game Frontend with JavaFX + SpringBoot</description>
 

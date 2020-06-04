@@ -1,7 +1,9 @@
 package com.coronakiller.ui.model.spaceship;
 
 import com.coronakiller.ui.controller.level.GameLevelController;
+import com.coronakiller.ui.model.bullet.SpaceShipBullet;
 import com.coronakiller.ui.model.bullet.SpaceShipBullet3;
+import com.coronakiller.ui.model.bullet.SpaceShipBullet4;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
@@ -10,20 +12,21 @@ import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 
 import static com.coronakiller.ui.constants.GameConstants.*;
+import static com.coronakiller.ui.constants.GameConstants.BIG_GUNS_SPACESHIP_HEIGHT;
 import static com.coronakiller.ui.controller.level.GameLevel5Controller.otherPlayerSpaceshipX;
 import static com.coronakiller.ui.controller.level.GameLevel5Controller.otherPlayerSpaceshipY;
 
-public class BigGunsSpaceShip extends SpaceShip{
+public class OtherBigGunsSpaceShip extends SpaceShip {
 
 	private Timeline autofireTimeline;
 	private Timeline moveTimeline;
-	Image spaceshipIcon = new Image(BIG_GUNS_SPACESHIP_ICON_URL);
+	Image spaceshipIcon = new Image(BIG_GUNS_SPACESHIP_ICON_URL2);
 
-	public BigGunsSpaceShip(int currentHealth) {
+	public OtherBigGunsSpaceShip(int currentHealth) {
 		super(BIG_GUNS_SPACESHIP_WIDTH, BIG_GUNS_SPACESHIP_HEIGHT, currentHealth);
 	}
 
-	public BigGunsSpaceShip(int positionX, int positionY, int currentHealth){
+	public OtherBigGunsSpaceShip(int positionX, int positionY, int currentHealth){
 		super(positionX,positionY,BIG_GUNS_SPACESHIP_WIDTH, BIG_GUNS_SPACESHIP_HEIGHT, currentHealth);
 	}
 
@@ -36,8 +39,8 @@ public class BigGunsSpaceShip extends SpaceShip{
 	public void autofire(Pane currentPane){
 		autofireTimeline = new Timeline(
 				new KeyFrame(Duration.millis(400), e -> {
-					SpaceShipBullet3 bullet = new SpaceShipBullet3(this.getX(), this.getY());
-					SpaceShipBullet3 bullet2 = new SpaceShipBullet3(this.getX() + this.getWidth(), this.getY());
+					SpaceShipBullet4 bullet = new SpaceShipBullet4(this.getX(), this.getY());
+					SpaceShipBullet4 bullet2 = new SpaceShipBullet4(this.getX() + this.getWidth(), this.getY());
 					bullet.changeIconOfBullet();
 					bullet2.changeIconOfBullet();
 					currentPane.getChildren().addAll(bullet, bullet2);

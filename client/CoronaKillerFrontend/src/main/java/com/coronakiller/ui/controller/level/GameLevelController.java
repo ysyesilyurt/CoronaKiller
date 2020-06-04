@@ -3,19 +3,16 @@ package com.coronakiller.ui.controller.level;
 import com.coronakiller.ui.application.StageInitializer;
 import com.coronakiller.ui.model.GameSession;
 import com.coronakiller.ui.model.ShipType;
-import com.coronakiller.ui.model.spaceship.BigGunsSpaceShip;
+import com.coronakiller.ui.model.spaceship.OtherBigGunsSpaceShip;
 import com.coronakiller.ui.model.spaceship.SpaceShip;
 import com.coronakiller.ui.model.virus.Virus;
 import com.coronakiller.ui.service.RequestService;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +25,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static com.coronakiller.ui.application.StageInitializer.gameDataCookie;
-import static com.coronakiller.ui.constants.GeneralConstants.MATCHMAKING_BODY;
-import static com.coronakiller.ui.constants.GeneralConstants.MATCHMAKING_HEADING;
 import static com.coronakiller.ui.controller.level.GameLevel5Controller.otherPlayerSpaceshipHealth;
 
 /**
@@ -43,9 +38,10 @@ public abstract class GameLevelController implements Initializable {
 	public static boolean isGameLevelFinished = false;
 	public static StringBuilder nextLevel = new StringBuilder();
 	public static long currentSessionScore = gameDataCookie.getGameSessionDTO().getSessionScore();
+	public static long otherPlayerScore;
 	public static int currentLevel;
 	public static ShipType shipType;
-	public static BigGunsSpaceShip spaceShip2;
+	public static OtherBigGunsSpaceShip spaceShip2;
 
 	public static Pane currentPane;
 	public static Text hpValue;
@@ -53,10 +49,7 @@ public abstract class GameLevelController implements Initializable {
 	/* For level 5*/
 	public static Text teammateHpValue;
 	public static Text alienHpValue;
-	public static Text nameOfTeammate;
 
-	private static JFXDialog gameFinishedDialog = new JFXDialog();
-	private static JFXDialogLayout gameFinishedLayout = new JFXDialogLayout();
 
 	@Override
 	public abstract void initialize(URL url, ResourceBundle resourceBundle);
@@ -74,11 +67,11 @@ public abstract class GameLevelController implements Initializable {
 	}
 
 	public static void updateTeammateHpValue() {
-		//teammateHpValue.setText(String.valueOf(otherPlayerSpaceshipHealth));
+		teammateHpValue.setText(String.valueOf(otherPlayerSpaceshipHealth));
 	}
 
 	public static void updateAlienHpValue() {
-		//alienHpValue.setText(String.valueOf(levelViruses.get(0).getVirusHealth()));
+		alienHpValue.setText(String.valueOf(levelViruses.get(0).getVirusHealth()));
 	}
 
 	/**
@@ -88,7 +81,7 @@ public abstract class GameLevelController implements Initializable {
 	 */
 	public static void finishLevelSuccessfully() throws IOException {
 		GameLevelController.spaceShip.stopFire();
-		if(spaceShip2 != null) {
+		if(spaceShip2 != null && GameLevelController.currentLevel == 5) {
 			GameLevelController.spaceShip2.stopFire();
 			displayFinish();
 		}
@@ -129,8 +122,8 @@ public abstract class GameLevelController implements Initializable {
 		alert.setTitle("CONGRATS!");
 		alert.setHeaderText(null);
 		StringBuilder stringBuilder = new StringBuilder("You have completed the game successfully with your friend!\n");
-		stringBuilder.append("You have earned" + currentSessionScore + "many points!\n" );
-		stringBuilder.append(GameLevel5Controller.otherPlayerUsername + " has earned" + GameLevel5Controller.otherPlayerSessionScore + "many points!\n");
+		stringBuilder.append("You have earned " + currentSessionScore + "many points!\n" );
+		stringBuilder.append(GameLevel5Controller.otherPlayerUsername + " has earned" + otherPlayerScore + "many points!\n");
 		alert.setContentText(stringBuilder.toString());
 		alert.show();
 	}

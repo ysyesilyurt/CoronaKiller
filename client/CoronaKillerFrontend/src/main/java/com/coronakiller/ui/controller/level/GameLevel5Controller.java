@@ -4,6 +4,7 @@ import com.coronakiller.ui.constants.GameConstants;
 import com.coronakiller.ui.constants.GeneralConstants;
 import com.coronakiller.ui.model.ShipType;
 import com.coronakiller.ui.model.spaceship.BigGunsSpaceShip;
+import com.coronakiller.ui.model.spaceship.OtherBigGunsSpaceShip;
 import com.coronakiller.ui.model.virus.BigBoss;
 import com.coronakiller.ui.model.virus.Virus;
 import com.coronakiller.ui.service.RequestService;
@@ -112,7 +113,7 @@ public class GameLevel5Controller extends GameLevelController {
 	private void waitForMatchmaking() {
 		Thread socketAcceptThread = new Thread(() -> {
 			try {
-				ServerSocket serverSocket = new ServerSocket(FIRST_PLAYER_SOCKET_PORT); // TODO: 0.0.0.0
+				ServerSocket serverSocket = new ServerSocket(FIRST_PLAYER_SOCKET_PORT);
 
 				/* Player waits for matchmaking */
 				Socket otherPlayerSocket = serverSocket.accept();
@@ -135,7 +136,7 @@ public class GameLevel5Controller extends GameLevelController {
 					}
 				});
 			} catch (IOException e) {
-				e.printStackTrace(); // TODO FAIL LOG
+				e.printStackTrace();
 			}
 		});
 		socketAcceptThread.start();
@@ -153,7 +154,7 @@ public class GameLevel5Controller extends GameLevelController {
 			TimeUnit.MILLISECONDS.sleep(MATCHMAKING_INITIAL_OFFSET_MSEC);
 			startGame();
 		} catch (IOException | InterruptedException e) {
-			e.printStackTrace(); // TODO FAIL LOG
+			e.printStackTrace();
 		}
 	}
 
@@ -176,7 +177,7 @@ public class GameLevel5Controller extends GameLevelController {
 				}
 				startListening();
 			} catch (IOException e) {
-				e.printStackTrace(); // TODO FAIL LOG
+				e.printStackTrace();
 				return;
 			}
 		});
@@ -196,7 +197,7 @@ public class GameLevel5Controller extends GameLevelController {
 				socketDataOutputStream.writeUTF("initialCommunicationFinished:");
 				startSendingInfoPeriodically();
 			} catch (IOException | InterruptedException e) {
-				e.printStackTrace(); // TODO FAIL LOG
+				e.printStackTrace();
 				return;
 			}
 		});
@@ -228,7 +229,7 @@ public class GameLevel5Controller extends GameLevelController {
 					}
 				});
 			} catch (InterruptedException e) {
-				e.printStackTrace(); // TODO FAIL LOG
+				e.printStackTrace();
 			}
 		});
 		countdownThread.start();
@@ -258,8 +259,8 @@ public class GameLevel5Controller extends GameLevelController {
 		GameLevelController.teammateHpValue = this.teammateHpValue;
 		GameLevelController.updateHpValue();
 		GameLevelController.updateScoreValue();
-		this.updateTeammateHpValue();
-		this.updateAlienHpValue();
+		updateTeammateHpValue();
+		updateAlienHpValue();
 		GameLevelController.currentLevel = 5;
 		GameLevelController.shipType = ShipType.BIG_GUNS;
 		GameLevelController.currentSessionScore = gameDataCookie.getGameSessionDTO().getSessionScore();
@@ -333,10 +334,10 @@ public class GameLevel5Controller extends GameLevelController {
 		spaceShip.setMouseDraggableObject();
 		spaceShip.autofire(anchorPane);
 
-		spaceShip2 = new BigGunsSpaceShip(GameConstants.INITIAL_SPACESHIP_X_POSITION + 50,
+		spaceShip2 = new OtherBigGunsSpaceShip(GameConstants.INITIAL_SPACESHIP_X_POSITION + 50,
 				GameConstants.INITIAL_SPACESHIP_Y_POSITION,
 				otherPlayerSpaceshipHealth);
-		spaceShip2.changeIconofSpaceShip2();
+		spaceShip2.changeIconofSpaceShip();
 		spaceShip2.moveSecondSpaceship();
 		spaceShip2.autofire(anchorPane);
 	}

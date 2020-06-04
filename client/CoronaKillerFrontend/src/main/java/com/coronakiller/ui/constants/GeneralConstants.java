@@ -7,8 +7,8 @@ import javafx.scene.control.TextFormatter;
  */
 public class GeneralConstants {
 	/* General Application Constants */
-	public static final String BACKEND_BASE_URL = "http://localhost:8080/api"; // TODO: CHANGE
-	public static final Integer FIRST_PLAYER_SOCKET_PORT = 10000; // TODO: CHANGE
+	public static final String BACKEND_BASE_URL = "http://144.122.71.144:8083/coronakillerbackend-group18/api";
+	public static final Integer FIRST_PLAYER_SOCKET_PORT = 10000;
 	public static final String WINDOW_TITLE = "Corona Killer";
 	public static final int WINDOW_WIDTH = 600;
 	public static final int WINDOW_HEIGHT = 800;

@@ -10,8 +10,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.coronakiller</groupId>
-	<artifactId>CoronaKillerBackend</artifactId>
-	<version>Group18</version>
+	<artifactId>coronakillerbackend</artifactId>
+	<version>group18</version>
 	<name>CoronaKiller</name>
 	<description>Corona Killer Game Backend with Spring Boot</description>
 	<packaging>war</packaging>
