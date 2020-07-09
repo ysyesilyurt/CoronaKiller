@@ -20,5 +20,5 @@ Infrastructure implemented using `Spring Boot Data MVC` frameworks, its also sec
 ### Frontend
 Client side is implemented as a desktop application using `JavaFX` in collaboration with `SpringBoot` (namely, managed using `SpringBoot`s `ApplicationContext`). `JFoenix` has been used for the styling of the application. UI test cases document and GUI Documentation pdf files has been created for detailed insight of frontend application. For the request chains `OkHttp` has been utilized. For the multiplayer part of the game a `peer2peer` architecture is implemented in collaboration with backend. Briefly, a matchmaking operation happens on the server-side and then players (namely `peers`) connect to each other and all the game flow passes between them via `TCP sockets` (For a more detailed explanation about this architecture please consult to [here](https://github.com/ysyesilyurt/CoronaKiller/tree/master/client/CoronaKillerFrontend#design))   
 
-## Teaser - Sample Build + Run + Play
+## CoronaKiller Teaser Video - Sample Build + Run + Play
 [![CoronaKiller Video](https://img.youtube.com/vi/PCt-ORYCpS8/0.jpg)](https://www.youtube.com/watch?v=PCt-ORYCpS8)
