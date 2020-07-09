@@ -6,16 +6,18 @@ This module consists of the implementations for our server-side development.
 
 ## Build and run:
 
-Development is performed in 2 platforms, namely `dev` and `prod`. `dev` refers to our local environment which we connect to our local database and `prod` refers to the server environment which we connect to the database that is given to us. For the environment changes for our development process we have used `Spring Profiles`. We have defined 2 `application.yml` files (`application-dev.yml`, `application-prod.yml`) under the `resources` folder. And to actually use them, we have specified which active profile we want to use. For below configurations, we specify `prod` profile.
+Development is performed in 2 platforms, namely `dev` and `prod`. `dev` refers to our local environment which we connect to our local database and `prod` refers to the server environment which we connect to the database that is given to us. For the environment changes for our development process we have used `Spring Profiles`. We have defined 2 `application.yml` files (`application-dev.yml`, `application-prod.yml`) under the `resources` folder. And to actually use them, we have specified which active profile we want to use. For below configurations, we specify `prod` profile. You can also ignore the profiles, default will obey the `prod` profile.
 
-First `git clone http://144.122.71.144:8080/Alper.KOCAMAN/group18.git`, then run on:
+First `https://github.com/ysyesilyurt/CoronaKiller.git`, then run on:
 
 ### Your host machine:
 Since project is developed using JDK-13, make sure you have JDK-13 installed in your system.
 #### From your favourite terminal:
+You can just execute `build.sh` which will build both executables (both backend and frontend) on a folder named executables in the root folder. Then you can run the resulting war directly.
 ```
-mvn clean install
-java -jar -Dspring.profiles.active=prod target/CoronaKiller-Backend-1.0-SNAPSHOT.jar
+./build.sh
+cd executables
+java -jar -Dspring.profiles.active=prod target/CoronaKillerBackend-Group18.war
 ```
 
 #### From your favourite IDE:
@@ -36,7 +38,7 @@ Simply put, this API is developed for a game named _Corona Killer_ which aims to
 
 ##### Currently API provides endpoints for:
 *  _Player/User Management_ (`/api/players/*`), which basically keeps the necessary services to apply CRUD operations on the users as well as their `login` and `register` processes,
-*  _Game Management_ (`/api/game/*`), which basically constructs main medium that game sessions modifications (newgame, continue, level-up, finish) can be applied through,
+*  _Game Management_ (`/api/game/*`), which basically constructs main medium that game sessions modifications (newgame, continue, level-up, finish, matchmakePlayer) can be applied through,
 *  _ScoreBoard Management_ (`/api/scoreboard`), which provides access to the services that creates requested (can be weekly, monthly or all times) scoreboard on the fly (has only 1 endpoint, different board types are specified through the query strings).
 
 ## DB Design
