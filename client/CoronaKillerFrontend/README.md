@@ -16,7 +16,7 @@ You can just execute `build.sh` which will build both executables (both backend 
 ```
 ./build.sh
 cd executables
-java -jar -Dspring.profiles.active=prod target/ui-0.0.1-SNAPSHOT.jar
+java -jar -Dspring.profiles.active=prod target/CoronaKillerFrontend-Group18.jar
 ```
 
 #### From your favourite IDE:
