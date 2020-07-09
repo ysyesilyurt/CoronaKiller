@@ -5,15 +5,17 @@ This module consists of the implementations for our client-side development.
 # Getting Started
 
 ## Build and run:
-You first need to run Backend server in your machine. For that consult to its README.
+You first need to run Backend server in your machine. For that consult to its documentation in its [README](https://github.com/ysyesilyurt/CoronaKiller/tree/master/server/CoronaKillerBackend).
 
-First `git clone http://144.122.71.144:8080/Alper.KOCAMAN/group18.git`, then run on:
+To run this application, first `git clone https://github.com/ysyesilyurt/CoronaKiller.git`, then run on:
 
 ### Your host machine:
 Since project is developed using JDK-13, make sure you have JDK-13 installed in your system.
 #### From your favourite terminal:
+You can just execute `build.sh` which will build both executables (both backend and frontend) on a folder named `executables` in the root folder. Then you can run the resulting `jar` directly.
 ```
-mvn clean install
+./build.sh
+cd executables
 java -jar -Dspring.profiles.active=prod target/ui-0.0.1-SNAPSHOT.jar
 ```
 
@@ -21,11 +23,8 @@ java -jar -Dspring.profiles.active=prod target/ui-0.0.1-SNAPSHOT.jar
 * Open the project with your favourite IDE (We prefer Intellij IDEA).
 * First let `maven` import all the dependencies, then run `Main.java` in the `com.coronakiller` package 
 
-#### Deploy
-Run `build.sh` and get executables in root folder. Then after deploying do not forget specify `prod` spring profile to your application!
-
 ## More About the Application
-Frontend UI Application that is developed with a Spring Boot JavaFX application. Serves as a client for the backend server.
+Frontend UI Application that is developed with a Spring Boot JavaFX application. Serves as a client for the backend server where players can self-sign, display different types of leaderboards and actually play the game.
 
 ## Documentation
 ### Design
